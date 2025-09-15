@@ -10,9 +10,22 @@ config_version=5
 
 [application]
 
-config/name="Nytt Spelprojekt"
+config/name="Tower Defense"
+run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+
+[layer_names]
+
+2d_physics/layer_1="World"
+2d_physics/layer_2="Towers"
+2d_physics/layer_3="Enemies"
+2d_physics/layer_4="Water"
 
 [rendering]
 
