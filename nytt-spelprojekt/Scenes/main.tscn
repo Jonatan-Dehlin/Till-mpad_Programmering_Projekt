@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://tbpoiyn0mbo1"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_fip6x"]
+[ext_resource type="PackedScene" uid="uid://cwhs2ydv1qcji" path="res://Scenes/tower_placer.tscn" id="2_jo2xf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_r0vqw"]
+font_size = 50
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_fip6x")
+
+[node name="LevelSelector" type="MenuButton" parent="."]
+offset_left = 233.0
+offset_top = 158.0
+offset_right = 580.0
+offset_bottom = 295.0
+text = "Level Selector
+"
+item_count = 1
+popup/item_0/text = "forest_level"
+
+[node name="PlacedTowers" type="Node2D" parent="."]
+
+[node name="LevelPlaceHolder" type="Node2D" parent="."]
+
+[node name="TowerPlacer" parent="." instance=ExtResource("2_jo2xf")]
+
+[node name="HUD" type="VBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 1544.0
+offset_top = 26.0
+offset_right = 1918.0
+offset_bottom = 309.0
+grow_horizontal = 0
+size_flags_horizontal = 0
+
+[node name="WaveLabel" type="Label" parent="HUD"]
+layout_mode = 2
+text = "Wave: x/y"
+label_settings = SubResource("LabelSettings_r0vqw")
+
+[node name="HealthLabel" type="Label" parent="HUD"]
+layout_mode = 2
+text = "Health: xxx"
+label_settings = SubResource("LabelSettings_r0vqw")
+
+[node name="MoneyLabel" type="Label" parent="HUD"]
+layout_mode = 2
+text = "Money: $xxx"
+label_settings = SubResource("LabelSettings_r0vqw")

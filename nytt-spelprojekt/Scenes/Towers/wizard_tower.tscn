@@ -1,0 +1,120 @@
+[gd_scene load_steps=9 format=3 uid="uid://lnvpp1rxb8pw"]
+
+[ext_resource type="Script" path="res://Scripts/wizard_tower.gd" id="1_6a7ut"]
+[ext_resource type="Texture2D" uid="uid://di68gim02dr7c" path="res://Assets/Towers/Towers bases/PNGs/Tower 05.png" id="1_fxrtq"]
+[ext_resource type="Texture2D" uid="uid://dtnip7poocuqc" path="res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 01 - Weapon.png" id="3_3wdoi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vjsy8"]
+radius = 108.057
+
+[sub_resource type="Animation" id="Animation_4dnem"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Weapon/WeaponSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_bamwi"]
+resource_name = "Tower_Firing"
+length = 1.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Weapon/WeaponSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0449431, 0.0949433, 0.144943, 0.194943, 0.244943, 0.294943, 0.344943, 0.394943, 0.444943, 0.494943, 0.544943, 0.594943, 0.644943, 0.694943, 0.744943, 0.794943, 0.844943, 0.894943, 0.944943, 0.994943, 1.04494, 1.09494, 1.14494, 1.19494, 1.24494, 1.29494, 1.34494, 1.39494),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
+}
+
+[sub_resource type="Animation" id="Animation_q23k1"]
+resource_name = "Tower_Idle"
+length = 1.6
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Weapon/WeaponSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jxany"]
+_data = {
+"RESET": SubResource("Animation_4dnem"),
+"Tower_Firing": SubResource("Animation_bamwi"),
+"Tower_Idle": SubResource("Animation_q23k1")
+}
+
+[node name="WizardTower" type="Node2D"]
+script = ExtResource("1_6a7ut")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_fxrtq")
+hframes = 3
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(100, 100, 100, 1)
+z_index = -1
+scale = Vector2(1.02, 1.02)
+texture = ExtResource("1_fxrtq")
+hframes = 3
+
+[node name="TowerCollider" type="Area2D" parent="."]
+
+[node name="TowerHitbox" type="CollisionPolygon2D" parent="TowerCollider"]
+polygon = PackedVector2Array(-22, 0, 22, 0, 32, 8, 32, 53, 21, 64, -21, 64, -32, 53, -32, 8)
+
+[node name="Range" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+shape = SubResource("CircleShape2D_vjsy8")
+debug_color = Color(0, 0.6, 0.701961, 0.180392)
+
+[node name="Weapon" type="Node2D" parent="."]
+z_index = 1
+position = Vector2(0, -10)
+
+[node name="WeaponSprite" type="Sprite2D" parent="Weapon"]
+position = Vector2(0, -8)
+scale = Vector2(1, 0.98)
+texture = ExtResource("3_3wdoi")
+hframes = 29
+vframes = 2
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jxany")
+}
+
+[node name="MouseHoverDetector" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MouseHoverDetector"]
+polygon = PackedVector2Array(21, 64, 32, 53, 32, 8, 26, -18, 25, -28, 23, -39, 20, -42, -20, -42, -23, -39, -25, -28, -26, -18, -32, 8, -32, 53, -21, 64)
+
+[connection signal="body_entered" from="Range" to="." method="_on_range_body_entered"]
+[connection signal="body_exited" from="Range" to="." method="_on_range_body_exited"]
+[connection signal="mouse_entered" from="MouseHoverDetector" to="." method="_on_mouse_hover_detector_mouse_entered"]
+[connection signal="mouse_exited" from="MouseHoverDetector" to="." method="_on_mouse_hover_detector_mouse_exited"]
