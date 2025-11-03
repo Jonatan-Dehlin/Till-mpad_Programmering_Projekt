@@ -1,0 +1,328 @@
+[gd_scene load_steps=6 format=3 uid="uid://bn5ae4t8xid65"]
+
+[ext_resource type="Script" path="res://Scripts/upgrade_panel.gd" id="1_0idd4"]
+[ext_resource type="Texture2D" uid="uid://bvap3sergftsn" path="res://icon.svg" id="1_mk3we"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nbe0r"]
+bg_color = Color(0.862745, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1kkbf"]
+bg_color = Color(0.752941, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ipgo4"]
+bg_color = Color(0.242059, 0.460932, 0.985935, 1)
+
+[node name="UpgradePanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.00264582
+scale = Vector2(1.82, 1.82)
+script = ExtResource("1_0idd4")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 341.0
+offset_bottom = 613.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_right = 340.0
+offset_bottom = 583.0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="TowerName" type="Label" parent="Panel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "TowerName_PlaceHolder"
+horizontal_alignment = 1
+
+[node name="CloseMenuButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_nbe0r")
+text = "X"
+icon_alignment = 1
+expand_icon = true
+
+[node name="TowerStats" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="StatNames" type="VBoxContainer" parent="Panel/VBoxContainer/TowerStats"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="Damage" type="Label" parent="Panel/VBoxContainer/TowerStats/StatNames"]
+layout_mode = 2
+text = "Damage"
+horizontal_alignment = 1
+
+[node name="Range" type="Label" parent="Panel/VBoxContainer/TowerStats/StatNames"]
+layout_mode = 2
+text = "Range"
+horizontal_alignment = 1
+
+[node name="AttackSpeed" type="Label" parent="Panel/VBoxContainer/TowerStats/StatNames"]
+layout_mode = 2
+text = "Attack Speed"
+horizontal_alignment = 1
+
+[node name="DamageDealt" type="Label" parent="Panel/VBoxContainer/TowerStats/StatNames"]
+layout_mode = 2
+text = "Damage Dealt"
+horizontal_alignment = 1
+
+[node name="StatValues" type="VBoxContainer" parent="Panel/VBoxContainer/TowerStats"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="damage" type="Label" parent="Panel/VBoxContainer/TowerStats/StatValues"]
+layout_mode = 2
+text = "x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="range" type="Label" parent="Panel/VBoxContainer/TowerStats/StatValues"]
+layout_mode = 2
+text = "x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="cooldown" type="Label" parent="Panel/VBoxContainer/TowerStats/StatValues"]
+layout_mode = 2
+text = "x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DamageDealtNr" type="Label" parent="Panel/VBoxContainer/TowerStats/StatValues"]
+layout_mode = 2
+text = "x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UpgradePaths" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="PathA" type="VBoxContainer" parent="Panel/VBoxContainer/UpgradePaths"]
+layout_mode = 2
+
+[node name="PathAName" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
+layout_mode = 2
+text = "UpgradeName"
+horizontal_alignment = 1
+
+[node name="PathAUpgradeButton" type="Button" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
+layout_mode = 2
+focus_mode = 0
+text = "$xxxxx"
+icon = ExtResource("1_mk3we")
+icon_alignment = 1
+vertical_icon_alignment = 2
+
+[node name="UpgradeADisplay" type="HBoxContainer" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
+modulate = Color(0.156675, 0.156675, 0.156675, 1)
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture = ExtResource("1_mk3we")
+expand_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
+modulate = Color(0.156675, 0.156675, 0.156675, 1)
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture = ExtResource("1_mk3we")
+expand_mode = 1
+
+[node name="TextureRect3" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
+modulate = Color(0.156675, 0.156675, 0.156675, 1)
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture = ExtResource("1_mk3we")
+expand_mode = 1
+
+[node name="TextureRect4" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
+modulate = Color(0.156675, 0.156675, 0.156675, 1)
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture = ExtResource("1_mk3we")
+expand_mode = 1
+
+[node name="TextureRect5" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
+modulate = Color(0.156675, 0.156675, 0.156675, 1)
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture = ExtResource("1_mk3we")
+expand_mode = 1
+
+[node name="damage" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "Change1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="range" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "Change2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="cooldown" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "Change3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="projectile_velocity" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "Change4
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="projectile_lifetime" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "Change5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PathB" type="VBoxContainer" parent="Panel/VBoxContainer/UpgradePaths"]
+layout_mode = 2
+
+[node name="PathBName" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
+layout_mode = 2
+text = "UpgradeName"
+horizontal_alignment = 1
+
+[node name="PathBUpgradeButton" type="Button" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
+layout_mode = 2
+focus_mode = 0
+text = "$xxxxx"
+icon = ExtResource("1_mk3we")
+icon_alignment = 1
+vertical_icon_alignment = 2
+
+[node name="UpgradeBDisplay" type="HBoxContainer" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
+modulate = Color(0.156675, 0.156675, 0.156675, 1)
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture = ExtResource("1_mk3we")
+expand_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
+modulate = Color(0.158472, 0.158472, 0.158472, 1)
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture = ExtResource("1_mk3we")
+expand_mode = 1
+
+[node name="TextureRect3" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
+modulate = Color(0.158472, 0.158472, 0.158472, 1)
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture = ExtResource("1_mk3we")
+expand_mode = 1
+
+[node name="TextureRect4" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
+modulate = Color(0.158472, 0.158472, 0.158472, 1)
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture = ExtResource("1_mk3we")
+expand_mode = 1
+
+[node name="TextureRect5" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
+modulate = Color(0.158472, 0.158472, 0.158472, 1)
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture = ExtResource("1_mk3we")
+expand_mode = 1
+
+[node name="damage" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "Change1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="range" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "Change2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="cooldown" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "Change3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="projectile_velocity" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "Change4
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="projectile_lifetime" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "Change5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="SellTower" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_1kkbf")
+text = "Sell: $xxxxx"
+
+[node name="ChangeTargeting" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 32)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_ipgo4")
+text = "First"
+
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer2/CloseMenuButton" to="." method="_on_close_menu_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/UpgradePaths/PathA/PathAUpgradeButton" to="." method="_on_path_a_upgrade_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/UpgradePaths/PathB/PathBUpgradeButton" to="." method="_on_path_b_upgrade_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/SellTower" to="." method="_on_sell_tower_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/ChangeTargeting" to="." method="_on_change_targeting_pressed"]

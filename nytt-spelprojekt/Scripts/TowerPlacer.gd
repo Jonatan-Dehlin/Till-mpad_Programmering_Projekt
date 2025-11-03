@@ -28,7 +28,7 @@ func _physics_process(delta: float) -> void:
 		$Sprite2D.modulate = Color(1,1,1)
 		
 func _place_tower(instance):
-	selected_tower.position = get_global_mouse_position()
+	instance.position = get_global_mouse_position()
 	$Sprite2D.position = get_global_mouse_position()
 	$Area2D.position = get_global_mouse_position()
 	if Input.is_action_just_pressed("Left_click") and entered_bodies == 0:
@@ -44,13 +44,13 @@ func _on_menu_item_pressed(id: int) -> void:
 		var instance = scen.instantiate()
 		placed = false
 		selected_tower = instance
-		$Sprite2D.texture = instance.get_node("Sprite2D").texture
-		$Sprite2D.hframes = instance.get_node("Sprite2D").hframes
-		$Sprite2D.frame = instance.get_node("Sprite2D").frame
+		$Sprite2D.texture = instance.get_node("TowerSprite").texture
+		$Sprite2D.hframes = instance.get_node("TowerSprite").hframes
+		$Sprite2D.frame = instance.get_node("TowerSprite").frame
 		var InstanceHitbox = instance.get_node("TowerCollider").get_node("TowerHitbox")
 		Hitbox.add_child(InstanceHitbox.duplicate())
 		
-		$TowerSelector.visible = false
+		$TowerSelector.visible = true
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	entered_bodies += 1

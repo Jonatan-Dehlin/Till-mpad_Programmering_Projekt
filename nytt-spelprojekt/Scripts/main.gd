@@ -2,10 +2,13 @@ extends Node2D
 
 @onready var current_level = $LevelPlaceHolder
 @onready var LevelSelector: MenuButton = $LevelSelector
+@onready var MoneyLabel: Label = $HUD/MoneyLabel
 
 var max_wave = 100
 
 var levels = []
+
+var display_cash: int
 
 func _ready() -> void:
 	var PopUp = LevelSelector.get_popup()
@@ -16,9 +19,23 @@ func _ready() -> void:
 	for level in level_directory.get_files():
 		levels.append(level)
 	print(levels)
-	
+
 func _process(delta: float) -> void:
-	$HUD/MoneyLabel.text = "Money: $" + str(floor(Globals.cash))
+	if Input.is_action_just_pressed("Space"):
+		Globals.cash += 1000
+		print(Globals.cash - display_cash)
+		print("display:" + str(display_cash))
+		
+	#Mjuk övergång mot det riktiga värdet
+	if display_cash < Globals.cash:
+		if Globals.cash - display_cash > 1000:
+			display_cash += 20
+		elif Globals.cash - display_cash > 100:
+			display_cash += 10
+		elif Globals.cash - display_cash > 0:
+			display_cash += 1
+			
+	MoneyLabel.text = "Money: $" + str(int(display_cash))
 
 func _send_wave(enemies: Dictionary) -> void:
 	$HUD/WaveLabel.text = "Wave: " + str(Globals.current_wave) + "/" + str(max_wave)

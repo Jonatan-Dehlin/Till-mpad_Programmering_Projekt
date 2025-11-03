@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://lnvpp1rxb8pw"]
+[gd_scene load_steps=10 format=3 uid="uid://lnvpp1rxb8pw"]
 
 [ext_resource type="Script" path="res://Scripts/wizard_tower.gd" id="1_6a7ut"]
 [ext_resource type="Texture2D" uid="uid://di68gim02dr7c" path="res://Assets/Towers/Towers bases/PNGs/Tower 05.png" id="1_fxrtq"]
 [ext_resource type="Texture2D" uid="uid://dtnip7poocuqc" path="res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 01 - Weapon.png" id="3_3wdoi"]
+[ext_resource type="PackedScene" uid="uid://bn5ae4t8xid65" path="res://Scenes/upgrade_panel.tscn" id="4_h4bsb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vjsy8"]
 radius = 108.057
@@ -67,11 +68,11 @@ _data = {
 [node name="WizardTower" type="Node2D"]
 script = ExtResource("1_6a7ut")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="TowerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_fxrtq")
 hframes = 3
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="TowerOutline" type="Sprite2D" parent="."]
 visible = false
 modulate = Color(100, 100, 100, 1)
 z_index = -1
@@ -113,6 +114,10 @@ libraries = {
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MouseHoverDetector"]
 polygon = PackedVector2Array(21, 64, 32, 53, 32, 8, 26, -18, 25, -28, 23, -39, 20, -42, -20, -42, -23, -39, -25, -28, -26, -18, -32, 8, -32, 53, -21, 64)
+
+[node name="UpgradePanel" parent="." instance=ExtResource("4_h4bsb")]
+visible = false
+scale = Vector2(1.7, 1.7)
 
 [connection signal="body_entered" from="Range" to="." method="_on_range_body_entered"]
 [connection signal="body_exited" from="Range" to="." method="_on_range_body_exited"]

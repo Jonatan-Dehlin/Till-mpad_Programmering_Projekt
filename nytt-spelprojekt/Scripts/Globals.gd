@@ -4,7 +4,7 @@ var current_wave = 0
 
 var coins = 0
 
-var cash = 0
+var cash = 100
 
 var enemies = {"FireBug":0,"LeafBug":0,"MagmaCrab":0,"Scorpion":0}
 

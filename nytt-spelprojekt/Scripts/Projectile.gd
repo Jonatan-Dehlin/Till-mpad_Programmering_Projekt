@@ -7,10 +7,10 @@ var lifetime: float
 var time_passed: float = 0.0
 
 func _ready() -> void:
-	damage = get_parent().damage
-	velocity = get_parent().projectile_velocity
+	damage = get_parent().stats["damage"]
+	velocity = get_parent().stats["projectile_velocity"]
 	rotation = get_parent().direction_to_enemy
-	lifetime = get_parent().projectile_lifetime
+	lifetime = get_parent().stats["projectile_lifetime"]
 
 func _physics_process(delta: float) -> void:
 	position += Vector2.RIGHT.rotated(rotation) * velocity * delta
