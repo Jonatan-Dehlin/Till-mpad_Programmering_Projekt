@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dn0auwi68m76c"]
+[gd_scene load_steps=15 format=3 uid="uid://dn0auwi68m76c"]
 
 [ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_q4ryf"]
 [ext_resource type="Texture2D" uid="uid://dmpn1uspe1emy" path="res://Assets/Enemies/Ground/Spritesheets/Firebug.png" id="2_h6vf1"]
@@ -71,6 +71,12 @@ animations = [{
 radius = 26.0
 height = 60.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_esvfh"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qoxdo"]
+bg_color = Color(8.18223e-07, 0.641867, 0.311666, 1)
+
 [node name="FireBug" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 0
@@ -86,3 +92,21 @@ frame_progress = 0.584487
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_1bnx4")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -2.0
+offset_right = 98.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.2, 0.2)
+theme_override_styles/background = SubResource("StyleBoxFlat_esvfh")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qoxdo")
+value = 100.0
+fill_mode = 1

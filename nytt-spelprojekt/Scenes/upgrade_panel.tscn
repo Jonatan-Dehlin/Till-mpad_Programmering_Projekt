@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bn5ae4t8xid65"]
+[gd_scene load_steps=7 format=3 uid="uid://bn5ae4t8xid65"]
 
 [ext_resource type="Script" path="res://Scripts/upgrade_panel.gd" id="1_0idd4"]
 [ext_resource type="Texture2D" uid="uid://bvap3sergftsn" path="res://icon.svg" id="1_mk3we"]
@@ -16,26 +16,32 @@ bg_color = Color(0.752941, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ipgo4"]
 bg_color = Color(0.242059, 0.460932, 0.985935, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_65vv1"]
+size = Vector2(340.66, 613.541)
+
 [node name="UpgradePanel" type="Control"]
+z_index = 100
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -852.0
+offset_bottom = -457.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 0.00264582
-scale = Vector2(1.82, 1.82)
+scale = Vector2(1.4, 1.4)
 script = ExtResource("1_0idd4")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
 offset_right = 341.0
-offset_bottom = 613.0
+offset_bottom = 465.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 0
 offset_right = 340.0
-offset_bottom = 583.0
+offset_bottom = 456.0
 theme_override_constants/separation = 20
 alignment = 1
 
@@ -175,42 +181,6 @@ layout_mode = 2
 texture = ExtResource("1_mk3we")
 expand_mode = 1
 
-[node name="damage" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
-text = "Change1"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="range" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
-text = "Change2"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="cooldown" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
-text = "Change3"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="projectile_velocity" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
-text = "Change4
-"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="projectile_lifetime" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
-text = "Change5"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="PathB" type="VBoxContainer" parent="Panel/VBoxContainer/UpgradePaths"]
 layout_mode = 2
 
@@ -266,42 +236,6 @@ layout_mode = 2
 texture = ExtResource("1_mk3we")
 expand_mode = 1
 
-[node name="damage" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
-text = "Change1"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="range" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
-text = "Change2"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="cooldown" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
-text = "Change3"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="projectile_velocity" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
-text = "Change4
-"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="projectile_lifetime" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 1, 0, 1)
-text = "Change5"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 30
@@ -320,6 +254,15 @@ layout_mode = 2
 focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_ipgo4")
 text = "First"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+position = Vector2(170.33, 306.419)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_65vv1")
+disabled = true
 
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer2/CloseMenuButton" to="." method="_on_close_menu_button_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/UpgradePaths/PathA/PathAUpgradeButton" to="." method="_on_path_a_upgrade_button_pressed"]

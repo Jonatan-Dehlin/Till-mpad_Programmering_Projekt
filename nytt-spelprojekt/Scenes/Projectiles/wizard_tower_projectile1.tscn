@@ -1,7 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://cuyi61e8w66x2"]
+[gd_scene load_steps=31 format=3 uid="uid://cuyi61e8w66x2"]
 
 [ext_resource type="Script" path="res://Scripts/Projectile.gd" id="1_501oy"]
 [ext_resource type="Texture2D" uid="uid://31o77wtth81k" path="res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 01 - Projectile.png" id="2_5eoa8"]
+[ext_resource type="Texture2D" uid="uid://bvap3sergftsn" path="res://icon.svg" id="3_iy8kd"]
+[ext_resource type="Texture2D" uid="uid://cokyqspih6qrs" path="res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 01 - Projectile - Impact.png" id="4_mahi7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1c6ey"]
 atlas = ExtResource("2_5eoa8")
@@ -92,13 +94,95 @@ animations = [{
 }],
 "loop": true,
 "name": &"new_animation",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5djm6"]
 radius = 5.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_lcyjy"]
+radius = 44.5028
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wcgl"]
+atlas = ExtResource("4_mahi7")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ychq5"]
+atlas = ExtResource("4_mahi7")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ppqkw"]
+atlas = ExtResource("4_mahi7")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aovej"]
+atlas = ExtResource("4_mahi7")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uqa41"]
+atlas = ExtResource("4_mahi7")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ad2e"]
+atlas = ExtResource("4_mahi7")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_df4fp"]
+atlas = ExtResource("4_mahi7")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mht30"]
+atlas = ExtResource("4_mahi7")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rhkhj"]
+atlas = ExtResource("4_mahi7")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ssgov"]
+atlas = ExtResource("4_mahi7")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g6kn6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1wcgl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ychq5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ppqkw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aovej")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uqa41")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ad2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_df4fp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mht30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rhkhj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ssgov")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
 [node name="WizardTowerProjectile" type="Area2D"]
+scale = Vector2(2, 2)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_501oy")
@@ -107,10 +191,29 @@ script = ExtResource("1_501oy")
 sprite_frames = SubResource("SpriteFrames_mge0d")
 animation = &"new_animation"
 autoplay = "new_animation"
-frame = 9
-frame_progress = 0.700311
+frame = 8
+frame_progress = 0.0137844
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5djm6")
 
+[node name="AOECollider" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_lcyjy")
+disabled = true
+
+[node name="LeadIndicator" type="Marker2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("3_iy8kd")
+
+[node name="HitExplosion" type="AnimatedSprite2D" parent="."]
+visible = false
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_g6kn6")
+frame = 1
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="HitExplosion" to="." method="_on_hit_explosion_animation_finished"]
+[connection signal="frame_changed" from="HitExplosion" to="." method="_on_hit_explosion_frame_changed"]

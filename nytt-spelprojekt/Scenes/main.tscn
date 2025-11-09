@@ -6,7 +6,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_r0vqw"]
 font_size = 50
 
-[node name="Main" type="Node2D"]
+[node name="Node2D" type="Node2D"]
 script = ExtResource("1_fip6x")
 
 [node name="LevelSelector" type="MenuButton" parent="."]
@@ -25,28 +25,50 @@ popup/item_0/text = "forest_level"
 
 [node name="TowerPlacer" parent="." instance=ExtResource("2_jo2xf")]
 
-[node name="HUD" type="VBoxContainer" parent="."]
+[node name="TowerProjectiles" type="Node2D" parent="."]
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="HUD"]
+layout_mode = 0
+offset_top = 980.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Numbers" type="HBoxContainer" parent="HUD/Panel"]
+layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 1544.0
-offset_top = 26.0
-offset_right = 1918.0
-offset_bottom = 309.0
+offset_left = -1920.0
+offset_right = -1.0
+offset_bottom = 100.0
 grow_horizontal = 0
 size_flags_horizontal = 0
+theme_override_constants/separation = 150
+alignment = 1
 
-[node name="WaveLabel" type="Label" parent="HUD"]
+[node name="WaveLabel" type="Label" parent="HUD/Panel/Numbers"]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 text = "Wave: x/y"
 label_settings = SubResource("LabelSettings_r0vqw")
+horizontal_alignment = 1
 
-[node name="HealthLabel" type="Label" parent="HUD"]
+[node name="HealthLabel" type="Label" parent="HUD/Panel/Numbers"]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 text = "Health: xxx"
 label_settings = SubResource("LabelSettings_r0vqw")
+horizontal_alignment = 1
 
-[node name="MoneyLabel" type="Label" parent="HUD"]
+[node name="MoneyLabel" type="Label" parent="HUD/Panel/Numbers"]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 text = "Money: $xxx"
 label_settings = SubResource("LabelSettings_r0vqw")
+horizontal_alignment = 1

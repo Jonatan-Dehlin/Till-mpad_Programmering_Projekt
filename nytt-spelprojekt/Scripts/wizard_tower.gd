@@ -2,15 +2,18 @@ extends Node2D
 
 var enemies_in_range: Array = []
 var is_attacking: bool = false
-var direction_to_enemy
+var targeted_enemy
 var hovering_over_tower: bool = false
 
+var TowerName = "Wizard Tower"
+
 #Tower Stats
-var stats = {"damage":1,
-			"range":1000,
-			"cooldown":10,
-			"projectile_velocity": 1260.0,
-			"projectile_lifetime": 5.0}
+var stats = {"damage":50,
+			"range":250,
+			"cooldown":1,
+			"projectile_velocity": 320.0,
+			"projectile_lifetime": 5.0,
+			"AOESize": 100.0}
 
 var place_cost: int = 100
 var total_cash_spent: int = 100
@@ -46,9 +49,12 @@ var UpgradeBPrices = {1:50,2:100,3:1400,4:5900,5:11000}
 
 
 func _ready() -> void: #Används för att ställa in stats, när tornet placeras och när det upgraderas
-	UpgradePanel.global_position = Vector2(0,0)
+	if global_position.x >= get_window().size.x / 2:
+		UpgradePanel.global_position = Vector2(0,0)
+	else:
+		UpgradePanel.global_position = Vector2(get_window().size.x-UpgradePanel.get_node("Panel").size.x*UpgradePanel.scale.x,0)
 	_update_stats()
-	
+
 func _update_stats():
 	RangeShape.radius = stats["range"] #Ställer in range
 	anim.speed_scale = stats["cooldown"]
@@ -62,49 +68,73 @@ func _physics_process(_delta: float) -> void:
 		anim.play("Tower_Idle")
 	
 	if Input.is_action_just_pressed("Left_click") and hovering_over_tower:
-		UpgradePanel.visible = true
+		UpgradePanel.visible = true	
+		print("öppnade upgradepanelen")
+	
+	var overlapping_enemies = $Range.get_overlapping_bodies()
+	enemies_in_range = overlapping_enemies.filter(func(b): return b is Enemy)
+	
 	queue_redraw()
 
-func _attack() -> void:
-	is_attacking = true
-	anim.play("Tower_Firing")
-
-	if enemies_in_range.size() > 0: #Dubbelkollar så att tornet inte gör skada om fienden redan gått ur range
+func _choose_targeted_enemy():
+	if targeting == "First":
+		var first_enemy: Enemy
+	
+		for i in enemies_in_range:
+			if first_enemy == null:
+				first_enemy = i 
+			elif i.get_parent().progress > first_enemy.get_parent().progress:
+				first_enemy = i
+		targeted_enemy = first_enemy
 		
-		#Anpassar vilken fiende tornet ska skjuta på
-		if targeting == "First":
-			direction_to_enemy = get_angle_to(enemies_in_range[0].global_position)
-		elif targeting == "Last":
-			direction_to_enemy = get_angle_to(enemies_in_range[enemies_in_range.size() - 1].global_position)
-		elif targeting == "Strongest":
-			var strongest_enemy = null
-			for enemy in enemies_in_range:
-				if enemy.current_health > strongest_enemy.current_health or strongest_enemy == null:
-					strongest_enemy = enemy
-			direction_to_enemy = get_angle_to(strongest_enemy.global_position)
-			
+	elif targeting == "Last":
+		var last_enemy: Enemy
+		for i in enemies_in_range:
+			if last_enemy == null:
+				last_enemy = i 
+			if i.get_parent().progress < last_enemy.get_parent().progress:
+				last_enemy = i
+		targeted_enemy = last_enemy
+		
+	elif targeting == "Strongest":
+		var strongest_enemy = null
+		for enemy in enemies_in_range:
+			if strongest_enemy == null or enemy.current_health > strongest_enemy.current_health:
+				strongest_enemy = enemy
+		targeted_enemy = strongest_enemy
+		
+	elif targeting == "Weakest":
+		var weakest_enemy = null
+		for enemy in enemies_in_range:
+			if weakest_enemy == null or enemy.current_health < weakest_enemy.current_health:
+				weakest_enemy = enemy
+		targeted_enemy = weakest_enemy
+
+func _spawn_projectile():
+	#Anpassar vilken fiende tornet ska skjuta på
+	if enemies_in_range.size() > 0: #Dubbelkollar så att tornet inte gör skada om fienden redan gått ur range
+		_choose_targeted_enemy()
 		
 		#skapar en projektil
 		var projectile_scene = load("res://Scenes/Projectiles/wizard_tower_projectile" + str(upgrade_level) + ".tscn")
 		var projectile = projectile_scene.instantiate()
-		projectile.position -= Vector2(0,25)
-		add_child(projectile)
+		projectile.global_position = global_position - Vector2(0,25)
+		projectile.parent = self
+		get_tree().current_scene.get_node("TowerProjectiles").add_child(projectile)
+
+func _attack() -> void:
+	is_attacking = true
+	anim.play("Tower_Firing")
 
 	await anim.animation_finished
 
 	is_attacking = false
 
 func _draw():
+	#Ritar range
 	if RangeShape is CircleShape2D and (hovering_over_tower or UpgradePanel.visible):
 		draw_circle(Vector2.ZERO, RangeShape.radius, Color(0, 0, 1, 0.1))
 
-func _on_range_body_entered(body: Node2D) -> void:
-	if body is Enemy:
-		enemies_in_range.append(body)
-
-func _on_range_body_exited(body: Node2D) -> void:
-	if body is Enemy:
-		enemies_in_range.erase(body)
 
 func _on_mouse_hover_detector_mouse_entered() -> void:
 	TowerOutline.visible = true

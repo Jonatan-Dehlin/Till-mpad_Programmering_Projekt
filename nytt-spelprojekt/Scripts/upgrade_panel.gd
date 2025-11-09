@@ -29,6 +29,7 @@ var UpgradeBCosts = {1:0,2:0,3:0,4:0,5:0}
 
 func _ready() -> void:
 	parent = get_parent()
+	$Panel/VBoxContainer/HBoxContainer2/TowerName.text = parent.TowerName
 	
 	UpgradeACosts = parent.UpgradeAPrices
 	UpgradeBCosts = parent.UpgradeBPrices
@@ -46,7 +47,6 @@ func _process(delta: float) -> void:
 		UpgradeBButton.disabled = false
 	
 	_display_upgrade_pricing()
-	_display_upgrade_stats()
 	_display_active_stats()
 	_display_sell_value()
 
@@ -57,28 +57,6 @@ func _display_active_stats():
 	for stats in parent.stats:
 		if StatValues.has_node(stats):
 			StatValues.get_node(stats).text = str(parent.stats[stats])
-
-func _display_upgrade_stats():
-	var Upgrade_A
-	var Upgrade_B
-	if UpgradeA < MaxAUpgrades:
-		Upgrade_A = parent.UpgradesA[UpgradeA+1]
-		for upgrades in Upgrade_A:
-			PathA.get_node(str(upgrades)).text = str(upgrades) + " " + str(Upgrade_A[upgrades])
-	else:
-		for labels in PathA.get_children():
-			if labels is Label and labels.name != "PathAName":
-				labels.text = ""
-	
-	if UpgradeB < MaxBUpgrades:
-		Upgrade_B = parent.UpgradesB[UpgradeB+1]
-		for upgrades in Upgrade_B:
-			PathB.get_node(str(upgrades)).text = str(upgrades) + " " + str(Upgrade_B[upgrades])
-		
-	else:
-		for labels in PathB.get_children():
-			if labels is Label and labels.name != "PathBName":
-				labels.text = ""
 	
 func _display_upgrade_pricing():
 	#Ritar ut kostnaden för uppgraderingsväg A
@@ -138,6 +116,15 @@ func _on_path_a_upgrade_button_pressed() -> void:
 		_upgrade("A")
 		_update_sell_prices(UpgradeACosts[UpgradeA])
 
+
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and Input.is_action_just_pressed("Left_click"):
+		# Kolla om musen inte är över UpgradePanel
+		if not get_global_rect().has_point(event.position):
+			visible = false
+			parent.hovering_over_tower = false
+			parent._on_mouse_hover_detector_mouse_exited()
+	
 func _on_close_menu_button_pressed() -> void:
 	visible = false
 	parent.TowerOutline.visible = false
@@ -147,7 +134,6 @@ func _on_close_menu_button_pressed() -> void:
 func _on_sell_tower_pressed() -> void:
 	Globals.cash += parent.sell_value
 	parent.queue_free()
-
 
 func _on_change_targeting_pressed() -> void:
 	if current_targeting_option < len(targeting_options)-1:

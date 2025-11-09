@@ -1,18 +1,23 @@
 extends PathFollow2D
 
-@export var speed = 100
+@export var speed: int
 @onready var enemy: Enemy
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	if get_child_count() > 0:
+		enemy = get_child(0)
+	if enemy != null:
+		speed = Globals.enemies_speed[enemy.name]
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	if get_child_count() != 0:
 		progress += speed * delta
+		
+		
 
 
 

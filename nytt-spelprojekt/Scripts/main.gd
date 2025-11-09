@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var current_level = $LevelPlaceHolder
 @onready var LevelSelector: MenuButton = $LevelSelector
-@onready var MoneyLabel: Label = $HUD/MoneyLabel
+@onready var MoneyLabel: Label = $HUD/Panel/Numbers/MoneyLabel
 
 var max_wave = 100
 
@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 	MoneyLabel.text = "Money: $" + str(int(display_cash))
 
 func _send_wave(enemies: Dictionary) -> void:
-	$HUD/WaveLabel.text = "Wave: " + str(Globals.current_wave) + "/" + str(max_wave)
+	$HUD/Panel/Numbers/WaveLabel.text = "Wave: " + str(Globals.current_wave) + "/" + str(max_wave)
 	for enemy in enemies:
 		
 		#Kollar om fienden existerar
