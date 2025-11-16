@@ -1,6 +1,6 @@
 extends Control
 
-
+#Referenser till intressanta noder
 @onready var UpgradeADisplayContainer: HBoxContainer = $Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay
 @onready var UpgradeBDisplayContainer: HBoxContainer = $Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay
 @onready var UpgradeAButton: Button = $Panel/VBoxContainer/UpgradePaths/PathA/PathAUpgradeButton
@@ -11,7 +11,7 @@ extends Control
 @onready var SellButton: Button = $Panel/VBoxContainer/HBoxContainer/SellTower
 @onready var ChangeTargetingButton: Button = $Panel/VBoxContainer/HBoxContainer/ChangeTargeting
 
-var parent
+var parent: Node2D #Referens till parent: tornet
 
 var targeting_options = ["First","Last","Strongest","Weakest","Closest","Furthest"]
 var current_targeting_option = 0
@@ -33,7 +33,6 @@ func _ready() -> void:
 	
 	UpgradeACosts = parent.UpgradeAPrices
 	UpgradeBCosts = parent.UpgradeBPrices
-	
 
 func _process(delta: float) -> void:
 	#Om man inte har råd eller inte kan upgradera så stängs knapparna av
@@ -50,6 +49,14 @@ func _process(delta: float) -> void:
 	_display_active_stats()
 	_display_sell_value()
 
+func _unhandled_input(event: InputEvent) -> void:
+	if visible and Input.is_action_just_pressed("Left_click"):
+		# Kolla om musen inte är över UpgradePanel
+		if not get_global_rect().has_point(event.position):
+			visible = false
+			parent.hovering_over_tower = false
+			parent._on_mouse_hover_detector_mouse_exited()
+
 func _display_sell_value():
 	SellButton.text = "Sell: $" + str(parent.sell_value)
 
@@ -57,7 +64,7 @@ func _display_active_stats():
 	for stats in parent.stats:
 		if StatValues.has_node(stats):
 			StatValues.get_node(stats).text = str(parent.stats[stats])
-	
+
 func _display_upgrade_pricing():
 	#Ritar ut kostnaden för uppgraderingsväg A
 	if UpgradeA == MaxAUpgrades:
@@ -86,7 +93,7 @@ func _upgrade(AorB):
 	for upgrades in Upgrade:
 			parent.stats[upgrades] += Upgrade[upgrades]
 	parent._update_stats()
-	
+
 func _update_sell_prices(upgrade_cost):
 	parent.total_cash_spent += upgrade_cost
 	parent.sell_value = floor(parent.total_cash_spent * 0.7)
@@ -102,7 +109,7 @@ func _on_path_b_upgrade_button_pressed() -> void:
 
 		_upgrade("B")
 		_update_sell_prices(UpgradeBCosts[UpgradeB])
-		
+
 func _on_path_a_upgrade_button_pressed() -> void:
 	if UpgradeA < MaxAUpgrades and UpgradeACosts[UpgradeA+1] <= Globals.cash:
 		
@@ -116,20 +123,10 @@ func _on_path_a_upgrade_button_pressed() -> void:
 		_upgrade("A")
 		_update_sell_prices(UpgradeACosts[UpgradeA])
 
-
-func _unhandled_input(event: InputEvent) -> void:
-	if visible and Input.is_action_just_pressed("Left_click"):
-		# Kolla om musen inte är över UpgradePanel
-		if not get_global_rect().has_point(event.position):
-			visible = false
-			parent.hovering_over_tower = false
-			parent._on_mouse_hover_detector_mouse_exited()
-	
 func _on_close_menu_button_pressed() -> void:
 	visible = false
 	parent.TowerOutline.visible = false
 	parent.hovering_over_tower = false
-
 
 func _on_sell_tower_pressed() -> void:
 	Globals.cash += parent.sell_value

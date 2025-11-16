@@ -1,31 +1,270 @@
-[gd_scene load_steps=4 format=3 uid="uid://tbpoiyn0mbo1"]
+[gd_scene load_steps=31 format=3 uid="uid://tbpoiyn0mbo1"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_fip6x"]
 [ext_resource type="PackedScene" uid="uid://cwhs2ydv1qcji" path="res://Scenes/tower_placer.tscn" id="2_jo2xf"]
+[ext_resource type="Texture2D" uid="uid://bvap3sergftsn" path="res://icon.svg" id="2_l7kl1"]
+[ext_resource type="Texture2D" uid="uid://dfyhvur3oujdf" path="res://Fantasy RPG (Toony) 32x32.png" id="3_baln0"]
+
+[sub_resource type="Animation" id="Animation_5ksp3"]
+resource_name = "PlayTransition"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../ChooseMap:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1920, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../ChooseMap:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+
+[sub_resource type="Animation" id="Animation_qhbpl"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.0005, 0, 0.0005, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-1080, -0.0005, 0, 0.0005, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../ChooseMap:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1920, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../ChooseMap:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_btpyr"]
+resource_name = "ShopTransition"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-1080, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vixfu"]
+_data = {
+"PlayTransition": SubResource("Animation_5ksp3"),
+"RESET": SubResource("Animation_qhbpl"),
+"ShopTransition": SubResource("Animation_btpyr")
+}
 
 [sub_resource type="LabelSettings" id="LabelSettings_r0vqw"]
 font_size = 50
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bsro3"]
+bg_color = Color(0.698039, 0.556863, 0.168627, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_color = Color(1, 1, 1, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3lyjj"]
+bg_color = Color(0.401158, 0.315411, 0.0790616, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_color = Color(1, 1, 1, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c5kku"]
+bg_color = Color(0.698039, 0.556863, 0.168627, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_color = Color(1, 1, 1, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyb4v"]
+bg_color = Color(0.549684, 1.40782e-06, 4.33177e-07, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_color = Color(1, 1, 1, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1hd12"]
+bg_color = Color(0.358988, 8.66354e-07, 9.62615e-08, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_color = Color(1, 1, 1, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_isgxx"]
+bg_color = Color(0.54902, 0, 0, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_color = Color(1, 1, 1, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8w52g"]
+bg_color = Color(1.08294e-07, 0.340032, 0.2176, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_color = Color(1, 1, 1, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arv6x"]
+bg_color = Color(8.60337e-07, 0.228025, 0.140306, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_color = Color(1, 1, 1, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfey8"]
+bg_color = Color(0, 0.341176, 0.215686, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_color = Color(1, 1, 1, 0.6)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ah3v"]
+corner_radius_bottom_right = 50
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v7vbr"]
+corner_radius_bottom_left = 50
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6vpbo"]
+atlas = ExtResource("3_baln0")
+region = Rect2(96, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w65k6"]
+atlas = ExtResource("3_baln0")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eoyyl"]
+atlas = ExtResource("3_baln0")
+region = Rect2(192, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5sro"]
+atlas = ExtResource("3_baln0")
+region = Rect2(288, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mnh8a"]
+atlas = ExtResource("3_baln0")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_il5i1"]
+atlas = ExtResource("3_baln0")
+region = Rect2(0, 128, 32, 32)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mtygj"]
+load_path = "res://.godot/imported/Fantasy RPG (Toony) 32x32.png-085a3b1a2daebfeebf1f8f8898fde54d.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ty0f0"]
+atlas = SubResource("CompressedTexture2D_mtygj")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vw8tu"]
+load_path = "res://.godot/imported/Fantasy RPG (Toony) 32x32.png-085a3b1a2daebfeebf1f8f8898fde54d.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_36oki"]
+atlas = SubResource("CompressedTexture2D_vw8tu")
+region = Rect2(288, 0, 32, 32)
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_fip6x")
 
-[node name="LevelSelector" type="MenuButton" parent="."]
-offset_left = 233.0
-offset_top = 158.0
-offset_right = 580.0
-offset_bottom = 295.0
-text = "Level Selector
-"
-item_count = 1
-popup/item_0/text = "forest_level"
-
-[node name="PlacedTowers" type="Node2D" parent="."]
-
-[node name="LevelPlaceHolder" type="Node2D" parent="."]
-
-[node name="TowerPlacer" parent="." instance=ExtResource("2_jo2xf")]
-
-[node name="TowerProjectiles" type="Node2D" parent="."]
+[node name="MenuTransitions" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Shop")
+libraries = {
+"": SubResource("AnimationLibrary_vixfu")
+}
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
@@ -72,3 +311,1123 @@ layout_mode = 2
 text = "Money: $xxx"
 label_settings = SubResource("LabelSettings_r0vqw")
 horizontal_alignment = 1
+
+[node name="MainMenu" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_l7kl1")
+
+[node name="Panel" type="Panel" parent="MainMenu"]
+layout_mode = 2
+offset_top = 880.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Buttons" type="HBoxContainer" parent="MainMenu/Panel"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 25.0
+offset_right = 1820.0
+offset_bottom = 175.0
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="Inventory" type="Button" parent="MainMenu/Panel/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_bsro3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3lyjj")
+theme_override_styles/normal = SubResource("StyleBoxFlat_c5kku")
+text = "INVENTORY
+"
+
+[node name="Play" type="Button" parent="MainMenu/Panel/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_jyb4v")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1hd12")
+theme_override_styles/normal = SubResource("StyleBoxFlat_isgxx")
+text = "PLAY"
+
+[node name="Shop" type="Button" parent="MainMenu/Panel/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = SubResource("StyleBoxFlat_8w52g")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_arv6x")
+theme_override_styles/normal = SubResource("StyleBoxFlat_nfey8")
+text = "SHOP"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainMenu"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 131.0
+theme_override_constants/separation = 1200
+
+[node name="PlayerStats" type="Panel" parent="MainMenu/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_6ah3v")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/HBoxContainer/PlayerStats"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 11.0
+offset_right = 333.0
+offset_bottom = 250.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainMenu/HBoxContainer/PlayerStats/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 11
+
+[node name="Level" type="Label" parent="MainMenu/HBoxContainer/PlayerStats/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "100
+"
+
+[node name="PlayerPrestige" type="TextureRect" parent="MainMenu/HBoxContainer/PlayerStats/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("2_l7kl1")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PlayerUsername" type="Label" parent="MainMenu/HBoxContainer/PlayerStats/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "PlayerUsername"
+
+[node name="ProgressBar" type="ProgressBar" parent="MainMenu/HBoxContainer/PlayerStats/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+show_percentage = false
+
+[node name="Label" type="Label" parent="MainMenu/HBoxContainer/PlayerStats/VBoxContainer/ProgressBar"]
+layout_mode = 0
+offset_top = -1.0
+offset_right = 317.0
+offset_bottom = 22.0
+text = "X/Y"
+horizontal_alignment = 1
+
+[node name="Panel2" type="Panel" parent="MainMenu/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_v7vbr")
+
+[node name="VBoxContainer" type="HBoxContainer" parent="MainMenu/HBoxContainer/Panel2"]
+layout_mode = 0
+offset_right = 360.0
+offset_bottom = 131.0
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainMenu/HBoxContainer/Panel2/VBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="Coins" type="TextureRect" parent="MainMenu/HBoxContainer/Panel2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("2_l7kl1")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MainMenu/HBoxContainer/Panel2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "XXXXX"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MainMenu/HBoxContainer/Panel2/VBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="Diamonds" type="TextureRect" parent="MainMenu/HBoxContainer/Panel2/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("2_l7kl1")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MainMenu/HBoxContainer/Panel2/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "XXXXX"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Settings" type="Button" parent="MainMenu"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 155.0
+offset_right = 121.0
+offset_bottom = 255.0
+icon = ExtResource("2_l7kl1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ChooseMap" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1920.0
+offset_right = 3840.0
+offset_bottom = 1080.0
+texture = ExtResource("2_l7kl1")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ChooseMap"]
+custom_minimum_size = Vector2(1720, 880)
+layout_mode = 0
+offset_left = 100.0
+offset_top = 100.0
+offset_right = 1820.0
+offset_bottom = 980.0
+horizontal_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ChooseMap/ScrollContainer"]
+custom_minimum_size = Vector2(1720, 880)
+layout_mode = 2
+theme_override_constants/separation = 75
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ChooseMap/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 75
+
+[node name="Button" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+icon = ExtResource("2_l7kl1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button2" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+icon = ExtResource("2_l7kl1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button3" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+icon = ExtResource("2_l7kl1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ChooseMap/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 75
+
+[node name="Button" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+icon = ExtResource("2_l7kl1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button2" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+icon = ExtResource("2_l7kl1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button3" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+icon = ExtResource("2_l7kl1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="ChooseMap/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 75
+
+[node name="Button" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+icon = ExtResource("2_l7kl1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button2" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+icon = ExtResource("2_l7kl1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button3" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+icon = ExtResource("2_l7kl1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Shop" type="TextureRect" parent="."]
+layout_mode = 0
+offset_top = -1080.0
+offset_right = 1920.0
+texture = ExtResource("2_l7kl1")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Shop"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 164.0
+offset_right = 1820.0
+offset_bottom = 964.0
+vertical_scroll_mode = 0
+
+[node name="Chests" type="HBoxContainer" parent="Shop/ScrollContainer"]
+custom_minimum_size = Vector2(880, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="Chest1" type="Panel" parent="Shop/ScrollContainer/Chests"]
+custom_minimum_size = Vector2(500, 800)
+layout_mode = 2
+
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest1"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+offset_left = 100.0
+offset_top = 410.0
+offset_right = 400.0
+offset_bottom = 710.0
+focus_mode = 0
+icon = SubResource("AtlasTexture_6vpbo")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1"]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 442.0
+
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0.6, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0.843, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Chest2" type="Panel" parent="Shop/ScrollContainer/Chests"]
+custom_minimum_size = Vector2(500, 800)
+layout_mode = 2
+
+[node name="Chest2Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest2"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+offset_left = 100.0
+offset_top = 410.0
+offset_right = 400.0
+offset_bottom = 710.0
+focus_mode = 0
+icon = SubResource("AtlasTexture_w65k6")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2"]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 442.0
+
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0.6, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0.843, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Chest3" type="Panel" parent="Shop/ScrollContainer/Chests"]
+custom_minimum_size = Vector2(500, 800)
+layout_mode = 2
+
+[node name="Chest3Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest3"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+offset_left = 100.0
+offset_top = 410.0
+offset_right = 400.0
+offset_bottom = 710.0
+focus_mode = 0
+icon = SubResource("AtlasTexture_eoyyl")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3"]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 442.0
+
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0.6, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0.843, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Chest4" type="Panel" parent="Shop/ScrollContainer/Chests"]
+custom_minimum_size = Vector2(500, 800)
+layout_mode = 2
+
+[node name="Chest4Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest4"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+offset_left = 100.0
+offset_top = 410.0
+offset_right = 400.0
+offset_bottom = 710.0
+focus_mode = 0
+icon = SubResource("AtlasTexture_c5sro")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4"]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 442.0
+
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0.6, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0.843, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Chest5" type="Panel" parent="Shop/ScrollContainer/Chests"]
+custom_minimum_size = Vector2(500, 800)
+layout_mode = 2
+
+[node name="Chest5Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest5"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+offset_left = 100.0
+offset_top = 410.0
+offset_right = 400.0
+offset_bottom = 710.0
+focus_mode = 0
+icon = SubResource("AtlasTexture_mnh8a")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5"]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 442.0
+
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0.6, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0.843, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Chest6" type="Panel" parent="Shop/ScrollContainer/Chests"]
+custom_minimum_size = Vector2(500, 800)
+layout_mode = 2
+
+[node name="Chest6Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest6"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+offset_left = 100.0
+offset_top = 410.0
+offset_right = 400.0
+offset_bottom = 710.0
+focus_mode = 0
+icon = SubResource("AtlasTexture_il5i1")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6"]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 442.0
+
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0.6, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0.843, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Chest7" type="Panel" parent="Shop/ScrollContainer/Chests"]
+custom_minimum_size = Vector2(500, 800)
+layout_mode = 2
+
+[node name="Chest7Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest7"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+offset_left = 100.0
+offset_top = 410.0
+offset_right = 400.0
+offset_bottom = 710.0
+focus_mode = 0
+icon = SubResource("AtlasTexture_ty0f0")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7"]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 442.0
+
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0.6, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0.843, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Chest8" type="Panel" parent="Shop/ScrollContainer/Chests"]
+custom_minimum_size = Vector2(500, 800)
+layout_mode = 2
+
+[node name="Chest8Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest8"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+offset_left = 100.0
+offset_top = 410.0
+offset_right = 400.0
+offset_bottom = 710.0
+focus_mode = 0
+icon = SubResource("AtlasTexture_36oki")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8"]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 442.0
+
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Blue"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(0.6, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Purple"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 1, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Pink"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Red"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+color = Color(1, 0.843, 0, 1)
+
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Gold"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "xx.x%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelSelector" type="MenuButton" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 257.0
+offset_top = 359.0
+offset_right = 604.0
+offset_bottom = 496.0
+text = "Level Selector
+"
+item_count = 1
+popup/item_0/text = "forest_level"
+
+[node name="PlacedTowers" type="Node2D" parent="."]
+
+[node name="LevelPlaceHolder" type="Node2D" parent="."]
+
+[node name="TowerPlacer" parent="." instance=ExtResource("2_jo2xf")]
+visible = false
+position = Vector2(97, -224)
+
+[node name="TowerProjectiles" type="Node2D" parent="."]
+
+[connection signal="pressed" from="MainMenu/Panel/Buttons/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MainMenu/Panel/Buttons/Shop" to="." method="_on_shop_pressed"]

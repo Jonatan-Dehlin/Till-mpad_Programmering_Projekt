@@ -1,8 +1,19 @@
-extends Node2D
+extends Control
 
+@onready var MainMenu = $MainMenu
+@onready var Chests = $Shop/ScrollContainer/Chests
+@onready var TestChest = $Shop/ScrollContainer/Chests/Chest1/Chest1Button
+@onready var InventoryButton: Button = $MainMenu/Panel/Buttons/Inventory
+@onready var PlayButton: Button = $MainMenu/Panel/Buttons/Play
+@onready var ShopButton: Button = $MainMenu/Panel/Buttons/Shop
+@onready var transitions: AnimationPlayer = $MenuTransitions
+@onready var Shop = $Shop
 @onready var current_level = $LevelPlaceHolder
 @onready var LevelSelector: MenuButton = $LevelSelector
 @onready var MoneyLabel: Label = $HUD/Panel/Numbers/MoneyLabel
+
+var Gamble = preload("res://Scenes/gamble.tscn").instantiate()
+var GambleMenu: Control
 
 var max_wave = 100
 
@@ -18,7 +29,36 @@ func _ready() -> void:
 
 	for level in level_directory.get_files():
 		levels.append(level)
-	print(levels)
+	var NewGamblePanel = Gamble.duplicate()
+	add_child(NewGamblePanel)
+	NewGamblePanel._ready()
+	GambleMenu = NewGamblePanel
+	
+	#Koppla kistknapparna
+	var ID = 0
+	for chest in Chests.get_children():
+		var button: Button = chest.get_child(0)
+		ID += 1 #Lista ut chest ID
+		button.pressed.connect(_open_chest.bind(ID,false))
+
+func _open_chest(chestID, reset: bool):
+	if reset == false:
+		var chest: Button = Chests.get_node("Chest" + str(chestID)).get_child(0)
+		for i in range(3):
+			
+			chest.icon.region.position.y += 32
+			await get_tree().create_timer(0.1).timeout
+		
+		if not has_node("Gamble"):
+			var NewGamblePanel = Gamble.duplicate()
+			add_child(NewGamblePanel)
+			NewGamblePanel._ready()
+			GambleMenu = NewGamblePanel
+		GambleMenu.visible = true
+		GambleMenu.gamble(chestID)
+	else:
+		var chest: Button = Chests.get_node("Chest" + str(chestID)).get_child(0)
+		chest.icon.region.position.y -= 96
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Space"):
@@ -71,7 +111,7 @@ func _send_wave(enemies: Dictionary) -> void:
 			get_node("LevelSelector").visible = false
 		else:
 			print((enemy+".tscn") + " is not found in res://Scenes/Enemies/")
-	
+
 func _wave_manager(wave) -> void:
 	Globals.current_wave += 1
 	if Globals.current_wave % 2 == 0:
@@ -82,11 +122,18 @@ func _wave_manager(wave) -> void:
 		Globals.enemies["LeafBug"] = 2
 	Globals._apply_health_multiplier(wave)
 	_send_wave(Globals.enemies)
-		
+
 func _on_menu_item_pressed(id: int) -> void:
 	var map = load("res://Scenes/Levels/"+levels[id])
 	map = map.instantiate()
 	current_level.replace_by(map)
 	current_level = map
 	_wave_manager(Globals.current_wave)
-	
+
+################# SIGNALNS #################
+func _on_shop_pressed() -> void:
+	transitions.play("ShopTransition")
+
+
+func _on_play_pressed() -> void:
+	transitions.play("PlayTransition")

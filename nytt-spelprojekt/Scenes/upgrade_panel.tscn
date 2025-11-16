@@ -260,7 +260,6 @@ text = "First"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 visible = false
 position = Vector2(170.33, 306.419)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_65vv1")
 disabled = true
 
