@@ -1,0 +1,13 @@
+#################### PLAYER DATA ####################
+NAME: Jonte
+STATS:
+	LEVEL: 22
+	EXP: 12300
+	COINS: 200
+	DIAMONDS: 10
+
+#################### INVENTORY ####################
+TOWERS:
+	wizard_tower, LVL: 1, TRAIT: none
+
+

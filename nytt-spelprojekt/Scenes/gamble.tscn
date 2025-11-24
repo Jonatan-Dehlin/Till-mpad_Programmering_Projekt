@@ -27,6 +27,9 @@ layout_mode = 0
 offset_top = 25.0
 offset_right = 1920.0
 offset_bottom = 825.0
+mouse_filter = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/ScrollContainer"]
 layout_mode = 2

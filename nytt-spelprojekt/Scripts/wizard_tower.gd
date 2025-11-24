@@ -49,10 +49,7 @@ var UpgradeBPrices = {1:50,2:100,3:1400,4:5900,5:11000}
 
 
 func _ready() -> void: #Används för att ställa in stats, när tornet placeras och när det upgraderas
-	if global_position.x >= get_window().size.x / 2:
-		UpgradePanel.global_position = Vector2(0,0)
-	else:
-		UpgradePanel.global_position = Vector2(get_window().size.x-UpgradePanel.get_node("Panel").size.x*UpgradePanel.scale.x,0)
+	z_index = int(position.y)
 	_update_stats()
 
 func _update_stats():
@@ -68,8 +65,12 @@ func _physics_process(_delta: float) -> void:
 		anim.play("Tower_Idle")
 	
 	if Input.is_action_just_pressed("Left_click") and hovering_over_tower:
-		UpgradePanel.visible = true	
-		print("öppnade upgradepanelen")
+		UpgradePanel.visible = true
+		if global_position.x >= get_viewport().get_visible_rect().size.x / 2:
+			UpgradePanel.global_position = Vector2(0,0)
+		else:
+			UpgradePanel.global_position = Vector2(get_viewport().get_visible_rect().size.x-UpgradePanel.get_node("Panel").size.x*UpgradePanel.scale.x,0)
+		print("Öppnade Upgradepanel på position: " + str(UpgradePanel.global_position))
 	
 	var overlapping_enemies = $Range.get_overlapping_bodies()
 	enemies_in_range = overlapping_enemies.filter(func(b): return b is Enemy)
@@ -139,8 +140,9 @@ func _draw():
 func _on_mouse_hover_detector_mouse_entered() -> void:
 	TowerOutline.visible = true
 	hovering_over_tower = true
+	
 
 func _on_mouse_hover_detector_mouse_exited() -> void:
 	if not UpgradePanel.visible:
 		TowerOutline.visible = false
-		hovering_over_tower = false
+	hovering_over_tower = false

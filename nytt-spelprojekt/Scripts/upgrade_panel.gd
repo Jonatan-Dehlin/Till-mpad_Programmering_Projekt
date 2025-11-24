@@ -52,7 +52,7 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if visible and Input.is_action_just_pressed("Left_click"):
 		# Kolla om musen inte är över UpgradePanel
-		if not get_global_rect().has_point(event.position):
+		if not get_global_rect().has_point(event.position) and not parent.hovering_over_tower:
 			visible = false
 			parent.hovering_over_tower = false
 			parent._on_mouse_hover_detector_mouse_exited()

@@ -9,15 +9,6 @@ script = ExtResource("1_pg7mh")
 
 [node name="Area2D" type="Area2D" parent="."]
 
-[node name="TowerSelector" type="MenuButton" parent="."]
-offset_left = 680.0
-offset_top = 618.0
-offset_right = 839.0
-offset_bottom = 686.0
-text = "Tower Selector"
-item_count = 1
-popup/item_0/text = "wizard_tower"
-
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

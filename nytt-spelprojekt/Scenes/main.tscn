@@ -1,9 +1,10 @@
-[gd_scene load_steps=31 format=3 uid="uid://tbpoiyn0mbo1"]
+[gd_scene load_steps=41 format=3 uid="uid://tbpoiyn0mbo1"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_fip6x"]
 [ext_resource type="PackedScene" uid="uid://cwhs2ydv1qcji" path="res://Scenes/tower_placer.tscn" id="2_jo2xf"]
 [ext_resource type="Texture2D" uid="uid://bvap3sergftsn" path="res://icon.svg" id="2_l7kl1"]
 [ext_resource type="Texture2D" uid="uid://dfyhvur3oujdf" path="res://Fantasy RPG (Toony) 32x32.png" id="3_baln0"]
+[ext_resource type="Texture2D" uid="uid://c0mv7l0xunohp" path="res://Skärmavbild 2025-11-18 kl. 15.15.56.png" id="3_wdan3"]
 
 [sub_resource type="Animation" id="Animation_5ksp3"]
 resource_name = "PlayTransition"
@@ -104,12 +105,84 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5)
 }
 
+[sub_resource type="Animation" id="Animation_sl3wv"]
+resource_name = "ResetShop"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -1080, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+
+[sub_resource type="Animation" id="Animation_87gxu"]
+resource_name = "ResetPlay"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../ChooseMap:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1920, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../ChooseMap:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vixfu"]
 _data = {
 "PlayTransition": SubResource("Animation_5ksp3"),
 "RESET": SubResource("Animation_qhbpl"),
+"ResetPlay": SubResource("Animation_87gxu"),
+"ResetShop": SubResource("Animation_sl3wv"),
 "ShopTransition": SubResource("Animation_btpyr")
 }
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_507ct"]
+region = Rect2(0, 0, 64, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x2mkn"]
+region = Rect2(0, 0, 64, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kp3kk"]
+region = Rect2(0, 0, 64, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2h21v"]
+region = Rect2(0, 0, 64, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p0xgb"]
+region = Rect2(0, 0, 64, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7i8pr"]
+region = Rect2(0, 0, 64, 0)
 
 [sub_resource type="LabelSettings" id="LabelSettings_r0vqw"]
 font_size = 50
@@ -217,6 +290,9 @@ corner_detail = 20
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v7vbr"]
 corner_radius_bottom_left = 50
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fneho"]
+region = Rect2(0, 0, 64, 0)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_6vpbo"]
 atlas = ExtResource("3_baln0")
 region = Rect2(96, 128, 32, 32)
@@ -265,6 +341,78 @@ root_node = NodePath("../Shop")
 libraries = {
 "": SubResource("AnimationLibrary_vixfu")
 }
+
+[node name="TowerHotbar" type="Control" parent="."]
+anchors_preset = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TowerHotbar"]
+custom_minimum_size = Vector2(1920, 50)
+layout_mode = 0
+offset_top = 750.0
+offset_right = 1920.0
+offset_bottom = 931.0
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="Tower1" type="Button" parent="TowerHotbar/HBoxContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+focus_mode = 0
+text = "$xxxxx"
+icon = SubResource("AtlasTexture_507ct")
+icon_alignment = 1
+vertical_icon_alignment = 0
+metadata/Index = 0
+
+[node name="Tower2" type="Button" parent="TowerHotbar/HBoxContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+focus_mode = 0
+text = "$xxxxx"
+icon = SubResource("AtlasTexture_x2mkn")
+icon_alignment = 1
+vertical_icon_alignment = 0
+metadata/Index = 1
+
+[node name="Tower3" type="Button" parent="TowerHotbar/HBoxContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+focus_mode = 0
+text = "$xxxxx"
+icon = SubResource("AtlasTexture_kp3kk")
+icon_alignment = 1
+vertical_icon_alignment = 0
+metadata/Index = 2
+
+[node name="Tower4" type="Button" parent="TowerHotbar/HBoxContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+focus_mode = 0
+text = "$xxxxx"
+icon = SubResource("AtlasTexture_2h21v")
+icon_alignment = 1
+vertical_icon_alignment = 0
+metadata/Index = 3
+
+[node name="Tower5" type="Button" parent="TowerHotbar/HBoxContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+focus_mode = 0
+text = "$xxxxx"
+icon = SubResource("AtlasTexture_p0xgb")
+icon_alignment = 1
+vertical_icon_alignment = 0
+metadata/Index = 4
+
+[node name="Tower6" type="Button" parent="TowerHotbar/HBoxContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+focus_mode = 0
+text = "$xxxxx"
+icon = SubResource("AtlasTexture_7i8pr")
+icon_alignment = 1
+vertical_icon_alignment = 0
+metadata/Index = 5
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
@@ -438,7 +586,7 @@ texture = ExtResource("2_l7kl1")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="MainMenu/HBoxContainer/Panel2/VBoxContainer/HBoxContainer"]
+[node name="CoinLabel" type="Label" parent="MainMenu/HBoxContainer/Panel2/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
@@ -457,7 +605,7 @@ texture = ExtResource("2_l7kl1")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="MainMenu/HBoxContainer/Panel2/VBoxContainer/HBoxContainer2"]
+[node name="DiamondLabel" type="Label" parent="MainMenu/HBoxContainer/Panel2/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
@@ -497,79 +645,293 @@ layout_mode = 2
 theme_override_constants/separation = 75
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ChooseMap/ScrollContainer/HBoxContainer"]
+[node name="MapContainer1" type="VBoxContainer" parent="ChooseMap/ScrollContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 75
 
-[node name="Button" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer"]
+[node name="forest_level" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer1"]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
+focus_mode = 0
+icon = ExtResource("3_wdan3")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button2" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer1"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+focus_mode = 0
 icon = ExtResource("2_l7kl1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button2" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer"]
+[node name="Button3" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer1"]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
+focus_mode = 0
 icon = ExtResource("2_l7kl1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button3" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(500, 500)
-layout_mode = 2
-icon = ExtResource("2_l7kl1")
-icon_alignment = 1
-expand_icon = true
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="ChooseMap/ScrollContainer/HBoxContainer"]
+[node name="MapContainer2" type="VBoxContainer" parent="ChooseMap/ScrollContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 75
 
-[node name="Button" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer2"]
+[node name="Button" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer2"]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
+focus_mode = 0
 icon = ExtResource("2_l7kl1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button2" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer2"]
+[node name="Button2" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer2"]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
+focus_mode = 0
 icon = ExtResource("2_l7kl1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button3" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer2"]
+[node name="Button3" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer2"]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
+focus_mode = 0
 icon = ExtResource("2_l7kl1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="ChooseMap/ScrollContainer/HBoxContainer"]
+[node name="MapContainer3" type="VBoxContainer" parent="ChooseMap/ScrollContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 75
 
-[node name="Button" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer3"]
+[node name="Button" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer3"]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
+focus_mode = 0
 icon = ExtResource("2_l7kl1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button2" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer3"]
+[node name="Button2" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer3"]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
+focus_mode = 0
 icon = ExtResource("2_l7kl1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button3" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/VBoxContainer3"]
+[node name="Button3" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer3"]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
+focus_mode = 0
 icon = ExtResource("2_l7kl1")
 icon_alignment = 1
+expand_icon = true
+
+[node name="ReturnToMainMenuFromPlay" type="Button" parent="ChooseMap"]
+layout_mode = 0
+offset_left = 208.0
+offset_top = 992.0
+offset_right = 369.0
+offset_bottom = 1047.0
+text = "Back"
+
+[node name="Inventory" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_l7kl1")
+
+[node name="InventoryPlaceholder" type="Button" parent="Inventory"]
+visible = false
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+offset_left = 685.0
+offset_top = 100.0
+offset_right = 935.0
+offset_bottom = 500.0
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Inventory"]
+custom_minimum_size = Vector2(1720, 880)
+layout_mode = 0
+offset_left = 100.0
+offset_top = 100.0
+offset_right = 1820.0
+offset_bottom = 980.0
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="Inventory/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 45
+theme_override_constants/v_separation = 45
+columns = 6
+
+[node name="InventoryPlaceholder" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder4" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder5" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder6" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder7" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder2" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder3" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder8" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder9" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder10" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder11" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder12" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder13" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder14" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder15" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder16" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder17" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="InventoryPlaceholder18" type="Button" parent="Inventory/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fneho")
+icon_alignment = 1
+vertical_icon_alignment = 0
 expand_icon = true
 
 [node name="Shop" type="TextureRect" parent="."]
@@ -1407,27 +1769,24 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LevelSelector" type="MenuButton" parent="."]
-visible = false
+[node name="ReturnToMainMenuButton" type="Button" parent="Shop"]
 layout_mode = 0
-offset_left = 257.0
-offset_top = 359.0
-offset_right = 604.0
-offset_bottom = 496.0
-text = "Level Selector
-"
-item_count = 1
-popup/item_0/text = "forest_level"
+offset_left = 217.0
+offset_top = 975.0
+offset_right = 584.0
+offset_bottom = 1044.0
+text = "BACK"
+
+[node name="TowerPlacer" parent="." instance=ExtResource("2_jo2xf")]
+position = Vector2(97, -224)
 
 [node name="PlacedTowers" type="Node2D" parent="."]
 
 [node name="LevelPlaceHolder" type="Node2D" parent="."]
 
-[node name="TowerPlacer" parent="." instance=ExtResource("2_jo2xf")]
-visible = false
-position = Vector2(97, -224)
-
 [node name="TowerProjectiles" type="Node2D" parent="."]
 
 [connection signal="pressed" from="MainMenu/Panel/Buttons/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MainMenu/Panel/Buttons/Shop" to="." method="_on_shop_pressed"]
+[connection signal="pressed" from="ChooseMap/ReturnToMainMenuFromPlay" to="." method="_on_return_to_main_menu_from_play_pressed"]
+[connection signal="pressed" from="Shop/ReturnToMainMenuButton" to="." method="_on_return_to_main_menu_button_pressed"]

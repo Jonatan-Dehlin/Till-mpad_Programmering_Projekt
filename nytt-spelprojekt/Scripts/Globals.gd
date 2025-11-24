@@ -2,9 +2,7 @@ extends Node
 
 var current_wave = 0
 
-var coins = 0 #Spelarens globala valuta som kan användas utanför banor
-
-var cash = 100
+var cash = 100000
 
 ################## ENEMY STATS ###################
 var enemies = {"FireBug":0,"LeafBug":0,"MagmaCrab":0,"Scorpion":0}
