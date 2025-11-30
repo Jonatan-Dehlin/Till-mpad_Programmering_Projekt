@@ -10,10 +10,10 @@ var weight = [["Blue",null],["Purple",null],["Pink",null],["Red",null],["Gold",n
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for chests in get_parent().get_node("Shop").get_child(0).get_child(0).get_children():
-		_modify_drop_rates(int(chests.name.replace("chest","")))
+	for Chests in get_parent().get_node("Shop").get_child(0).get_child(0).get_children():
+		_modify_drop_rates(int(Chests.name.replace("chest","")))
 		var index = 0
-		for colors in chests.get_child(1).get_children():
+		for colors in Chests.get_child(1).get_children():
 			colors.get_child(1).text = "%0.1f%%" % (float(weight[index][1]) / 10)
 			index += 1
 			
@@ -60,8 +60,8 @@ func gamble(ChestID):
 		var t = clamp(elapsed_time / spin_duration, 0.0, 1.0)
 
 		# Ease-out quad: hastigheten avtar mjukt mot noll
-		var ease = 1.0 - (1.0 - t) * (1.0 - t)
-		speed = lerp(start_speed, 0.0, ease)
+		var Ease = 1.0 - (1.0 - t) * (1.0 - t)
+		speed = lerp(start_speed, 0.0, Ease)
 
 		# Uppdatera scroll med delta-time
 		scroll.scroll_horizontal += speed

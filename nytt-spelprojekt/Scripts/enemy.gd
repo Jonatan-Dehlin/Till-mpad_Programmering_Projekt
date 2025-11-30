@@ -10,9 +10,9 @@ class_name Enemy
 var speed: int
 
 func _ready() -> void:
-	current_health = Globals.enemies_health[name]
-	kill_reward = Globals.enemy_base_reward[name]
+	current_health = Globals.enemy_health[name]
+	kill_reward = Globals.enemy_base_reward[name] * Globals.current_health_factor
 	healthbarprogress.max_value = current_health
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	healthbarprogress.value = current_health

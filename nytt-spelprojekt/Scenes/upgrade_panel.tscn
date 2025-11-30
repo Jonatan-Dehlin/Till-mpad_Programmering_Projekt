@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bn5ae4t8xid65"]
+[gd_scene load_steps=8 format=3 uid="uid://bn5ae4t8xid65"]
 
 [ext_resource type="Script" path="res://Scripts/upgrade_panel.gd" id="1_0idd4"]
 [ext_resource type="Texture2D" uid="uid://bvap3sergftsn" path="res://icon.svg" id="1_mk3we"]
+[ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="2_q3l7l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nbe0r"]
 bg_color = Color(0.862745, 0, 0, 1)
@@ -19,44 +20,39 @@ bg_color = Color(0.242059, 0.460932, 0.985935, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_65vv1"]
 size = Vector2(340.66, 613.541)
 
-[node name="UpgradePanel" type="Control"]
-z_index = 100
+[node name="UpgradePanelCanvas" type="CanvasLayer"]
+
+[node name="UpgradePanel" type="Control" parent="."]
+visible = false
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -852.0
-offset_bottom = -457.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = 0.00264582
+anchors_preset = 0
 scale = Vector2(1.4, 1.4)
 script = ExtResource("1_0idd4")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="UpgradePanel"]
 layout_mode = 0
 offset_right = 341.0
 offset_bottom = 465.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UpgradePanel/Panel"]
 layout_mode = 0
 offset_right = 340.0
 offset_bottom = 456.0
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="UpgradePanel/Panel/VBoxContainer"]
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 alignment = 1
 
-[node name="TowerName" type="Label" parent="Panel/VBoxContainer/HBoxContainer2"]
+[node name="TowerName" type="Label" parent="UpgradePanel/Panel/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "TowerName_PlaceHolder"
 horizontal_alignment = 1
 
-[node name="CloseMenuButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer2"]
+[node name="CloseMenuButton" type="Button" parent="UpgradePanel/Panel/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 focus_mode = 0
@@ -65,76 +61,77 @@ text = "X"
 icon_alignment = 1
 expand_icon = true
 
-[node name="TowerStats" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="TowerStats" type="HBoxContainer" parent="UpgradePanel/Panel/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 24
 alignment = 1
 
-[node name="StatNames" type="VBoxContainer" parent="Panel/VBoxContainer/TowerStats"]
+[node name="StatNames" type="VBoxContainer" parent="UpgradePanel/Panel/VBoxContainer/TowerStats"]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 
-[node name="Damage" type="Label" parent="Panel/VBoxContainer/TowerStats/StatNames"]
+[node name="Damage" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatNames"]
 layout_mode = 2
 text = "Damage"
 horizontal_alignment = 1
 
-[node name="Range" type="Label" parent="Panel/VBoxContainer/TowerStats/StatNames"]
+[node name="Range" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatNames"]
 layout_mode = 2
 text = "Range"
 horizontal_alignment = 1
 
-[node name="AttackSpeed" type="Label" parent="Panel/VBoxContainer/TowerStats/StatNames"]
+[node name="AttackSpeed" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatNames"]
 layout_mode = 2
 text = "Attack Speed"
 horizontal_alignment = 1
 
-[node name="DamageDealt" type="Label" parent="Panel/VBoxContainer/TowerStats/StatNames"]
+[node name="DamageDealt" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatNames"]
 layout_mode = 2
 text = "Damage Dealt"
 horizontal_alignment = 1
 
-[node name="StatValues" type="VBoxContainer" parent="Panel/VBoxContainer/TowerStats"]
+[node name="StatValues" type="VBoxContainer" parent="UpgradePanel/Panel/VBoxContainer/TowerStats"]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 
-[node name="damage" type="Label" parent="Panel/VBoxContainer/TowerStats/StatValues"]
+[node name="damage" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatValues"]
 layout_mode = 2
 text = "x"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="range" type="Label" parent="Panel/VBoxContainer/TowerStats/StatValues"]
+[node name="range" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatValues"]
 layout_mode = 2
 text = "x"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="cooldown" type="Label" parent="Panel/VBoxContainer/TowerStats/StatValues"]
+[node name="cooldown" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatValues"]
 layout_mode = 2
 text = "x"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DamageDealtNr" type="Label" parent="Panel/VBoxContainer/TowerStats/StatValues"]
+[node name="DamageDealt" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatValues"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_q3l7l")
 text = "x"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="UpgradePaths" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="UpgradePaths" type="HBoxContainer" parent="UpgradePanel/Panel/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="PathA" type="VBoxContainer" parent="Panel/VBoxContainer/UpgradePaths"]
+[node name="PathA" type="VBoxContainer" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths"]
 layout_mode = 2
 
-[node name="PathAName" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
+[node name="PathAName" type="Label" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA"]
 layout_mode = 2
 text = "UpgradeName"
 horizontal_alignment = 1
 
-[node name="PathAUpgradeButton" type="Button" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
+[node name="PathAUpgradeButton" type="Button" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA"]
 layout_mode = 2
 focus_mode = 0
 text = "$xxxxx"
@@ -142,54 +139,54 @@ icon = ExtResource("1_mk3we")
 icon_alignment = 1
 vertical_icon_alignment = 2
 
-[node name="UpgradeADisplay" type="HBoxContainer" parent="Panel/VBoxContainer/UpgradePaths/PathA"]
+[node name="UpgradeADisplay" type="HBoxContainer" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA"]
 layout_mode = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
+[node name="TextureRect" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
 modulate = Color(0.156675, 0.156675, 0.156675, 1)
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture = ExtResource("1_mk3we")
 expand_mode = 1
 
-[node name="TextureRect2" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
+[node name="TextureRect2" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
 modulate = Color(0.156675, 0.156675, 0.156675, 1)
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture = ExtResource("1_mk3we")
 expand_mode = 1
 
-[node name="TextureRect3" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
+[node name="TextureRect3" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
 modulate = Color(0.156675, 0.156675, 0.156675, 1)
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture = ExtResource("1_mk3we")
 expand_mode = 1
 
-[node name="TextureRect4" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
+[node name="TextureRect4" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
 modulate = Color(0.156675, 0.156675, 0.156675, 1)
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture = ExtResource("1_mk3we")
 expand_mode = 1
 
-[node name="TextureRect5" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
+[node name="TextureRect5" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
 modulate = Color(0.156675, 0.156675, 0.156675, 1)
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture = ExtResource("1_mk3we")
 expand_mode = 1
 
-[node name="PathB" type="VBoxContainer" parent="Panel/VBoxContainer/UpgradePaths"]
+[node name="PathB" type="VBoxContainer" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths"]
 layout_mode = 2
 
-[node name="PathBName" type="Label" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
+[node name="PathBName" type="Label" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB"]
 layout_mode = 2
 text = "UpgradeName"
 horizontal_alignment = 1
 
-[node name="PathBUpgradeButton" type="Button" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
+[node name="PathBUpgradeButton" type="Button" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB"]
 layout_mode = 2
 focus_mode = 0
 text = "$xxxxx"
@@ -197,74 +194,74 @@ icon = ExtResource("1_mk3we")
 icon_alignment = 1
 vertical_icon_alignment = 2
 
-[node name="UpgradeBDisplay" type="HBoxContainer" parent="Panel/VBoxContainer/UpgradePaths/PathB"]
+[node name="UpgradeBDisplay" type="HBoxContainer" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB"]
 layout_mode = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
+[node name="TextureRect" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
 modulate = Color(0.156675, 0.156675, 0.156675, 1)
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture = ExtResource("1_mk3we")
 expand_mode = 1
 
-[node name="TextureRect2" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
+[node name="TextureRect2" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
 modulate = Color(0.158472, 0.158472, 0.158472, 1)
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture = ExtResource("1_mk3we")
 expand_mode = 1
 
-[node name="TextureRect3" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
+[node name="TextureRect3" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
 modulate = Color(0.158472, 0.158472, 0.158472, 1)
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture = ExtResource("1_mk3we")
 expand_mode = 1
 
-[node name="TextureRect4" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
+[node name="TextureRect4" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
 modulate = Color(0.158472, 0.158472, 0.158472, 1)
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture = ExtResource("1_mk3we")
 expand_mode = 1
 
-[node name="TextureRect5" type="TextureRect" parent="Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
+[node name="TextureRect5" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
 modulate = Color(0.158472, 0.158472, 0.158472, 1)
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture = ExtResource("1_mk3we")
 expand_mode = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UpgradePanel/Panel/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="SellTower" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+[node name="SellTower" type="Button" parent="UpgradePanel/Panel/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_1kkbf")
 text = "Sell: $xxxxx"
 
-[node name="ChangeTargeting" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+[node name="ChangeTargeting" type="Button" parent="UpgradePanel/Panel/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_ipgo4")
 text = "First"
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="UpgradePanel"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpgradePanel/Area2D"]
 visible = false
 position = Vector2(170.33, 306.419)
 shape = SubResource("RectangleShape2D_65vv1")
 disabled = true
 
-[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer2/CloseMenuButton" to="." method="_on_close_menu_button_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/UpgradePaths/PathA/PathAUpgradeButton" to="." method="_on_path_a_upgrade_button_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/UpgradePaths/PathB/PathBUpgradeButton" to="." method="_on_path_b_upgrade_button_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/SellTower" to="." method="_on_sell_tower_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/ChangeTargeting" to="." method="_on_change_targeting_pressed"]
+[connection signal="pressed" from="UpgradePanel/Panel/VBoxContainer/HBoxContainer2/CloseMenuButton" to="UpgradePanel" method="_on_close_menu_button_pressed"]
+[connection signal="pressed" from="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/PathAUpgradeButton" to="UpgradePanel" method="_on_path_a_upgrade_button_pressed"]
+[connection signal="pressed" from="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/PathBUpgradeButton" to="UpgradePanel" method="_on_path_b_upgrade_button_pressed"]
+[connection signal="pressed" from="UpgradePanel/Panel/VBoxContainer/HBoxContainer/SellTower" to="UpgradePanel" method="_on_sell_tower_pressed"]
+[connection signal="pressed" from="UpgradePanel/Panel/VBoxContainer/HBoxContainer/ChangeTargeting" to="UpgradePanel" method="_on_change_targeting_pressed"]

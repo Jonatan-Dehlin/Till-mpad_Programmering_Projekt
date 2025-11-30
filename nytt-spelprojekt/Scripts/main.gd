@@ -4,43 +4,58 @@ extends Control
 @onready var MainMenu = $MainMenu
 @onready var MapContainers = $ChooseMap/ScrollContainer/HBoxContainer.get_children()
 @onready var TestChest = $Shop/ScrollContainer/Chests/Chest1/Chest1Button
-@onready var InventoryButton: Button = $MainMenu/Panel/Buttons/Inventory
-@onready var PlayButton: Button = $MainMenu/Panel/Buttons/Play
-@onready var ShopButton: Button = $MainMenu/Panel/Buttons/Shop
+@onready var InventoryButton: TextureButton = $MainMenu/BottomPanel/Buttons/Inventory
+@onready var InventoryButtonPlaceholder: TextureRect = $Inventory/InventoryPlaceHolderBackground
+@onready var InventoryGrid: GridContainer = $Inventory/ScrollContainer/InventoryGrid
+@onready var PlayButton: TextureButton = $MainMenu/BottomPanel/Buttons/Play
+@onready var ShopButton: TextureButton = $MainMenu/BottomPanel/Buttons/Shop
 @onready var transitions: AnimationPlayer = $MenuTransitions
 @onready var Shop = $Shop
 @onready var Chests = $Shop/ScrollContainer/Chests
-@onready var EquippedTowersButtons = $TowerHotbar/HBoxContainer.get_children()
+@onready var EquippedTowersButtons = $HUD/TowerHotbar/HBoxContainer.get_children()
 
 #Player Stat Labels (och EXP bar)
-@onready var PlayerNameLabel = $MainMenu/HBoxContainer/PlayerStats/VBoxContainer/HBoxContainer/PlayerUsername
-@onready var CoinLabel = $MainMenu/HBoxContainer/Panel2/VBoxContainer/HBoxContainer/CoinLabel
-@onready var DiamondLabel = $MainMenu/HBoxContainer/Panel2/VBoxContainer/HBoxContainer2/DiamondLabel
-@onready var PlayerLevelLabel =$MainMenu/HBoxContainer/PlayerStats/VBoxContainer/HBoxContainer/Level
-@onready var PlayerEXPLabel = $MainMenu/HBoxContainer/PlayerStats/VBoxContainer/ProgressBar/Label
-@onready var EXPProgressBar = $MainMenu/HBoxContainer/PlayerStats/VBoxContainer/ProgressBar
+@onready var PlayerNameLabel = $MainMenu/PlayerStats/PlayerUsername
+@onready var CoinLabel = $MainMenu/PlayerWallet/HBoxContainer/CoinLabel
+@onready var DiamondLabel = $MainMenu/PlayerWallet/HBoxContainer2/DiamondLabel
+@onready var PlayerLevelLabel = $MainMenu/PlayerStats/Level
+@onready var PlayerEXPLabel = $MainMenu/PlayerStats/ProgressBar/Label
+@onready var EXPProgressBar = $MainMenu/PlayerStats/ProgressBar
 
-
+#Saker som är användbara ingame
 @onready var current_level = $LevelPlaceHolder
-@onready var MoneyLabel: Label = $HUD/Panel/Numbers/MoneyLabel
+@onready var MoneyLabel: Label = $HUD/WHMdisplay/Numbers/MoneyLabel
+@onready var WaveTimer: Timer = $HUD/NextWaveTimer
+@onready var SkipTimer: Timer = $HUD/SkipTimer
 
+#Gamble variables
 var Gamble = preload("res://Scenes/gamble.tscn").instantiate()
 var GambleMenu: Control
 
-var PlayerStatFile = "user://PlayerData.txt"
+#Tower Directory
 var tower_directory = DirAccess.open("res://Scenes/Towers/")
 
+#Player Stats
+var PlayerStatFile = "user://PlayerData.txt"
 var PlayerName: String
-
 var PlayerStats = {"Coins": 0, "Diamonds": 0, "Level": 0, "EXP": 0}
-
 var PlayerInventory = []
+var EquippedTowers = []
 
-var EquippedTowers = [["wizard_tower,LVL:1,TRAIT:none", 0],["wizard_tower,LVL:1,TRAIT:none",1]]
+#Game variables
+var WaveDataFile = "user://WaveData.txt"
+var StartOrSkipPressed: bool = false
+
+var Playing: bool = false
+var Finished_sending_wave: bool = false
+var Skip_availiable: bool = false
+var BetweenWaves: bool = false
 
 var max_wave = 100
 
 var display_cash: int
+
+var selected_menu: String = "Main"
 
 func _ready() -> void:
 	var NewGamblePanel = Gamble.duplicate()
@@ -65,6 +80,40 @@ func _ready() -> void:
 	_load_inventory()
 	_update_selected_towers()
 	_update_save_file()
+	_read_wave_data(1)
+
+func _process(_delta: float) -> void:
+	var diff = Globals.cash - display_cash
+
+	# Bestäm steglängd baserat på avståndet
+	var amount := 1
+	var abs_diff = abs(diff)
+
+	if abs_diff > 50000:
+		amount = 2000
+	elif abs_diff > 20000:
+		amount = 1000
+	elif abs_diff > 10000:
+		amount = 500
+	elif abs_diff > 1000:
+		amount = 100
+	elif abs_diff > 100:
+		amount = 50
+
+	# Lägg till eller dra ifrån med sign
+	display_cash += sign(diff) * amount
+	
+	MoneyLabel.text = "Money: $" + str(Globals._format_number(display_cash))
+
+func _physics_process(delta: float) -> void:
+	if Playing and _detect_every_enemy_defeated():
+		if not BetweenWaves:
+			BetweenWaves = true
+			WaveTimer.start()
+			$HUD/StartWaveButton.visible = true
+		$HUD/StartWaveButton.text = "Next wave in: " + str(round(WaveTimer.time_left))
+	$HUD/Label.text = str(round(1/delta))
+	#print("uppdaterade FPS: " + str(round(1/delta)))
 
 func _load_player_stats():
 	if not FileAccess.file_exists(PlayerStatFile):
@@ -100,9 +149,28 @@ func _load_inventory():
 			if line.contains("TOWERS:"):
 				TowersFound = true
 		file.close()
+		_update_inventory()
+
+func _update_inventory():
+	for towers in PlayerInventory:
+		var inventoryTowerDirectory = str(towers.split(",")[0] + ".tscn")
+		var tower = load("res://Scenes/Towers/" + inventoryTowerDirectory)
+		var instance = tower.instantiate()
+		var Duplicate = InventoryButtonPlaceholder.duplicate()
+		var DuplicateButton: Button = Duplicate.get_child(0)
+		
+		if not str(towers.split(",")[3]).contains("n/a"):
+			var SlotPos = int(str(towers.split(",")[3]).replace("SLOT:",""))
+			EquippedTowers.append([str(towers.split(",")[0]) + "," + str(towers.split(",")[1]) + "," + str(towers.split(",")[2]),SlotPos])
+		
+		DuplicateButton.icon.atlas = instance.get_node("TowerSprite").texture
+		DuplicateButton.get_node("TowerName").text = instance.name
+		DuplicateButton.get_node("TowerLevel").text = str(towers.split(",")[1])
+			
+		Duplicate.visible = true
+		InventoryGrid.add_child(Duplicate)
 
 func _update_selected_towers():
-	print("all towers: " + str(tower_directory.get_files()))
 	
 	for button: Button in EquippedTowersButtons:
 		for i in range(EquippedTowers.size()):
@@ -111,7 +179,8 @@ func _update_selected_towers():
 				var instance = tower.instantiate()
 				button.icon.atlas = instance.get_node("TowerSprite").texture
 				button.text = "$" + str(instance.place_cost)
-				button.pressed.connect(_place_tower.bind(EquippedTowers[i][0],instance))
+				if not button.is_connected("pressed", Callable(self, "_place_tower")):
+					button.pressed.connect(_place_tower.bind(EquippedTowers[i][0],instance))
 
 func _update_save_file():
 	if not FileAccess.file_exists(PlayerStatFile):
@@ -150,24 +219,10 @@ func _update_save_file():
 		EXPProgressBar.value = PlayerStats["EXP"]
 		PlayerEXPLabel.text = str(PlayerStats["EXP"]) + "/" + str(_calculate_required_EXP())
 
-func _start_play_mode():
-	MainMenu.visible = false
-	Shop.visible = false
-	$ChooseMap.visible = false
-
-func _start_map(MapID):
-	var map = load("res://Scenes/Levels/"+ str(MapID) + ".tscn")
-	map = map.instantiate()
-	current_level.replace_by(map)
-	current_level = map
-	
-	_start_play_mode()
-	_wave_manager(Globals.current_wave)
-
-func _place_tower(TowerID, TowerInstance):
-	var TowerName = str(TowerID).split(",")[0]
-	if Globals.cash >= TowerInstance.place_cost:
-		TowerPlacer.preview_tower(TowerName)
+func _calculate_required_EXP() -> int:
+	var BaseEXPRequirement: int = 100
+	var EXPScalingFactor: float = 1.3
+	return BaseEXPRequirement * EXPScalingFactor ** PlayerStats["Level"]
 
 func _open_chest(chestID, reset: bool):
 	if reset == false:
@@ -188,84 +243,154 @@ func _open_chest(chestID, reset: bool):
 		var chest: Button = Chests.get_node("Chest" + str(chestID)).get_child(0)
 		chest.icon.region.position.y -= 96
 
-func _process(delta: float) -> void:
-	#Mjuk övergång mot det riktiga värdet
-	if display_cash < Globals.cash:
-		if Globals.cash - display_cash > 1000:
-			display_cash += 20
-		elif Globals.cash - display_cash > 100:
-			display_cash += 10
-		elif Globals.cash - display_cash > 0:
-			display_cash += 1
-	elif display_cash > Globals.cash:
-		if Globals.cash - display_cash < -1000:
-			display_cash -= 20
-		elif Globals.cash - display_cash < -100:
-			display_cash -= 10
-		elif Globals.cash - display_cash < -0:
-			display_cash -= 1
-			
-	MoneyLabel.text = "Money: $" + str(int(display_cash))
 
-func _send_wave(enemies: Dictionary) -> void:
-	$HUD/Panel/Numbers/WaveLabel.text = "Wave: " + str(Globals.current_wave) + "/" + str(max_wave)
-	for enemy in enemies:
+############# PLAY FUNCTIONS ##############
+func _start_play_mode():
+	Playing = true
+	MainMenu.visible = false
+	Shop.visible = false
+	$ChooseMap.visible = false
+	$HUD.visible = true
+
+func _start_map(MapID):
+	var map = load("res://Scenes/Levels/"+ str(MapID) + ".tscn")
+	map = map.instantiate()
+	current_level.replace_by(map)
+	current_level = map
+	
+	_start_play_mode()
+
+func _place_tower(TowerID, TowerInstance):
+	var TowerName = str(TowerID).split(",")[0]
+	if Globals.cash >= TowerInstance.place_cost:
+		TowerPlacer.preview_tower(TowerName)
+
+func _detect_every_enemy_defeated() -> bool:
+	if get_node(str(current_level.name)).get_node("EnemyPath").get_child_count() <= 1 and Finished_sending_wave:
+		return true
+	else:
+		return false
+
+func _send_wave(enemy: String, amount: int, cooldown: float, last: bool) -> void:
+	$HUD/WHMdisplay/Numbers/WaveLabel.text = "Wave: " + str(Globals.current_wave) + "/" + str(max_wave)
+	Finished_sending_wave = false
+	BetweenWaves = false
+	#Kollar om fienden existerar
+	if FileAccess.file_exists("res://Scenes/Enemies/" + enemy):
 		
-		#Kollar om fienden existerar
-		if FileAccess.file_exists("res://Scenes/Enemies/"+enemy+".tscn"):
+		#Laddar enemyn
+		var enemy_scene = load("res://Scenes/Enemies/" + enemy)
+		
+		#Definerar levelns path och dess pathfollow2D template
+		var Path = current_level.get_node("EnemyPath")
+		var PathFollowTemplate = current_level.get_node("EnemyPath").get_node("PathFollow2D")
+		
+		for i in range(amount):
+			#Instantierar fienden
+			var spawn = enemy_scene.instantiate()
 			
-			#Laddar enemyn
-			var enemy_scene = load("res://Scenes/Enemies/"+enemy+".tscn")
+			#Kopierar PathFollow2D och lägger till fienden i den
+			var PathFollow = PathFollowTemplate.duplicate()
+			PathFollow.add_child(spawn)
 			
-			#Definerar levelns path och dess pathfollow2D template
-			var Path = current_level.get_node("EnemyPath")
-			var PathFollowTemplate = current_level.get_node("EnemyPath").get_node("PathFollow2D")
+			#Nollställer progress så att de inte spawnar på samma ställe
+			PathFollow.progress = 0
 			
-			for i in range(enemies[enemy]):
-				#Instantierar fienden
-				var spawn = enemy_scene.instantiate()
-				
-				#Kopierar PathFollow2D och lägger till fienden i den
-				var PathFollow = PathFollowTemplate.duplicate()
-				PathFollow.add_child(spawn)
-				
-				#Nollställer progress så att de inte spawnar på samma ställe
-				PathFollow.progress = 0
-				
-				#Lägger in PathFollow2D med dess enemy i pathen
-				Path.add_child(PathFollow)
-				
-				#Cooldown mellan varje spawn
-				await get_tree().create_timer(2).timeout
+			#Lägger in PathFollow2D med dess enemy i pathen
+			Path.add_child(PathFollow)
 			
-		else:
-			print((enemy+".tscn") + " is not found in res://Scenes/Enemies/")
+			#Cooldown mellan varje spawn
+			await get_tree().create_timer(cooldown).timeout
+	else:
+		print(enemy + " is not found in res://Scenes/Enemies/")
+	if last:
+		Finished_sending_wave = true
+		print("skickat klart")
 
 func _wave_manager(wave) -> void:
 	Globals.current_wave += 1
-	if Globals.current_wave % 2 == 0:
-		Globals.enemies["FireBug"] = 1
-		Globals.enemies["LeafBug"] = 1
+	var enemies
+	if Globals.current_wave <= max_wave:
+		enemies = _read_wave_data(Globals.current_wave)
 	else:
-		Globals.enemies["FireBug"] = 2
-		Globals.enemies["LeafBug"] = 2
-	Globals._apply_health_multiplier(wave)
-	_send_wave(Globals.enemies)
+		enemies = _generate_wave(Globals.current_wave)
+	for enemy in enemies:
+		print(enemies)
+		var e = str_to_var(enemy)
+		
+		var EnemyName = e[0]
+		var EnemyAmount = e[1]
+		var EnemyCooldown = e[2]
+		var EnemyLast = e[3]
 
-func _calculate_required_EXP() -> int:
-	var BaseEXPRequirement: int = 100
-	var EXPScalingFactor: float = 1.3
-	return BaseEXPRequirement * EXPScalingFactor ** PlayerStats["Level"]
+		_send_wave(EnemyName, EnemyAmount, EnemyCooldown, EnemyLast)
+		print("skickade: " + str(EnemyAmount) + " st " + str(EnemyName) + " Med cooldown på: " + str(EnemyCooldown))
+
+func _read_wave_data(wave: int) -> Array:
+	if not FileAccess.file_exists(WaveDataFile):
+		print("Fatal error: no player data file found.")
+	else:
+		var file = FileAccess.open(WaveDataFile, FileAccess.READ)
+		var WaveDataFound = false
+		var WaveData: Array
+		
+		while not file.eof_reached():
+			var line = file.get_line().replace(" ", "").replace("	", "")
+			if WaveDataFound:
+				WaveData.append(line.split(";"))
+			if line.contains("#WAVEDATA#"):
+				WaveDataFound = true
+		for waves in WaveData:
+			if waves[0] == str(wave):
+				var new: PackedStringArray = waves
+				new.remove_at(0)
+				return new
+	return []
+
+func _generate_wave(wave: int) -> Array:
+	return []
 
 ################# SIGNALS #################
 func _on_shop_pressed() -> void:
-	transitions.play("ShopTransition")
+	if selected_menu == "Main":
+		transitions.play("ShopTransition")
+		selected_menu = "Shop"
 
 func _on_play_pressed() -> void:
-	transitions.play("PlayTransition")
+	if selected_menu == "Main":
+		transitions.play("PlayTransition")
+		selected_menu = "Play"
+
+func _on_inventory_pressed() -> void:
+	if selected_menu == "Main":
+		transitions.play("InventoryTransition")
+		selected_menu = "Inventory"
 
 func _on_return_to_main_menu_button_pressed() -> void:
-	transitions.play("ResetShop")
+	if selected_menu == "Shop":
+		transitions.play("ResetShop")
+		selected_menu = "Main"
 
 func _on_return_to_main_menu_from_play_pressed() -> void:
-	transitions.play("ResetPlay")
+	if selected_menu == "Play":
+		transitions.play("ResetPlay")
+		selected_menu = "Main"
+
+func _on_return_to_main_menu_from_inventory_button_pressed() -> void:
+	if selected_menu == "Inventory":
+		transitions.play("ResetInventory")
+		selected_menu = "Main"
+
+func _on_start_wave_button_pressed() -> void:
+	_wave_manager(Globals.current_wave)
+	$HUD/StartWaveButton.visible = false
+	SkipTimer.start()
+
+func _on_skip_timer_timeout() -> void:
+	$HUD/StartWaveButton.text = "Skip wave?"
+	$HUD/StartWaveButton.visible = true
+
+func _on_next_wave_timer_timeout() -> void:
+	_wave_manager(Globals.current_wave)
+	$HUD/StartWaveButton.visible = false
+	SkipTimer.start()

@@ -13,14 +13,16 @@ var stats = {"damage":50,
 			"cooldown":1,
 			"projectile_velocity": 320.0,
 			"projectile_lifetime": 5.0,
-			"AOESize": 100.0}
+			"AOESize": 100.0,
+			"DamageDealt": 0}
 
 var place_cost: int = 100
 var total_cash_spent: int = 100
 
 var targeting: String = "First"
 
-@export var sell_value: int = 70
+@export var sell_value: int = place_cost * 0.7 #70% sellback
+@export var LVL: int = 1
 
 
 var upgrade_level = 1
@@ -44,16 +46,19 @@ var UpgradeBPrices = {1:50,2:100,3:1400,4:5900,5:11000}
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var TowerSprite: Sprite2D = $TowerSprite
 @onready var TowerOutline: Sprite2D = $TowerOutline
-@onready var UpgradePanel: Control = $UpgradePanel
+@onready var UpgradePanel: Control = $UpgradePanel.get_child(0)
 @onready var RangeShape: CircleShape2D = $Range/CollisionShape2D.shape
+@onready var UniqueRangeShape: CircleShape2D
 
 
 func _ready() -> void: #Används för att ställa in stats, när tornet placeras och när det upgraderas
 	z_index = int(position.y)
+	UniqueRangeShape = RangeShape.duplicate()
+	$Range/CollisionShape2D.shape = UniqueRangeShape
 	_update_stats()
 
 func _update_stats():
-	RangeShape.radius = stats["range"] #Ställer in range
+	UniqueRangeShape.radius = stats["range"] #Ställer in range
 	anim.speed_scale = stats["cooldown"]
 
 func _physics_process(_delta: float) -> void:
@@ -67,10 +72,9 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("Left_click") and hovering_over_tower:
 		UpgradePanel.visible = true
 		if global_position.x >= get_viewport().get_visible_rect().size.x / 2:
-			UpgradePanel.global_position = Vector2(0,0)
+			UpgradePanel.global_position = Vector2(0,get_viewport_rect().size.y / 2 - UpgradePanel.get_node("Panel").size.y)
 		else:
-			UpgradePanel.global_position = Vector2(get_viewport().get_visible_rect().size.x-UpgradePanel.get_node("Panel").size.x*UpgradePanel.scale.x,0)
-		print("Öppnade Upgradepanel på position: " + str(UpgradePanel.global_position))
+			UpgradePanel.global_position = Vector2(get_viewport().get_visible_rect().size.x-UpgradePanel.get_node("Panel").size.x*UpgradePanel.scale.x,get_viewport_rect().size.y / 2 - UpgradePanel.get_node("Panel").size.y)
 	
 	var overlapping_enemies = $Range.get_overlapping_bodies()
 	enemies_in_range = overlapping_enemies.filter(func(b): return b is Enemy)
@@ -78,38 +82,63 @@ func _physics_process(_delta: float) -> void:
 	queue_redraw()
 
 func _choose_targeted_enemy():
-	if targeting == "First":
-		var first_enemy: Enemy
-	
-		for i in enemies_in_range:
-			if first_enemy == null:
-				first_enemy = i 
-			elif i.get_parent().progress > first_enemy.get_parent().progress:
-				first_enemy = i
-		targeted_enemy = first_enemy
-		
-	elif targeting == "Last":
-		var last_enemy: Enemy
-		for i in enemies_in_range:
-			if last_enemy == null:
-				last_enemy = i 
-			if i.get_parent().progress < last_enemy.get_parent().progress:
-				last_enemy = i
-		targeted_enemy = last_enemy
-		
-	elif targeting == "Strongest":
-		var strongest_enemy = null
-		for enemy in enemies_in_range:
-			if strongest_enemy == null or enemy.current_health > strongest_enemy.current_health:
-				strongest_enemy = enemy
-		targeted_enemy = strongest_enemy
-		
-	elif targeting == "Weakest":
-		var weakest_enemy = null
-		for enemy in enemies_in_range:
-			if weakest_enemy == null or enemy.current_health < weakest_enemy.current_health:
-				weakest_enemy = enemy
-		targeted_enemy = weakest_enemy
+	# Filtrera bort null fiender
+	var valid_enemies: Array = []
+	for e in enemies_in_range:
+		if e != null and e.is_inside_tree() and e.current_health > 0:
+			valid_enemies.append(e)
+
+	if valid_enemies.is_empty():
+		targeted_enemy = null
+		return
+
+	match targeting:
+		"First":
+			var best = valid_enemies[0]
+			for e in valid_enemies:
+				if e.get_parent().progress > best.get_parent().progress:
+					best = e
+			targeted_enemy = best
+
+		"Last":
+			var best = valid_enemies[0]
+			for e in valid_enemies:
+				if e.get_parent().progress < best.get_parent().progress:
+					best = e
+			targeted_enemy = best
+
+		"Strongest":
+			var best = valid_enemies[0]
+			for e in valid_enemies:
+				if e.current_health > best.current_health:
+					best = e
+			targeted_enemy = best
+
+		"Weakest":
+			var best = valid_enemies[0]
+			for e in valid_enemies:
+				if e.current_health < best.current_health:
+					best = e
+			targeted_enemy = best
+
+		"Closest":
+			var best = valid_enemies[0]
+			for e in valid_enemies:
+				if global_position.distance_to(e.global_position) < global_position.distance_to(best.global_position):
+					best = e
+			targeted_enemy = best
+
+		"Furthest":
+			var best = valid_enemies[0]
+			for e in valid_enemies:
+				if global_position.distance_to(e.global_position) > global_position.distance_to(best.global_position):
+					best = e
+			targeted_enemy = best
+
+		"Random":
+			var best = valid_enemies.pick_random()
+			targeted_enemy = best
+
 
 func _spawn_projectile():
 	#Anpassar vilken fiende tornet ska skjuta på
@@ -133,8 +162,8 @@ func _attack() -> void:
 
 func _draw():
 	#Ritar range
-	if RangeShape is CircleShape2D and (hovering_over_tower or UpgradePanel.visible):
-		draw_circle(Vector2.ZERO, RangeShape.radius, Color(0, 0, 1, 0.1))
+	if UniqueRangeShape is CircleShape2D and (hovering_over_tower or UpgradePanel.visible):
+		draw_circle(Vector2.ZERO, UniqueRangeShape.radius, Color(0, 0, 1, 0.1))
 
 
 func _on_mouse_hover_detector_mouse_entered() -> void:

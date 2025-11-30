@@ -13,7 +13,7 @@ extends Control
 
 var parent: Node2D #Referens till parent: tornet
 
-var targeting_options = ["First","Last","Strongest","Weakest","Closest","Furthest"]
+var targeting_options = ["First","Last","Strongest","Weakest","Closest","Furthest","Random"]
 var current_targeting_option = 0
 
 var MaxAUpgrades = 5
@@ -28,7 +28,7 @@ var UpgradeBCosts = {1:0,2:0,3:0,4:0,5:0}
 
 
 func _ready() -> void:
-	parent = get_parent()
+	parent = get_parent().get_parent()
 	$Panel/VBoxContainer/HBoxContainer2/TowerName.text = parent.TowerName
 	
 	UpgradeACosts = parent.UpgradeAPrices
@@ -44,12 +44,11 @@ func _process(delta: float) -> void:
 		UpgradeBButton.disabled = true
 	else:
 		UpgradeBButton.disabled = false
-	
 	_display_upgrade_pricing()
 	_display_active_stats()
 	_display_sell_value()
 
-func _unhandled_input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void: #Stänger panelen ifall man klickar utanför den
 	if visible and Input.is_action_just_pressed("Left_click"):
 		# Kolla om musen inte är över UpgradePanel
 		if not get_global_rect().has_point(event.position) and not parent.hovering_over_tower:
@@ -57,14 +56,16 @@ func _unhandled_input(event: InputEvent) -> void:
 			parent.hovering_over_tower = false
 			parent._on_mouse_hover_detector_mouse_exited()
 
-func _display_sell_value():
+func _display_sell_value(): #Visar tornets sell-värde
 	SellButton.text = "Sell: $" + str(parent.sell_value)
 
 func _display_active_stats():
 	for stats in parent.stats:
 		if StatValues.has_node(stats):
-			StatValues.get_node(stats).text = str(parent.stats[stats])
-
+			if StatValues.get_node(stats).name == "DamageDealt":
+				StatValues.get_node(stats).text = str(Globals._format_number(parent.stats[stats]))
+			else:
+				StatValues.get_node(stats).text = str(parent.stats[stats])
 func _display_upgrade_pricing():
 	#Ritar ut kostnaden för uppgraderingsväg A
 	if UpgradeA == MaxAUpgrades:
@@ -83,6 +84,8 @@ func _display_upgrade_pricing():
 			UpgradeBButton.text = "MAX"
 	else:
 		UpgradeBButton.text = "$" + str(UpgradeBCosts[UpgradeB+1])
+
+
 
 func _upgrade(AorB):
 	var Upgrade
