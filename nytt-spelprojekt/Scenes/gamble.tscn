@@ -16,6 +16,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_j1h4x")
 
+[node name="Panel2" type="Panel" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
 offset_top = 115.0

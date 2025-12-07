@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://bo0gm6lsmj70n"]
+[gd_scene load_steps=16 format=3 uid="uid://bo0gm6lsmj70n"]
 
 [ext_resource type="Texture2D" uid="uid://06y1dqd1oyi8" path="res://Assets/Enemies/Ground/Spritesheets/Leafbug.png" id="1_jaumx"]
 [ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_s7l5n"]
+[ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="3_v1sjb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8ssv1"]
 atlas = ExtResource("1_jaumx")
@@ -71,10 +72,10 @@ animations = [{
 radius = 13.0
 height = 46.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xieg3"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rs6o2"]
 bg_color = Color(1, 0, 0, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7p76"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ntimc"]
 bg_color = Color(8.18223e-07, 0.641867, 0.311666, 1)
 
 [node name="LeafBug" type="CharacterBody2D"]
@@ -92,18 +93,38 @@ rotation = -1.5708
 shape = SubResource("CapsuleShape2D_bq73s")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
+layout_direction = 2
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.0
+offset_top = -43.0
+offset_right = 36.0
+offset_bottom = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_rs6o2")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ntimc")
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="ProgressBar"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -21.0
-offset_top = -6.0
-offset_right = 87.0
-offset_bottom = 21.0
+offset_left = -24.0
+offset_top = -11.3333
+offset_right = 24.0
+offset_bottom = 14.6667
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.4, 0.4)
-theme_override_styles/background = SubResource("StyleBoxFlat_xieg3")
-theme_override_styles/fill = SubResource("StyleBoxFlat_h7p76")
-value = 100.0
+theme_override_fonts/font = ExtResource("3_v1sjb")
+theme_override_font_sizes/font_size = 14
+text = "XX"
+horizontal_alignment = 1
+vertical_alignment = 1

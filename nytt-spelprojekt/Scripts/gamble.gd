@@ -8,6 +8,22 @@ extends Control
 
 var weight = [["Blue",null],["Purple",null],["Pink",null],["Red",null],["Gold",null]]
 
+var TowerOrTrait: bool = false
+
+var SelectedTower
+
+var TowersTier1 = ["wizard_tower.tscn"]
+var TowersTier2 = ["wizard_tower.tscn"]
+var TowersTier3 = ["wizard_tower.tscn"]
+var TowersTier4 = ["wizard_tower.tscn"]
+var TowersTier5 = ["wizard_tower.tscn"]
+
+var TraitsTier1 = ["Rapid I", "Strong I", "Vision I"]
+var TraitsTier2 = ["Rapid II", "Strong II", "Vision II"]
+var TraitsTier3 = ["Rapid III", "Strong III", "Vision III"]
+var TraitsTier4 = ["Lightning", "Unbeatable", "Hawkeye", "Midas"]
+var TraitsTier5 = ["Singularity"]
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for Chests in get_parent().get_node("Shop").get_child(0).get_child(0).get_children():
@@ -16,7 +32,7 @@ func _ready() -> void:
 		for colors in Chests.get_child(1).get_children():
 			colors.get_child(1).text = "%0.1f%%" % (float(weight[index][1]) / 10)
 			index += 1
-			
+
 func _add_panels():
 	for panels in range(200):
 		var cumulative = []

@@ -16,11 +16,32 @@ var has_exploded = false
 
 var parent: Node2D
 
+var explosion_radii := [60, 110]
+
 @onready var indicator: Marker2D = $LeadIndicator
 @onready var AOECollider: CollisionShape2D = $AOECollider
 
+@onready var selected_sprite = $AnimatedSprite2D
+@onready var selected_explosion = $HitExplosion
+
 func _ready() -> void:
 	z_index = 1000
+	
+	if parent.UpgradeA == 4 or parent.UpgradeB == 4:
+		selected_sprite = $AnimatedSprite2D2
+		selected_explosion = $HitExplosion2
+		AOECollider.shape.radius = explosion_radii[0]
+		$AnimatedSprite2D.visible = false
+		$AnimatedSprite2D2.visible = true
+
+	elif parent.UpgradeA == 5 or parent.UpgradeB == 5:
+		selected_sprite = $AnimatedSprite2D3
+		selected_explosion = $HitExplosion3
+		AOECollider.shape.radius = explosion_radii[1]
+		$AnimatedSprite2D.visible = false
+		$AnimatedSprite2D2.visible = false
+		$AnimatedSprite2D3.visible = true
+	
 	damage = parent.stats["damage"]
 	velocity = parent.stats["projectile_velocity"]
 	lifetime = parent.stats["projectile_lifetime"]
@@ -56,7 +77,7 @@ func _physics_process(delta: float) -> void:
 	if time_passed >= lifetime:
 		queue_free()
 	
-	$AnimatedSprite2D.global_rotation = 0
+	selected_sprite.global_rotation = 0
 
 func _apply_explosion_damage():
 	#Gör skada på alla Enemy inom AOE
@@ -78,18 +99,16 @@ func _on_body_entered(body: Node2D) -> void:
 		await get_tree().process_frame
 		
 		#Gör Hitexplosion synlig och startar animationen
-		$HitExplosion.visible = true
-		$HitExplosion.play()
+		selected_explosion.visible = true
+		selected_explosion.play()
 		
-
-		
-		#Gömmer den vanliga spriten och sätter velocity till 0
-		$AnimatedSprite2D.visible = false
+		#Gömmer den vanliga spriten och sätter velocity till 0 så att explosionen inte flyttar på sig
+		selected_sprite.visible = false
 		velocity = 0
 
 
 func _on_hit_explosion_frame_changed() -> void:
-	if $HitExplosion.frame == 5: #frame där explosionen faktiskt händer
+	if selected_explosion.frame == 5: #frame där explosionen faktiskt händer
 		_apply_explosion_damage()
 
 

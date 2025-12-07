@@ -3,11 +3,15 @@ extends Control
 #Referenser till intressanta noder
 @onready var UpgradeADisplayContainer: HBoxContainer = $Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay
 @onready var UpgradeBDisplayContainer: HBoxContainer = $Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay
-@onready var UpgradeAButton: Button = $Panel/VBoxContainer/UpgradePaths/PathA/PathAUpgradeButton
-@onready var UpgradeBButton: Button = $Panel/VBoxContainer/UpgradePaths/PathB/PathBUpgradeButton
+@onready var UpgradeAButton: TextureButton = $Panel/VBoxContainer/UpgradePaths/PathA/PathAUpgradeButton
+@onready var UpgradeBButton: TextureButton = $Panel/VBoxContainer/UpgradePaths/PathB/PathBUpgradeButton
+@onready var UpgradeACost: Label = $Panel/VBoxContainer/UpgradePaths/PathA/PathAUpgradeButton/UpgradeACosts
+@onready var UpgradeBCost: Label = $Panel/VBoxContainer/UpgradePaths/PathB/PathBUpgradeButton/UpgradeBCosts
 @onready var PathB: VBoxContainer = $Panel/VBoxContainer/UpgradePaths/PathB
 @onready var PathA: VBoxContainer = $Panel/VBoxContainer/UpgradePaths/PathA
-@onready var StatValues: VBoxContainer = $Panel/VBoxContainer/TowerStats/StatValues
+@onready var PathAName: Label = $Panel/VBoxContainer/UpgradePaths/PathA/PathAUpgradeButton/PathAName
+@onready var PathBName: Label = $Panel/VBoxContainer/UpgradePaths/PathB/PathBUpgradeButton/PathBName
+@onready var StatValues: VBoxContainer = $Panel/TextureRect/TowerStats/StatValues
 @onready var SellButton: Button = $Panel/VBoxContainer/HBoxContainer/SellTower
 @onready var ChangeTargetingButton: Button = $Panel/VBoxContainer/HBoxContainer/ChangeTargeting
 
@@ -15,6 +19,8 @@ var parent: Node2D #Referens till parent: tornet
 
 var targeting_options = ["First","Last","Strongest","Weakest","Closest","Furthest","Random"]
 var current_targeting_option = 0
+
+var target_region = Rect2(545, 449, 14, 14)
 
 var MaxAUpgrades = 5
 var MaxBUpgrades = 5
@@ -29,7 +35,8 @@ var UpgradeBCosts = {1:0,2:0,3:0,4:0,5:0}
 
 func _ready() -> void:
 	parent = get_parent().get_parent()
-	$Panel/VBoxContainer/HBoxContainer2/TowerName.text = parent.TowerName
+	print(parent)
+	$Panel/TowerName.text = parent.TowerName
 	
 	UpgradeACosts = parent.UpgradeAPrices
 	UpgradeBCosts = parent.UpgradeBPrices
@@ -62,40 +69,45 @@ func _display_sell_value(): #Visar tornets sell-värde
 func _display_active_stats():
 	for stats in parent.stats:
 		if StatValues.has_node(stats):
-			if StatValues.get_node(stats).name == "DamageDealt":
-				StatValues.get_node(stats).text = str(Globals._format_number(parent.stats[stats]))
-			else:
-				StatValues.get_node(stats).text = str(parent.stats[stats])
+			StatValues.get_node(stats).text = str(Globals._format_number(parent.stats[stats]))
+
 func _display_upgrade_pricing():
 	#Ritar ut kostnaden för uppgraderingsväg A
 	if UpgradeA == MaxAUpgrades:
 		if MaxAUpgrades == 2:
-			UpgradeAButton.text = "Path capped"
+			UpgradeACost.text = "Path capped"
 		elif MaxAUpgrades == 5:
-			UpgradeAButton.text = "MAX"
+			UpgradeACost.text = "MAX"
 	else:
-		UpgradeAButton.text = "$" + str(UpgradeACosts[UpgradeA+1])
+		UpgradeACost.text = "$" + str(UpgradeACosts[UpgradeA+1])
+		PathAName.text = parent.UpgradesA[UpgradeA+1]["name"]
 	
 	#Ritar ut kostnaden för uppgraderingsväg B
 	if UpgradeB == MaxBUpgrades:
 		if MaxBUpgrades == 2:
-			UpgradeBButton.text = "Path capped"
+			UpgradeBCost.text = "Path capped"
 		elif MaxBUpgrades == 5:
-			UpgradeBButton.text = "MAX"
+			UpgradeBCost.text = "MAX"
 	else:
-		UpgradeBButton.text = "$" + str(UpgradeBCosts[UpgradeB+1])
-
-
+		UpgradeBCost.text = "$" + str(UpgradeBCosts[UpgradeB+1])
+		PathBName.text = parent.UpgradesB[UpgradeB+1]["name"]
 
 func _upgrade(AorB):
 	var Upgrade
 	if AorB == "A":
 		Upgrade = parent.UpgradesA[UpgradeA]
+		
+		parent.UpgradeA += 1
 	else:
 		Upgrade = parent.UpgradesB[UpgradeB]
+		parent.UpgradeB += 1
 	for upgrades in Upgrade:
+		if upgrades != "name":
 			parent.stats[upgrades] += Upgrade[upgrades]
-	parent._update_stats()
+	if AorB == "A":
+		parent._update_stats("A")
+	else:
+		parent._update_stats("B")
 
 func _update_sell_prices(upgrade_cost):
 	parent.total_cash_spent += upgrade_cost
@@ -103,7 +115,10 @@ func _update_sell_prices(upgrade_cost):
 
 func _on_path_b_upgrade_button_pressed() -> void:
 	if UpgradeB < MaxBUpgrades and UpgradeBCosts[UpgradeB+1] <= Globals.cash:
-		UpgradeBDisplayContainer.get_child(UpgradeB).modulate = Color(1,1,1)
+		
+		UpgradeBDisplayContainer.get_child(UpgradeB).texture.region = target_region
+		UpgradeBDisplayContainer.get_child(UpgradeB).modulate = Color(0,1,0)
+		
 		UpgradeB += 1
 		if UpgradeB == 3:
 			MaxAUpgrades = 2
@@ -115,8 +130,13 @@ func _on_path_b_upgrade_button_pressed() -> void:
 
 func _on_path_a_upgrade_button_pressed() -> void:
 	if UpgradeA < MaxAUpgrades and UpgradeACosts[UpgradeA+1] <= Globals.cash:
+
+		var child = UpgradeADisplayContainer.get_child(UpgradeA)
 		
-		UpgradeADisplayContainer.get_child(UpgradeA).modulate = Color(1,1,1)
+		child.texture = child.texture.duplicate()
+		child.texture.region = target_region
+		child.modulate = Color(0, 1, 0)
+		
 		UpgradeA += 1
 		if UpgradeA == 3:
 			MaxBUpgrades = 2

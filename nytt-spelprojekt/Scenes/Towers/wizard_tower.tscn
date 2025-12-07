@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://lnvpp1rxb8pw"]
+[gd_scene load_steps=12 format=3 uid="uid://lnvpp1rxb8pw"]
 
 [ext_resource type="Script" path="res://Scripts/wizard_tower.gd" id="1_6a7ut"]
 [ext_resource type="Texture2D" uid="uid://di68gim02dr7c" path="res://Assets/Towers/Towers bases/PNGs/Tower 05.png" id="1_fxrtq"]
 [ext_resource type="Texture2D" uid="uid://dtnip7poocuqc" path="res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 01 - Weapon.png" id="3_3wdoi"]
 [ext_resource type="PackedScene" uid="uid://bn5ae4t8xid65" path="res://Scenes/upgrade_panel.tscn" id="4_h4bsb"]
+[ext_resource type="Texture2D" uid="uid://cflnfvohukdsk" path="res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 02 - Weapon.png" id="4_s8h2t"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b7dvf"]
 radius = 108.057
@@ -72,11 +73,16 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 
+[sub_resource type="Animation" id="Animation_36ohr"]
+resource_name = "Tower_Idle2"
+step = 0.2
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jxany"]
 _data = {
 "RESET": SubResource("Animation_4dnem"),
 "Tower_Firing": SubResource("Animation_bamwi"),
-"Tower_Idle": SubResource("Animation_q23k1")
+"Tower_Idle": SubResource("Animation_q23k1"),
+"Tower_Idle2": SubResource("Animation_36ohr")
 }
 
 [node name="Wizard Tower" type="Node2D"]
@@ -109,15 +115,18 @@ shape = SubResource("CircleShape2D_b7dvf")
 debug_color = Color(0, 0.6, 0.701961, 0.180392)
 
 [node name="Weapon" type="Node2D" parent="."]
-position = Vector2(0, -10)
+position = Vector2(0, -19)
 
 [node name="WeaponSprite" type="Sprite2D" parent="Weapon"]
-position = Vector2(0, -8)
 scale = Vector2(1, 0.98)
 texture = ExtResource("3_3wdoi")
 hframes = 29
 vframes = 2
 frame = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Weapon"]
+visible = false
+texture = ExtResource("4_s8h2t")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -16,8 +16,8 @@ extends Control
 
 #Player Stat Labels (och EXP bar)
 @onready var PlayerNameLabel = $MainMenu/PlayerStats/PlayerUsername
-@onready var CoinLabel = $MainMenu/PlayerWallet/HBoxContainer/CoinLabel
-@onready var DiamondLabel = $MainMenu/PlayerWallet/HBoxContainer2/DiamondLabel
+@onready var CoinLabel = $MainMenu/PlayerWallet/SilverAmount/Currency/Silver/SilverLabel
+@onready var DiamondLabel = $MainMenu/PlayerWallet/GoldAmount/Currency/Gold/GoldLabel
 @onready var PlayerLevelLabel = $MainMenu/PlayerStats/Level
 @onready var PlayerEXPLabel = $MainMenu/PlayerStats/ProgressBar/Label
 @onready var EXPProgressBar = $MainMenu/PlayerStats/ProgressBar
@@ -211,8 +211,8 @@ func _update_save_file():
 		file.close()
 		
 		#Uppdatera visade värden i spelet
-		CoinLabel.text = str(PlayerStats["Coins"])
-		DiamondLabel.text = str(PlayerStats["Diamonds"])
+		CoinLabel.text = str(Globals._format_number(PlayerStats["Coins"]))
+		DiamondLabel.text = str(Globals._format_number(PlayerStats["Diamonds"]))
 		PlayerNameLabel.text = PlayerName
 		PlayerLevelLabel.text = str(PlayerStats["Level"])
 		EXPProgressBar.max_value = _calculate_required_EXP()
@@ -243,7 +243,6 @@ func _open_chest(chestID, reset: bool):
 		var chest: Button = Chests.get_node("Chest" + str(chestID)).get_child(0)
 		chest.icon.region.position.y -= 96
 
-
 ############# PLAY FUNCTIONS ##############
 func _start_play_mode():
 	Playing = true
@@ -271,12 +270,14 @@ func _detect_every_enemy_defeated() -> bool:
 	else:
 		return false
 
-func _send_wave(enemy: String, amount: int, cooldown: float, last: bool) -> void:
+func _send_wave(enemy: String, amount: int, cooldown: float, startcooldown: float, last: bool) -> void:
 	$HUD/WHMdisplay/Numbers/WaveLabel.text = "Wave: " + str(Globals.current_wave) + "/" + str(max_wave)
 	Finished_sending_wave = false
 	BetweenWaves = false
 	#Kollar om fienden existerar
 	if FileAccess.file_exists("res://Scenes/Enemies/" + enemy):
+		#Cooldown innan fienden börjar spawnas
+		await get_tree().create_timer(startcooldown).timeout
 		
 		#Laddar enemyn
 		var enemy_scene = load("res://Scenes/Enemies/" + enemy)
@@ -305,7 +306,6 @@ func _send_wave(enemy: String, amount: int, cooldown: float, last: bool) -> void
 		print(enemy + " is not found in res://Scenes/Enemies/")
 	if last:
 		Finished_sending_wave = true
-		print("skickat klart")
 
 func _wave_manager(wave) -> void:
 	Globals.current_wave += 1
@@ -315,18 +315,18 @@ func _wave_manager(wave) -> void:
 	else:
 		enemies = _generate_wave(Globals.current_wave)
 	for enemy in enemies:
-		print(enemies)
 		var e = str_to_var(enemy)
 		
 		var EnemyName = e[0]
 		var EnemyAmount = e[1]
 		var EnemyCooldown = e[2]
-		var EnemyLast = e[3]
+		var EnemyStartCooldown = e[3]
+		var EnemyLast = e[4]
 
-		_send_wave(EnemyName, EnemyAmount, EnemyCooldown, EnemyLast)
-		print("skickade: " + str(EnemyAmount) + " st " + str(EnemyName) + " Med cooldown på: " + str(EnemyCooldown))
+		_send_wave(EnemyName, EnemyAmount, EnemyCooldown, EnemyStartCooldown, EnemyLast)
+		#print("skickade: " + str(EnemyAmount) + " st " + str(EnemyName) + " Med cooldown på: " + str(EnemyCooldown))
 
-func _read_wave_data(wave: int) -> Array:
+func _read_wave_data(wave: int) -> Array: #Läser wave-data fram till max_wave
 	if not FileAccess.file_exists(WaveDataFile):
 		print("Fatal error: no player data file found.")
 	else:
@@ -347,7 +347,11 @@ func _read_wave_data(wave: int) -> Array:
 				return new
 	return []
 
-func _generate_wave(wave: int) -> Array:
+func _generate_wave(wave: int) -> Array: #Genererar infinite waves
+	#format exempel: ["[\"FireBug.tscn\",10,1,false]", "[\"FireBug.tscn\",10,0.1,false]"]
+	#Tillgängliga fiender: FireBug.tscn, LeafBug.tscn, MagmaCrab.tscn, Scorpion.tscn
+	
+	
 	return []
 
 ################# SIGNALS #################

@@ -27,23 +27,37 @@ var targeting: String = "First"
 
 var upgrade_level = 1
 
-#Upgrade Stats. Allting är additivt
-var UpgradesA = {1:{"damage":50,"range":50,"cooldown":0.1,"projectile_velocity":0,"projectile_lifetime":0}
-				,2:{"damage":50,"range":50,"cooldown":1.1,"projectile_velocity":0,"projectile_lifetime":0}
-				,3:{"damage":50,"range":50,"cooldown":1.1,"projectile_velocity":0,"projectile_lifetime":0}
-				,4:{"damage":50,"range":50,"cooldown":1.1,"projectile_velocity":0,"projectile_lifetime":0}
-				,5:{"damage":50,"range":50,"cooldown":1.1,"projectile_velocity":0,"projectile_lifetime":0}}
+var UpgradeA = 0
+var UpgradeB = 0
 
-var UpgradesB = {1:{"damage":50,"range":50,"cooldown":0.1,"projectile_velocity":0,"projectile_lifetime":0}
-				,2:{"damage":50,"range":50,"cooldown":1.1,"projectile_velocity":0,"projectile_lifetime":0}
-				,3:{"damage":50,"range":50,"cooldown":1.1,"projectile_velocity":0,"projectile_lifetime":0}
-				,4:{"damage":50,"range":50,"cooldown":1.1,"projectile_velocity":0,"projectile_lifetime":0}
-				,5:{"damage":50,"range":50,"cooldown":1.1,"projectile_velocity":0,"projectile_lifetime":0}}
+var weapon_sprite2 = ImageTexture.create_from_image(preload("res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 02 - Weapon.png").get_image())
+var weapon_sprite3 = ImageTexture.create_from_image(preload("res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 03 - Weapon.png").get_image())
+
+var projectile_sprite2 = ImageTexture.create_from_image(preload("res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 02 - Projectile.png").get_image())
+var projectile_sprite3 = ImageTexture.create_from_image(preload("res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 03 - Projectile.png").get_image())
+
+#Upgrade Stats. Allting är additivt
+var UpgradesA = {
+	1: {"damage": +5,  "range": 0, "cooldown": +0.01, "projectile_velocity": -20, "projectile_lifetime": -0.3, "name": "Quickspark"},
+	2: {"damage": +8,  "range": 0, "cooldown": +0.05, "projectile_velocity": -15, "projectile_lifetime": -0.2, "name": "Arcane Flurry"},
+	3: {"damage": +12, "range": -10,  "cooldown": +1.0, "projectile_velocity": -10, "projectile_lifetime": -0.1, "name": "Mystic Barrage"},
+	4: {"damage": +18, "range": 0,   "cooldown": +1.5, "projectile_velocity": 0,    "projectile_lifetime": 0,   "name": "Eldritch Haste"},
+	5: {"damage": +25, "range": +10, "cooldown": +2.0, "projectile_velocity": +10,  "projectile_lifetime": +0.1, "name": "Arcane Hyperflux"}
+	}
+
+var UpgradesB = {
+	1: {"damage": 0, "range": +50,  "cooldown": +0.1, "projectile_velocity": +80,  "projectile_lifetime": +0.5, "name": "Longshot Initiate"},
+	2: {"damage": 0, "range": +60,  "cooldown": +0.1, "projectile_velocity": +120, "projectile_lifetime": +0.5, "name": "Skybolt Adept"},
+	3: {"damage": +40, "range": +75,  "cooldown": +0.2, "projectile_velocity": +150, "projectile_lifetime": +0.5, "name": "Aether Pierce"},
+	4: {"damage": +50, "range": +90,  "cooldown": +0.2, "projectile_velocity": +200, "projectile_lifetime": +0.6, "name": "Astral Sniper"},
+	5: {"damage": +65, "range": +100, "cooldown": +0.3, "projectile_velocity": +250, "projectile_lifetime": +0.7, "name": "Celestial Railshot"}
+	}
 
 var UpgradeAPrices = {1:50,2:100,3:1400,4:5900,5:11000}
 var UpgradeBPrices = {1:50,2:100,3:1400,4:5900,5:11000}
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
+@onready var Weapon: Node2D = $Weapon
 @onready var TowerSprite: Sprite2D = $TowerSprite
 @onready var TowerOutline: Sprite2D = $TowerOutline
 @onready var UpgradePanel: Control = $UpgradePanel.get_child(0)
@@ -55,11 +69,29 @@ func _ready() -> void: #Används för att ställa in stats, när tornet placeras
 	z_index = int(position.y)
 	UniqueRangeShape = RangeShape.duplicate()
 	$Range/CollisionShape2D.shape = UniqueRangeShape
-	_update_stats()
+	_update_stats(null)
 
-func _update_stats():
+func _update_stats(AorB):
 	UniqueRangeShape.radius = stats["range"] #Ställer in range
 	anim.speed_scale = stats["cooldown"]
+	if UpgradeA > 3 and AorB == "A":
+		TowerSprite.frame = UpgradeA - 3
+		TowerOutline.frame = TowerSprite.frame
+		if UpgradeA == 4:
+			Weapon.position.y -= 8
+			Weapon.get_node("WeaponSprite").texture = weapon_sprite2
+		elif UpgradeA == 5:
+			Weapon.position.y -= 7
+			Weapon.get_node("WeaponSprite").texture = weapon_sprite3
+	elif UpgradeB > 3 and AorB == "B":
+		TowerSprite.frame = UpgradeB - 3
+		TowerOutline.frame = TowerSprite.frame
+		if UpgradeB == 4:
+			Weapon.position.y -= 8
+			Weapon.get_node("WeaponSprite").texture = weapon_sprite2
+		elif UpgradeB == 5:
+			Weapon.position.y -= 7
+			Weapon.get_node("WeaponSprite").texture = weapon_sprite3
 
 func _physics_process(_delta: float) -> void:
 	#Om tornet inte redan attackerar och det finns fiender inom range: starta en attack
@@ -72,10 +104,11 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("Left_click") and hovering_over_tower:
 		UpgradePanel.visible = true
 		if global_position.x >= get_viewport().get_visible_rect().size.x / 2:
-			UpgradePanel.global_position = Vector2(0,get_viewport_rect().size.y / 2 - UpgradePanel.get_node("Panel").size.y)
+			UpgradePanel.global_position = Vector2(0,get_viewport_rect().size.y / 1.5 - UpgradePanel.get_node("Panel").size.y)
+			UpgradePanel.get_node("Panel").get_node("TextureRect").position.x = 459
 		else:
-			UpgradePanel.global_position = Vector2(get_viewport().get_visible_rect().size.x-UpgradePanel.get_node("Panel").size.x*UpgradePanel.scale.x,get_viewport_rect().size.y / 2 - UpgradePanel.get_node("Panel").size.y)
-	
+			UpgradePanel.global_position = Vector2(get_viewport().get_visible_rect().size.x-UpgradePanel.get_node("Panel").size.x*UpgradePanel.scale.x,get_viewport_rect().size.y / 1.5 - UpgradePanel.get_node("Panel").size.y)
+			UpgradePanel.get_node("Panel").get_node("TextureRect").position.x = -399
 	var overlapping_enemies = $Range.get_overlapping_bodies()
 	enemies_in_range = overlapping_enemies.filter(func(b): return b is Enemy)
 	
@@ -139,16 +172,15 @@ func _choose_targeted_enemy():
 			var best = valid_enemies.pick_random()
 			targeted_enemy = best
 
-
 func _spawn_projectile():
 	#Anpassar vilken fiende tornet ska skjuta på
 	if enemies_in_range.size() > 0: #Dubbelkollar så att tornet inte gör skada om fienden redan gått ur range
 		_choose_targeted_enemy()
 		
 		#skapar en projektil
-		var projectile_scene = load("res://Scenes/Projectiles/wizard_tower_projectile" + str(upgrade_level) + ".tscn")
+		var projectile_scene = load("res://Scenes/Projectiles/wizard_tower_projectile.tscn")
 		var projectile = projectile_scene.instantiate()
-		projectile.global_position = global_position - Vector2(0,25)
+		projectile.global_position = Weapon.global_position - Vector2(0,19)
 		projectile.parent = self
 		get_tree().current_scene.get_node("TowerProjectiles").add_child(projectile)
 

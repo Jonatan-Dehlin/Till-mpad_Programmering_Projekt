@@ -1,21 +1,95 @@
-[gd_scene load_steps=8 format=3 uid="uid://bn5ae4t8xid65"]
+[gd_scene load_steps=28 format=3 uid="uid://bn5ae4t8xid65"]
 
 [ext_resource type="Script" path="res://Scripts/upgrade_panel.gd" id="1_0idd4"]
-[ext_resource type="Texture2D" uid="uid://bvap3sergftsn" path="res://icon.svg" id="1_mk3we"]
+[ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/medieval.png" id="2_51bdg"]
 [ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="2_q3l7l"]
+[ext_resource type="Texture2D" uid="uid://2dyamd5eme8k" path="res://#1 - Transparent Icons.png" id="4_romi5"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nbe0r"]
-bg_color = Color(0.862745, 0, 0, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8q8s"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(64, 96, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6l3dh"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(1, 98, 46, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_157r4"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(209, 392, 48, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13s8r"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(513, 97, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02nuc"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(513, 97, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lub0r"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(513, 97, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7s86"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(513, 97, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ii0ik"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(513, 97, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6mg71"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(1, 98, 46, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wy25b"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(513, 97, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gt2il"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(513, 97, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23cot"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(513, 97, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7rsxd"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(513, 97, 14, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_04bjk"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(513, 97, 14, 14)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1kkbf"]
 bg_color = Color(0.752941, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ipgo4"]
 bg_color = Color(0.242059, 0.460932, 0.985935, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfrpb"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(864, 704, 97, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pr87s"]
+atlas = ExtResource("4_romi5")
+region = Rect2(67, 164, 25, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61jkw"]
+atlas = ExtResource("4_romi5")
+region = Rect2(103, 195, 19, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_icwlu"]
+atlas = ExtResource("4_romi5")
+region = Rect2(195, 67, 26, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_65777"]
+atlas = ExtResource("4_romi5")
+region = Rect2(355, 99, 26, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0h7le"]
+atlas = ExtResource("2_51bdg")
+region = Rect2(593, 530, 14, 13)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_65vv1"]
 size = Vector2(340.66, 613.541)
@@ -29,15 +103,27 @@ anchors_preset = 0
 scale = Vector2(1.4, 1.4)
 script = ExtResource("1_0idd4")
 
-[node name="Panel" type="Panel" parent="UpgradePanel"]
+[node name="Panel" type="TextureRect" parent="UpgradePanel"]
 layout_mode = 0
-offset_right = 341.0
-offset_bottom = 465.0
+offset_right = 442.0
+offset_bottom = 638.0
+texture = SubResource("AtlasTexture_l8q8s")
+stretch_mode = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UpgradePanel/Panel"]
-layout_mode = 0
-offset_right = 340.0
-offset_bottom = 456.0
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -253.0
+offset_top = -287.0
+offset_right = 254.0
+offset_bottom = 279.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/separation = 20
 alignment = 1
 
@@ -46,191 +132,199 @@ custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 alignment = 1
 
-[node name="TowerName" type="Label" parent="UpgradePanel/Panel/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "TowerName_PlaceHolder"
-horizontal_alignment = 1
-
-[node name="CloseMenuButton" type="Button" parent="UpgradePanel/Panel/VBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-focus_mode = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_nbe0r")
-text = "X"
-icon_alignment = 1
-expand_icon = true
-
-[node name="TowerStats" type="HBoxContainer" parent="UpgradePanel/Panel/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 24
-alignment = 1
-
-[node name="StatNames" type="VBoxContainer" parent="UpgradePanel/Panel/VBoxContainer/TowerStats"]
-custom_minimum_size = Vector2(120, 0)
-layout_mode = 2
-
-[node name="Damage" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatNames"]
-layout_mode = 2
-text = "Damage"
-horizontal_alignment = 1
-
-[node name="Range" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatNames"]
-layout_mode = 2
-text = "Range"
-horizontal_alignment = 1
-
-[node name="AttackSpeed" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatNames"]
-layout_mode = 2
-text = "Attack Speed"
-horizontal_alignment = 1
-
-[node name="DamageDealt" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatNames"]
-layout_mode = 2
-text = "Damage Dealt"
-horizontal_alignment = 1
-
-[node name="StatValues" type="VBoxContainer" parent="UpgradePanel/Panel/VBoxContainer/TowerStats"]
-custom_minimum_size = Vector2(120, 0)
-layout_mode = 2
-
-[node name="damage" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatValues"]
-layout_mode = 2
-text = "x"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="range" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatValues"]
-layout_mode = 2
-text = "x"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="cooldown" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatValues"]
-layout_mode = 2
-text = "x"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="DamageDealt" type="Label" parent="UpgradePanel/Panel/VBoxContainer/TowerStats/StatValues"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_q3l7l")
-text = "x"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="UpgradePaths" type="HBoxContainer" parent="UpgradePanel/Panel/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 15
 alignment = 1
 
 [node name="PathA" type="VBoxContainer" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths"]
 layout_mode = 2
 
-[node name="PathAName" type="Label" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA"]
-layout_mode = 2
-text = "UpgradeName"
-horizontal_alignment = 1
-
-[node name="PathAUpgradeButton" type="Button" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA"]
+[node name="PathAUpgradeButton" type="TextureButton" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA"]
+custom_minimum_size = Vector2(180, 220)
 layout_mode = 2
 focus_mode = 0
+texture_normal = SubResource("AtlasTexture_6l3dh")
+stretch_mode = 5
+
+[node name="PathAName" type="Label" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/PathAUpgradeButton"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -58.0
+offset_top = 25.0
+offset_right = 58.0
+offset_bottom = 42.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_q3l7l")
+text = "UpgradeName"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="TextureRect" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/PathAUpgradeButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.5
+offset_top = -66.0
+offset_right = 54.5
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_157r4")
+stretch_mode = 5
+
+[node name="UpgradeACosts" type="Label" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/PathAUpgradeButton"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -34.0
+offset_top = -47.3333
+offset_right = 34.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_q3l7l")
+theme_override_font_sizes/font_size = 20
 text = "$xxxxx"
-icon = ExtResource("1_mk3we")
-icon_alignment = 1
-vertical_icon_alignment = 2
+horizontal_alignment = 1
 
 [node name="UpgradeADisplay" type="HBoxContainer" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA"]
 layout_mode = 2
 alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
-modulate = Color(0.156675, 0.156675, 0.156675, 1)
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
-texture = ExtResource("1_mk3we")
+texture = SubResource("AtlasTexture_13s8r")
 expand_mode = 1
+stretch_mode = 4
 
 [node name="TextureRect2" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
-modulate = Color(0.156675, 0.156675, 0.156675, 1)
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
-texture = ExtResource("1_mk3we")
+texture = SubResource("AtlasTexture_02nuc")
 expand_mode = 1
 
 [node name="TextureRect3" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
-modulate = Color(0.156675, 0.156675, 0.156675, 1)
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
-texture = ExtResource("1_mk3we")
+texture = SubResource("AtlasTexture_lub0r")
 expand_mode = 1
 
 [node name="TextureRect4" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
-modulate = Color(0.156675, 0.156675, 0.156675, 1)
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
-texture = ExtResource("1_mk3we")
+texture = SubResource("AtlasTexture_h7s86")
 expand_mode = 1
 
 [node name="TextureRect5" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay"]
-modulate = Color(0.156675, 0.156675, 0.156675, 1)
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
-texture = ExtResource("1_mk3we")
+texture = SubResource("AtlasTexture_ii0ik")
 expand_mode = 1
 
 [node name="PathB" type="VBoxContainer" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths"]
 layout_mode = 2
 
-[node name="PathBName" type="Label" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB"]
+[node name="PathBUpgradeButton" type="TextureButton" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB"]
+custom_minimum_size = Vector2(180, 220)
 layout_mode = 2
+focus_mode = 0
+texture_normal = SubResource("AtlasTexture_6mg71")
+stretch_mode = 5
+
+[node name="PathBName" type="Label" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/PathBUpgradeButton"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -58.0
+offset_top = 25.0
+offset_right = 58.0
+offset_bottom = 42.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_q3l7l")
 text = "UpgradeName"
 horizontal_alignment = 1
 
-[node name="PathBUpgradeButton" type="Button" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB"]
-layout_mode = 2
-focus_mode = 0
+[node name="TextureRect" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/PathBUpgradeButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.5
+offset_top = -66.0
+offset_right = 54.5
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_157r4")
+stretch_mode = 5
+
+[node name="UpgradeBCosts" type="Label" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/PathBUpgradeButton"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -34.0
+offset_top = -47.3333
+offset_right = 34.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_q3l7l")
+theme_override_font_sizes/font_size = 20
 text = "$xxxxx"
-icon = ExtResource("1_mk3we")
-icon_alignment = 1
-vertical_icon_alignment = 2
+horizontal_alignment = 1
 
 [node name="UpgradeBDisplay" type="HBoxContainer" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB"]
 layout_mode = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
-modulate = Color(0.156675, 0.156675, 0.156675, 1)
+[node name="TextureRect6" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
-texture = ExtResource("1_mk3we")
+texture = SubResource("AtlasTexture_wy25b")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="TextureRect7" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture = SubResource("AtlasTexture_gt2il")
 expand_mode = 1
 
-[node name="TextureRect2" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
-modulate = Color(0.158472, 0.158472, 0.158472, 1)
+[node name="TextureRect8" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
-texture = ExtResource("1_mk3we")
+texture = SubResource("AtlasTexture_23cot")
 expand_mode = 1
 
-[node name="TextureRect3" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
-modulate = Color(0.158472, 0.158472, 0.158472, 1)
+[node name="TextureRect9" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
-texture = ExtResource("1_mk3we")
+texture = SubResource("AtlasTexture_7rsxd")
 expand_mode = 1
 
-[node name="TextureRect4" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
-modulate = Color(0.158472, 0.158472, 0.158472, 1)
+[node name="TextureRect10" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
-texture = ExtResource("1_mk3we")
-expand_mode = 1
-
-[node name="TextureRect5" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay"]
-modulate = Color(0.158472, 0.158472, 0.158472, 1)
-custom_minimum_size = Vector2(20, 20)
-layout_mode = 2
-texture = ExtResource("1_mk3we")
+texture = SubResource("AtlasTexture_04bjk")
 expand_mode = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UpgradePanel/Panel/VBoxContainer"]
@@ -242,6 +336,8 @@ alignment = 1
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 focus_mode = 0
+theme_override_fonts/font = ExtResource("2_q3l7l")
+theme_override_font_sizes/font_size = 12
 theme_override_styles/normal = SubResource("StyleBoxFlat_1kkbf")
 text = "Sell: $xxxxx"
 
@@ -249,8 +345,137 @@ text = "Sell: $xxxxx"
 custom_minimum_size = Vector2(100, 32)
 layout_mode = 2
 focus_mode = 0
+theme_override_fonts/font = ExtResource("2_q3l7l")
+theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_ipgo4")
 text = "First"
+
+[node name="TextureRect" type="TextureRect" parent="UpgradePanel/Panel"]
+z_index = -1
+layout_mode = 0
+offset_left = 459.0
+offset_top = 46.0
+offset_right = 841.0
+offset_bottom = 270.0
+texture = SubResource("AtlasTexture_tfrpb")
+stretch_mode = 1
+
+[node name="TowerStats" type="HBoxContainer" parent="UpgradePanel/Panel/TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -253.5
+offset_top = -88.0
+offset_right = 253.5
+offset_bottom = 88.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="StatNames" type="VBoxContainer" parent="UpgradePanel/Panel/TextureRect/TowerStats"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="Damage" type="TextureRect" parent="UpgradePanel/Panel/TextureRect/TowerStats/StatNames"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+texture = SubResource("AtlasTexture_pr87s")
+stretch_mode = 5
+
+[node name="Range" type="TextureRect" parent="UpgradePanel/Panel/TextureRect/TowerStats/StatNames"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+texture = SubResource("AtlasTexture_61jkw")
+stretch_mode = 5
+
+[node name="Cooldown" type="TextureRect" parent="UpgradePanel/Panel/TextureRect/TowerStats/StatNames"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+texture = SubResource("AtlasTexture_icwlu")
+stretch_mode = 5
+
+[node name="TotalDmg" type="TextureRect" parent="UpgradePanel/Panel/TextureRect/TowerStats/StatNames"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+texture = SubResource("AtlasTexture_65777")
+stretch_mode = 5
+
+[node name="StatValues" type="VBoxContainer" parent="UpgradePanel/Panel/TextureRect/TowerStats"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="damage" type="Label" parent="UpgradePanel/Panel/TextureRect/TowerStats/StatValues"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_q3l7l")
+theme_override_font_sizes/font_size = 40
+text = "x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="range" type="Label" parent="UpgradePanel/Panel/TextureRect/TowerStats/StatValues"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_q3l7l")
+theme_override_font_sizes/font_size = 40
+text = "x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="cooldown" type="Label" parent="UpgradePanel/Panel/TextureRect/TowerStats/StatValues"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_q3l7l")
+theme_override_font_sizes/font_size = 40
+text = "x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DamageDealt" type="Label" parent="UpgradePanel/Panel/TextureRect/TowerStats/StatValues"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_q3l7l")
+theme_override_font_sizes/font_size = 40
+text = "x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TowerName" type="Label" parent="UpgradePanel/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -236.5
+offset_top = 37.8571
+offset_right = 236.5
+offset_bottom = 78.8571
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0.620607, 0.788678, 1)
+theme_override_fonts/font = ExtResource("2_q3l7l")
+theme_override_font_sizes/font_size = 40
+text = "TowerName_PlaceHolder"
+horizontal_alignment = 1
+
+[node name="CloseMenuButton" type="TextureButton" parent="UpgradePanel/Panel"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+offset_left = 376.429
+offset_top = 525.0
+offset_right = 406.429
+offset_bottom = 555.0
+focus_mode = 0
+texture_normal = SubResource("AtlasTexture_0h7le")
+stretch_mode = 4
 
 [node name="Area2D" type="Area2D" parent="UpgradePanel"]
 
@@ -260,8 +485,8 @@ position = Vector2(170.33, 306.419)
 shape = SubResource("RectangleShape2D_65vv1")
 disabled = true
 
-[connection signal="pressed" from="UpgradePanel/Panel/VBoxContainer/HBoxContainer2/CloseMenuButton" to="UpgradePanel" method="_on_close_menu_button_pressed"]
 [connection signal="pressed" from="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/PathAUpgradeButton" to="UpgradePanel" method="_on_path_a_upgrade_button_pressed"]
 [connection signal="pressed" from="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/PathBUpgradeButton" to="UpgradePanel" method="_on_path_b_upgrade_button_pressed"]
 [connection signal="pressed" from="UpgradePanel/Panel/VBoxContainer/HBoxContainer/SellTower" to="UpgradePanel" method="_on_sell_tower_pressed"]
 [connection signal="pressed" from="UpgradePanel/Panel/VBoxContainer/HBoxContainer/ChangeTargeting" to="UpgradePanel" method="_on_change_targeting_pressed"]
+[connection signal="pressed" from="UpgradePanel/Panel/CloseMenuButton" to="UpgradePanel" method="_on_close_menu_button_pressed"]

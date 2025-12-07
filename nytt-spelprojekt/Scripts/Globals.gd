@@ -28,12 +28,20 @@ func _damage(damage_dealt, targeted_enemy) -> void:
 		targeted_enemy.current_health -= damage_dealt
 
 func _format_number(n: int) -> String: #Gör om t.ex. 1000000 -> 1,000,000
-	var s = str(n)
-	var result = ""
-	var count = 0
-	for i in range(s.length() - 1, -1, -1):
-		result = s[i] + result
-		count += 1
-		if count % 3 == 0 and i != 0:
-			result = "," + result
-	return result
+	if n < 1000: #Om numret är under 1000 behöver det inte formatteras
+		return str(n)
+	else:
+		var s = str(n)
+		var result: String
+		var numbers_added = 0
+		
+		s = s.reverse() #Vänder på stringen för att få "," på rätt ställen
+		
+		for numbers in s:
+			if numbers_added % 3 == 0 and numbers_added != 0: # != 0 för att 0/3 = 0
+				result += "," #Om tre siffror blivit tillagda ska ett komma in
+			result += numbers
+			numbers_added += 1
+		result = result.reverse() #Vänder tillbaks string så att det blir rätt håll
+		
+		return result
