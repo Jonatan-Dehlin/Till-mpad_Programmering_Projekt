@@ -36,7 +36,7 @@ var UpgradeBCosts = {1:0,2:0,3:0,4:0,5:0}
 func _ready() -> void:
 	parent = get_parent().get_parent()
 	print(parent)
-	$Panel/TowerName.text = parent.TowerName
+	$Panel/TowerName.text = parent.name
 	
 	UpgradeACosts = parent.UpgradeAPrices
 	UpgradeBCosts = parent.UpgradeBPrices

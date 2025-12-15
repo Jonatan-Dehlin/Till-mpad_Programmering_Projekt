@@ -10,6 +10,7 @@ var enemy_base_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion"
 var enemy_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
 var enemies_speed = {"FireBug":100,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
 var enemy_base_reward = {"FireBug":10,"LeafBug":20,"MagmaCrab":50,"Scorpion":100}
+
 var current_health_factor: float = 1
 
 func _ready() -> void:

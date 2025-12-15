@@ -18,9 +18,9 @@ var TowersTier3 = ["wizard_tower.tscn"]
 var TowersTier4 = ["wizard_tower.tscn"]
 var TowersTier5 = ["wizard_tower.tscn"]
 
-var TraitsTier1 = ["Rapid I", "Strong I", "Vision I"]
-var TraitsTier2 = ["Rapid II", "Strong II", "Vision II"]
-var TraitsTier3 = ["Rapid III", "Strong III", "Vision III"]
+var TraitsTier1 = ["Rapid_I", "Strong_I", "Vision_I"]
+var TraitsTier2 = ["Rapid_II", "Strong_II", "Vision_II"]
+var TraitsTier3 = ["Rapid_III", "Strong_III", "Vision_III"]
 var TraitsTier4 = ["Lightning", "Unbeatable", "Hawkeye", "Midas"]
 var TraitsTier5 = ["Singularity"]
 
@@ -61,6 +61,8 @@ func _add_panels():
 		HboxConatiner.add_child(NewPanel)
 
 func gamble(ChestID):
+	ChestID = str(ChestID)
+	
 	_modify_drop_rates(ChestID)
 	_add_panels()
 
@@ -85,26 +87,32 @@ func gamble(ChestID):
 		elapsed_time += get_process_delta_time()
 	
 	await get_tree().create_timer(2).timeout
-	get_parent()._open_chest(ChestID, true)
-	_grant_gamble_reward()
+	if ChestID != "Trait":
+		get_parent()._open_chest(ChestID, true)
+	return "ScrollFinished"
 
 func _modify_drop_rates(ChestID):
-	if ChestID == 1:
+	ChestID = str(ChestID)
+	
+	if ChestID == "1":
 		weight = [["Blue",500],["Purple",250],["Pink",200],["Red",40],["Gold",10]]
-	elif ChestID == 2:
+	elif ChestID == "2":
 		weight = [["Blue",450],["Purple",250],["Pink",200],["Red",70],["Gold",30]]
-	elif ChestID == 3:
+	elif ChestID == "3":
 		weight = [["Blue",400],["Purple",250],["Pink",200],["Red",100],["Gold",50]]
-	elif ChestID == 4:
+	elif ChestID == "4":
 		weight = [["Blue",350],["Purple",250],["Pink",200],["Red",130],["Gold",70]]
-	elif ChestID == 5:
+	elif ChestID == "5":
 		weight = [["Blue",300],["Purple",250],["Pink",200],["Red",180],["Gold",70]]
-	elif ChestID == 6:
+	elif ChestID == "6":
 		weight = [["Blue",250],["Purple",250],["Pink",200],["Red",200],["Gold",100]]
-	elif ChestID == 7:
+	elif ChestID == "7":
 		weight = [["Blue",200],["Purple",250],["Pink",200],["Red",250],["Gold",100]]
-	elif ChestID == 8:
+	elif ChestID == "8":
 		weight = [["Blue",150],["Purple",200],["Pink",200],["Red",300],["Gold",150]]
+	
+	elif ChestID == "Trait": #För traits
+		weight = [["Blue",250],["Purple",250],["Pink",200],["Red",200],["Gold",100]]
 
 func _grant_gamble_reward():
 	var centerpos = Vector2(960,425)  # Vector2, globalt
@@ -112,7 +120,16 @@ func _grant_gamble_reward():
 		# Om panel ligger direkt under den globala positionen
 		var global_rect = Rect2(panel.global_position, panel.size)
 		if global_rect.has_point(centerpos):
-			print("Panel under punkten:", panel.name)
-			print("Du fick en:",panel.get_child(0).color)
-			break
-	queue_free()
+			var rarityTier: String
+			if panel.get_child(0).color == Color(0,0,1):
+				rarityTier = TraitsTier1.pick_random()
+			elif panel.get_child(0).color == Color(0.6,0,1):
+				rarityTier = TraitsTier2.pick_random()
+			elif panel.get_child(0).color == Color(1,0,1):
+				rarityTier = TraitsTier3.pick_random()
+			elif panel.get_child(0).color == Color(1,0,0):
+				rarityTier = TraitsTier4.pick_random()
+			elif panel.get_child(0).color == Color(1,0.843,0):
+				rarityTier = TraitsTier4.pick_random()
+			queue_free()
+			return rarityTier

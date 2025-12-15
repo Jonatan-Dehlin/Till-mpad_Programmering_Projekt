@@ -4,9 +4,15 @@ extends Control
 @onready var MainMenu = $MainMenu
 @onready var MapContainers = $ChooseMap/ScrollContainer/HBoxContainer.get_children()
 @onready var TestChest = $Shop/ScrollContainer/Chests/Chest1/Chest1Button
+
 @onready var InventoryButton: TextureButton = $MainMenu/BottomPanel/Buttons/Inventory
 @onready var InventoryButtonPlaceholder: TextureRect = $Inventory/InventoryPlaceHolderBackground
 @onready var InventoryGrid: GridContainer = $Inventory/ScrollContainer/InventoryGrid
+
+@onready var TraitInventoryGrid: GridContainer = $Traits/ScrollContainer/GridContainer
+@onready var TraitSelectedTower: CenterContainer = $Traits/CenterContainer
+@onready var CurrentTraitLabel: Label = $Traits/PurchaseTraitReroll2/CenterContainer/CurrentTrait
+
 @onready var PlayButton: TextureButton = $MainMenu/BottomPanel/Buttons/Play
 @onready var ShopButton: TextureButton = $MainMenu/BottomPanel/Buttons/Shop
 @onready var transitions: AnimationPlayer = $MenuTransitions
@@ -42,6 +48,9 @@ var PlayerStats = {"Coins": 0, "Diamonds": 0, "Level": 0, "EXP": 0}
 var PlayerInventory = []
 var EquippedTowers = []
 
+#Trait Reroll variables
+var selected_trait_reroll_tower
+
 #Game variables
 var WaveDataFile = "user://WaveData.txt"
 var StartOrSkipPressed: bool = false
@@ -58,6 +67,7 @@ var display_cash: int
 var selected_menu: String = "Main"
 
 func _ready() -> void:
+	
 	var NewGamblePanel = Gamble.duplicate()
 	add_child(NewGamblePanel)
 	NewGamblePanel._ready()
@@ -80,9 +90,18 @@ func _ready() -> void:
 	_load_inventory()
 	_update_selected_towers()
 	_update_save_file()
+	_update_tower_buttons()
 	_read_wave_data(1)
 
 func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("Space"):
+		var new_number = int(PlayerInventory[0].split(",")[1].replace("LVL:",""))
+		PlayerInventory[0] = PlayerInventory[0].replace("LVL:1","LVL:2")
+		new_number += 1
+		_update_save_file()
+		
+	
+	
 	var diff = Globals.cash - display_cash
 
 	# Bestäm steglängd baserat på avståndet
@@ -152,6 +171,7 @@ func _load_inventory():
 		_update_inventory()
 
 func _update_inventory():
+	var id = 0
 	for towers in PlayerInventory:
 		var inventoryTowerDirectory = str(towers.split(",")[0] + ".tscn")
 		var tower = load("res://Scenes/Towers/" + inventoryTowerDirectory)
@@ -166,9 +186,16 @@ func _update_inventory():
 		DuplicateButton.icon.atlas = instance.get_node("TowerSprite").texture
 		DuplicateButton.get_node("TowerName").text = instance.name
 		DuplicateButton.get_node("TowerLevel").text = str(towers.split(",")[1])
-			
+		
+		Duplicate.set_meta("Index",id)
+		id += 1
 		Duplicate.visible = true
+		
+		var Duplicate2 = Duplicate.duplicate()
+		
+		#Lägg till i inventory, men också listan i Trait-menyn
 		InventoryGrid.add_child(Duplicate)
+		TraitInventoryGrid.add_child(Duplicate2)
 
 func _update_selected_towers():
 	
@@ -193,6 +220,7 @@ func _update_save_file():
 			lines.append(file.get_line())
 		file.close()
 		
+		#Save Player Stats
 		for line in range(lines.size()):
 			var stripped: String = lines[line].replace(" ", "").replace("	","")
 			
@@ -204,6 +232,18 @@ func _update_save_file():
 				lines[line] = "	COINS: " + str(PlayerStats["Coins"])
 			elif stripped.begins_with("DIAMONDS:"):
 				lines[line] = "	DIAMONDS: " + str(PlayerStats["Diamonds"])
+		#Save Tower Stats
+		var TowersFound = false
+		var index = 0
+		for line in range(lines.size()):
+			var stripped: String = lines[line].replace(" ", "").replace("	","")
+			
+			if TowersFound and stripped != "":
+				lines[line] = PlayerInventory[index]
+				index += 1
+			if stripped.contains("TOWERS:"):
+				TowersFound = true
+		file.close()
 		
 		file = FileAccess.open(PlayerStatFile, FileAccess.WRITE)
 		for line in lines:
@@ -218,6 +258,12 @@ func _update_save_file():
 		EXPProgressBar.max_value = _calculate_required_EXP()
 		EXPProgressBar.value = PlayerStats["EXP"]
 		PlayerEXPLabel.text = str(PlayerStats["EXP"]) + "/" + str(_calculate_required_EXP())
+
+func _update_tower_buttons():
+	for towers in TraitInventoryGrid.get_children():
+		var button: Button = towers.get_child(0)
+		
+		button.pressed.connect(_trait_reroll.bind(towers))
 
 func _calculate_required_EXP() -> int:
 	var BaseEXPRequirement: int = 100
@@ -243,6 +289,36 @@ func _open_chest(chestID, reset: bool):
 		var chest: Button = Chests.get_node("Chest" + str(chestID)).get_child(0)
 		chest.icon.region.position.y -= 96
 
+func _trait_reroll(tower: TextureRect):
+	var Duplicate = tower.duplicate()
+	
+	if TraitSelectedTower.get_child_count() != 0:
+		TraitSelectedTower.get_child(0).queue_free()
+	TraitSelectedTower.add_child(Duplicate)
+	selected_trait_reroll_tower = tower
+	
+	var TraitLabel: String
+	if PlayerInventory[tower.get_meta("Index")].split(",")[2].contains("_"):
+		TraitLabel = PlayerInventory[tower.get_meta("Index")].split(",")[2].replace("_"," ")
+	else:
+		TraitLabel = PlayerInventory[tower.get_meta("Index")].split(",")[2]
+		print("Else")
+	CurrentTraitLabel.text = TraitLabel.replace("TRAIT:","")
+
+func _trait_change(NewTrait, tower):
+	print(PlayerInventory[tower.get_meta("Index")])
+	print(NewTrait)
+	var split = PlayerInventory[tower.get_meta("Index")].split(",")   # ["TOWER_NAME", "LVL:XXX", "TRAIT:XXX", "SLOT:XX"]
+	
+	for i in range(split.size()):
+		if split[i].begins_with("TRAIT:"):
+			split[i] = "TRAIT:" + NewTrait
+			CurrentTraitLabel.text = NewTrait
+	
+	var joined = ",".join(split)
+	PlayerInventory[tower.get_meta("Index")] = joined
+	_update_save_file()
+	
 ############# PLAY FUNCTIONS ##############
 func _start_play_mode():
 	Playing = true
@@ -398,3 +474,24 @@ func _on_next_wave_timer_timeout() -> void:
 	_wave_manager(Globals.current_wave)
 	$HUD/StartWaveButton.visible = false
 	SkipTimer.start()
+
+func _on_reroll_trait_button_pressed() -> void:
+	if selected_trait_reroll_tower != null:
+		var NewGamblePanel = Gamble.duplicate()
+		add_child(NewGamblePanel)
+		NewGamblePanel._ready()
+		GambleMenu = NewGamblePanel
+		GambleMenu.visible = true
+		if ((await GambleMenu.gamble("Trait")) == "ScrollFinished"):
+			var reward = GambleMenu._grant_gamble_reward()
+			_trait_change(reward,selected_trait_reroll_tower)
+
+func _on_trait_menu_button_pressed() -> void:
+	if selected_menu == "Shop":
+		transitions.play("TraitTransition")
+		selected_menu = "Trait"
+
+func _on_return_to_shop_menu_pressed() -> void:
+	if selected_menu == "Trait":
+		transitions.play("ResetTrait")
+		selected_menu = "Shop"

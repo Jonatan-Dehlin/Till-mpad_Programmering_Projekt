@@ -1,11 +1,11 @@
 extends Node2D
 
+class_name Tower
+
 var enemies_in_range: Array = []
 var is_attacking: bool = false
 var targeted_enemy
 var hovering_over_tower: bool = false
-
-var TowerName = "Wizard Tower"
 
 #Tower Stats
 var stats = {"damage":50,
