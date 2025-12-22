@@ -2,12 +2,16 @@ extends Node2D
 
 class_name Tower
 
+var TowerName = "Wizard Tower"
+
 var enemies_in_range: Array = []
 var is_attacking: bool = false
 var targeted_enemy
 var hovering_over_tower: bool = false
 
 #Tower Stats
+var Trait: String
+var Level: int
 var stats = {"damage":50,
 			"range":250,
 			"cooldown":1,
@@ -22,8 +26,6 @@ var total_cash_spent: int = 100
 var targeting: String = "First"
 
 @export var sell_value: int = place_cost * 0.7 #70% sellback
-@export var LVL: int = 1
-
 
 var upgrade_level = 1
 
@@ -65,21 +67,30 @@ var UpgradeBPrices = {1:50,2:100,3:1400,4:5900,5:11000}
 @onready var UniqueRangeShape: CircleShape2D
 
 
-func _ready() -> void: #Används för att ställa in stats, när tornet placeras och när det upgraderas
-	z_index = int(position.y)
-	UniqueRangeShape = RangeShape.duplicate()
-	$Range/CollisionShape2D.shape = UniqueRangeShape
-	_update_stats(null)
+func _ready() -> void: # Används för att ställa in stats, när tornet placeras och när det upgraderas
+	Trait = self.get_meta("Trait")
+	Level = self.get_meta("Level")
+	z_index = int(position.y) # Z index anpassas för att torn ska kunna placeras nära varandra i y-led utan överlappningsproblem
+	UniqueRangeShape = RangeShape.duplicate() # Range shapen dupliceras för att alla torn inte ska dela samma range
+	$Range/CollisionShape2D.shape = UniqueRangeShape # Den nya duplicerade range shapen appliceras
+	_apply_trait_modifiers()
+	_update_stats(null) # Uppdaterar stats utan hänsyn till A eller B upgrade paths
+
+func _apply_trait_modifiers():
+	var modifiers = Globals.TraitModifiers[Trait]
+	for stat in stats:
+		if stat != "DamageDealt":
+			stats[stat] *= modifiers[stat]
 
 func _update_stats(AorB):
-	UniqueRangeShape.radius = stats["range"] #Ställer in range
-	anim.speed_scale = stats["cooldown"]
+	UniqueRangeShape.radius = stats["range"] # Ställer in range
+	anim.speed_scale = stats["cooldown"] # Ställer in attack speed
 	if UpgradeA > 3 and AorB == "A":
 		TowerSprite.frame = UpgradeA - 3
 		TowerOutline.frame = TowerSprite.frame
 		if UpgradeA == 4:
-			Weapon.position.y -= 8
-			Weapon.get_node("WeaponSprite").texture = weapon_sprite2
+			Weapon.position.y -= 8 # Eftersom den nya tornbasen är lite högre måste vapnets plats anpassas
+			Weapon.get_node("WeaponSprite").texture = weapon_sprite2 # Vapnets sprite ändras ifall uppgraderingsnivån är 4 eller 5
 		elif UpgradeA == 5:
 			Weapon.position.y -= 7
 			Weapon.get_node("WeaponSprite").texture = weapon_sprite3

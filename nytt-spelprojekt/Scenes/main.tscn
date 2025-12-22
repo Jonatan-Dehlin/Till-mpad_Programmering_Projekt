@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://tbpoiyn0mbo1"]
+[gd_scene load_steps=66 format=3 uid="uid://tbpoiyn0mbo1"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_fip6x"]
 [ext_resource type="PackedScene" uid="uid://cwhs2ydv1qcji" path="res://Scenes/tower_placer.tscn" id="2_jo2xf"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/medieval.png" id="2_ral5c"]
 [ext_resource type="Texture2D" uid="uid://dfyhvur3oujdf" path="res://Fantasy RPG (Toony) 32x32.png" id="3_baln0"]
 [ext_resource type="Texture2D" uid="uid://c0mv7l0xunohp" path="res://Skärmavbild 2025-11-18 kl. 15.15.56.png" id="3_wdan3"]
+[ext_resource type="Texture2D" uid="uid://2dyamd5eme8k" path="res://#1 - Transparent Icons.png" id="7_h2fuq"]
 [ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="7_ovdqn"]
 
 [sub_resource type="Animation" id="Animation_nsful"]
@@ -229,6 +230,32 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5)
 }
 
+[sub_resource type="Animation" id="Animation_tgykk"]
+resource_name = "ResetTrait"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Traits:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Traits:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -1080, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+
 [sub_resource type="Animation" id="Animation_btpyr"]
 resource_name = "ShopTransition"
 length = 0.5
@@ -278,32 +305,6 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "handle_modes": PackedInt32Array(0, 0),
 "points": PackedFloat32Array(-1080, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.5)
-}
-
-[sub_resource type="Animation" id="Animation_tgykk"]
-resource_name = "ResetTrait"
-length = 0.5
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../Traits:position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 0.5)
-}
-tracks/1/type = "bezier"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../Traits:position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, -1080, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 0.5)
 }
 
@@ -434,6 +435,10 @@ region = Rect2(517, 384, 118, 32)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_syglp"]
 texture = SubResource("AtlasTexture_tcm8e")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_kidrv"]
+atlas = ExtResource("7_h2fuq")
+region = Rect2(131, 36, 27, 25)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_jt2w2"]
 atlas = ExtResource("2_ral5c")
 region = Rect2(64, 96, 48, 64)
@@ -459,6 +464,10 @@ font_size = 50
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_507ct"]
 region = Rect2(0, 0, 64, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yn0ca"]
+atlas = ExtResource("7_h2fuq")
+region = Rect2(408, 42, 38, 11)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x2mkn"]
 region = Rect2(0, 0, 64, 0)
@@ -1044,7 +1053,7 @@ offset_left = 158.0
 offset_top = 9.0
 offset_right = 198.0
 offset_bottom = 49.0
-texture = ExtResource("2_l7kl1")
+texture = ExtResource("7_h2fuq")
 expand_mode = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Inventory"]
@@ -2057,9 +2066,8 @@ vertical_alignment = 1
 
 [node name="Traits" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 1920.0
 offset_top = -1080.0
-offset_right = 3840.0
+offset_right = 1920.0
 texture = SubResource("AtlasTexture_6wws7")
 
 [node name="Label" type="Label" parent="Traits"]
@@ -2095,6 +2103,7 @@ grow_vertical = 2
 scale = Vector2(1.7, 1.7)
 
 [node name="InventoryPlaceHolderBackground" type="TextureRect" parent="Traits/CenterContainer"]
+visible = false
 custom_minimum_size = Vector2(250, 400)
 layout_mode = 2
 texture = SubResource("AtlasTexture_s5ptr")
@@ -2148,12 +2157,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TraitIcon" type="TextureRect" parent="Traits/CenterContainer/InventoryPlaceHolderBackground/InventoryPlaceholder"]
+visible = false
 layout_mode = 0
 offset_left = 158.0
 offset_top = 9.0
 offset_right = 198.0
 offset_bottom = 49.0
-texture = ExtResource("2_l7kl1")
+texture = SubResource("AtlasTexture_kidrv")
 expand_mode = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Traits"]
@@ -2176,13 +2186,13 @@ theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 50
 columns = 2
 
-[node name="InventoryPlaceHolderBackground" type="TextureRect" parent="Traits/ScrollContainer/GridContainer"]
+[node name="InventoryPlaceHolderBackground" type="TextureRect" parent="Traits/ScrollContainer"]
 visible = false
 custom_minimum_size = Vector2(250, 400)
 layout_mode = 2
 texture = SubResource("AtlasTexture_s5ptr")
 
-[node name="InventoryPlaceholder" type="Button" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground"]
+[node name="InventoryPlaceholder" type="Button" parent="Traits/ScrollContainer/InventoryPlaceHolderBackground"]
 layout_mode = 2
 offset_left = 16.0
 offset_top = 45.0
@@ -2205,7 +2215,7 @@ icon_alignment = 1
 vertical_icon_alignment = 2
 expand_icon = true
 
-[node name="TowerName" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground/InventoryPlaceholder"]
+[node name="TowerName" type="Label" parent="Traits/ScrollContainer/InventoryPlaceHolderBackground/InventoryPlaceholder"]
 layout_mode = 1
 offset_left = 9.0
 offset_top = -22.0
@@ -2217,7 +2227,7 @@ text = "WIZARD TOWER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TowerLevel" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground/InventoryPlaceholder"]
+[node name="TowerLevel" type="Label" parent="Traits/ScrollContainer/InventoryPlaceHolderBackground/InventoryPlaceholder"]
 modulate = Color(0.873865, 4.71681e-06, 6.73831e-07, 1)
 layout_mode = 1
 offset_left = 9.0
@@ -2230,448 +2240,7 @@ text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TraitIcon" type="TextureRect" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground/InventoryPlaceholder"]
-layout_mode = 0
-offset_left = 158.0
-offset_top = 9.0
-offset_right = 198.0
-offset_bottom = 49.0
-texture = ExtResource("2_l7kl1")
-expand_mode = 1
-
-[node name="InventoryPlaceHolderBackground2" type="TextureRect" parent="Traits/ScrollContainer/GridContainer"]
-visible = false
-custom_minimum_size = Vector2(250, 400)
-layout_mode = 2
-texture = SubResource("AtlasTexture_s5ptr")
-
-[node name="InventoryPlaceholder" type="Button" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground2"]
-layout_mode = 2
-offset_left = 16.0
-offset_top = 45.0
-offset_right = 234.0
-offset_bottom = 381.0
-focus_mode = 0
-theme_override_constants/h_separation = 45
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_76ib4")
-icon = SubResource("AtlasTexture_fneho")
-autowrap_mode = 3
-icon_alignment = 1
-vertical_icon_alignment = 2
-expand_icon = true
-
-[node name="TowerName" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground2/InventoryPlaceholder"]
-layout_mode = 1
-offset_left = 9.0
-offset_top = -22.0
-offset_right = 212.0
-offset_bottom = 9.0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 30
-text = "WIZARD TOWER"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TowerLevel" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground2/InventoryPlaceholder"]
-modulate = Color(0.873865, 4.71681e-06, 6.73831e-07, 1)
-layout_mode = 1
-offset_left = 9.0
-offset_top = 12.0
-offset_right = 77.0
-offset_bottom = 53.0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 35
-text = "100"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TraitIcon" type="TextureRect" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground2/InventoryPlaceholder"]
-layout_mode = 0
-offset_left = 158.0
-offset_top = 9.0
-offset_right = 198.0
-offset_bottom = 49.0
-texture = ExtResource("2_l7kl1")
-expand_mode = 1
-
-[node name="InventoryPlaceHolderBackground3" type="TextureRect" parent="Traits/ScrollContainer/GridContainer"]
-visible = false
-custom_minimum_size = Vector2(250, 400)
-layout_mode = 2
-texture = SubResource("AtlasTexture_s5ptr")
-
-[node name="InventoryPlaceholder" type="Button" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground3"]
-layout_mode = 2
-offset_left = 16.0
-offset_top = 45.0
-offset_right = 234.0
-offset_bottom = 381.0
-focus_mode = 0
-theme_override_constants/h_separation = 45
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_76ib4")
-icon = SubResource("AtlasTexture_fneho")
-autowrap_mode = 3
-icon_alignment = 1
-vertical_icon_alignment = 2
-expand_icon = true
-
-[node name="TowerName" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground3/InventoryPlaceholder"]
-layout_mode = 1
-offset_left = 9.0
-offset_top = -22.0
-offset_right = 212.0
-offset_bottom = 9.0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 30
-text = "WIZARD TOWER"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TowerLevel" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground3/InventoryPlaceholder"]
-modulate = Color(0.873865, 4.71681e-06, 6.73831e-07, 1)
-layout_mode = 1
-offset_left = 9.0
-offset_top = 12.0
-offset_right = 77.0
-offset_bottom = 53.0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 35
-text = "100"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TraitIcon" type="TextureRect" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground3/InventoryPlaceholder"]
-layout_mode = 0
-offset_left = 158.0
-offset_top = 9.0
-offset_right = 198.0
-offset_bottom = 49.0
-texture = ExtResource("2_l7kl1")
-expand_mode = 1
-
-[node name="InventoryPlaceHolderBackground4" type="TextureRect" parent="Traits/ScrollContainer/GridContainer"]
-visible = false
-custom_minimum_size = Vector2(250, 400)
-layout_mode = 2
-texture = SubResource("AtlasTexture_s5ptr")
-
-[node name="InventoryPlaceholder" type="Button" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground4"]
-layout_mode = 2
-offset_left = 16.0
-offset_top = 45.0
-offset_right = 234.0
-offset_bottom = 381.0
-focus_mode = 0
-theme_override_constants/h_separation = 45
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_76ib4")
-icon = SubResource("AtlasTexture_fneho")
-autowrap_mode = 3
-icon_alignment = 1
-vertical_icon_alignment = 2
-expand_icon = true
-
-[node name="TowerName" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground4/InventoryPlaceholder"]
-layout_mode = 1
-offset_left = 9.0
-offset_top = -22.0
-offset_right = 212.0
-offset_bottom = 9.0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 30
-text = "WIZARD TOWER"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TowerLevel" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground4/InventoryPlaceholder"]
-modulate = Color(0.873865, 4.71681e-06, 6.73831e-07, 1)
-layout_mode = 1
-offset_left = 9.0
-offset_top = 12.0
-offset_right = 77.0
-offset_bottom = 53.0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 35
-text = "100"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TraitIcon" type="TextureRect" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground4/InventoryPlaceholder"]
-layout_mode = 0
-offset_left = 158.0
-offset_top = 9.0
-offset_right = 198.0
-offset_bottom = 49.0
-texture = ExtResource("2_l7kl1")
-expand_mode = 1
-
-[node name="InventoryPlaceHolderBackground5" type="TextureRect" parent="Traits/ScrollContainer/GridContainer"]
-visible = false
-custom_minimum_size = Vector2(250, 400)
-layout_mode = 2
-texture = SubResource("AtlasTexture_s5ptr")
-
-[node name="InventoryPlaceholder" type="Button" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground5"]
-layout_mode = 2
-offset_left = 16.0
-offset_top = 45.0
-offset_right = 234.0
-offset_bottom = 381.0
-focus_mode = 0
-theme_override_constants/h_separation = 45
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_76ib4")
-icon = SubResource("AtlasTexture_fneho")
-autowrap_mode = 3
-icon_alignment = 1
-vertical_icon_alignment = 2
-expand_icon = true
-
-[node name="TowerName" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground5/InventoryPlaceholder"]
-layout_mode = 1
-offset_left = 9.0
-offset_top = -22.0
-offset_right = 212.0
-offset_bottom = 9.0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 30
-text = "WIZARD TOWER"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TowerLevel" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground5/InventoryPlaceholder"]
-modulate = Color(0.873865, 4.71681e-06, 6.73831e-07, 1)
-layout_mode = 1
-offset_left = 9.0
-offset_top = 12.0
-offset_right = 77.0
-offset_bottom = 53.0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 35
-text = "100"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TraitIcon" type="TextureRect" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground5/InventoryPlaceholder"]
-layout_mode = 0
-offset_left = 158.0
-offset_top = 9.0
-offset_right = 198.0
-offset_bottom = 49.0
-texture = ExtResource("2_l7kl1")
-expand_mode = 1
-
-[node name="InventoryPlaceHolderBackground6" type="TextureRect" parent="Traits/ScrollContainer/GridContainer"]
-visible = false
-custom_minimum_size = Vector2(250, 400)
-layout_mode = 2
-texture = SubResource("AtlasTexture_s5ptr")
-
-[node name="InventoryPlaceholder" type="Button" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground6"]
-layout_mode = 2
-offset_left = 16.0
-offset_top = 45.0
-offset_right = 234.0
-offset_bottom = 381.0
-focus_mode = 0
-theme_override_constants/h_separation = 45
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_76ib4")
-icon = SubResource("AtlasTexture_fneho")
-autowrap_mode = 3
-icon_alignment = 1
-vertical_icon_alignment = 2
-expand_icon = true
-
-[node name="TowerName" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground6/InventoryPlaceholder"]
-layout_mode = 1
-offset_left = 9.0
-offset_top = -22.0
-offset_right = 212.0
-offset_bottom = 9.0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 30
-text = "WIZARD TOWER"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TowerLevel" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground6/InventoryPlaceholder"]
-modulate = Color(0.873865, 4.71681e-06, 6.73831e-07, 1)
-layout_mode = 1
-offset_left = 9.0
-offset_top = 12.0
-offset_right = 77.0
-offset_bottom = 53.0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 35
-text = "100"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TraitIcon" type="TextureRect" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground6/InventoryPlaceholder"]
-layout_mode = 0
-offset_left = 158.0
-offset_top = 9.0
-offset_right = 198.0
-offset_bottom = 49.0
-texture = ExtResource("2_l7kl1")
-expand_mode = 1
-
-[node name="InventoryPlaceHolderBackground7" type="TextureRect" parent="Traits/ScrollContainer/GridContainer"]
-visible = false
-custom_minimum_size = Vector2(250, 400)
-layout_mode = 2
-texture = SubResource("AtlasTexture_s5ptr")
-
-[node name="InventoryPlaceholder" type="Button" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground7"]
-layout_mode = 2
-offset_left = 16.0
-offset_top = 45.0
-offset_right = 234.0
-offset_bottom = 381.0
-focus_mode = 0
-theme_override_constants/h_separation = 45
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_76ib4")
-icon = SubResource("AtlasTexture_fneho")
-autowrap_mode = 3
-icon_alignment = 1
-vertical_icon_alignment = 2
-expand_icon = true
-
-[node name="TowerName" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground7/InventoryPlaceholder"]
-layout_mode = 1
-offset_left = 9.0
-offset_top = -22.0
-offset_right = 212.0
-offset_bottom = 9.0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 30
-text = "WIZARD TOWER"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TowerLevel" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground7/InventoryPlaceholder"]
-modulate = Color(0.873865, 4.71681e-06, 6.73831e-07, 1)
-layout_mode = 1
-offset_left = 9.0
-offset_top = 12.0
-offset_right = 77.0
-offset_bottom = 53.0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 35
-text = "100"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TraitIcon" type="TextureRect" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground7/InventoryPlaceholder"]
-layout_mode = 0
-offset_left = 158.0
-offset_top = 9.0
-offset_right = 198.0
-offset_bottom = 49.0
-texture = ExtResource("2_l7kl1")
-expand_mode = 1
-
-[node name="InventoryPlaceHolderBackground8" type="TextureRect" parent="Traits/ScrollContainer/GridContainer"]
-visible = false
-custom_minimum_size = Vector2(250, 400)
-layout_mode = 2
-texture = SubResource("AtlasTexture_s5ptr")
-
-[node name="InventoryPlaceholder" type="Button" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground8"]
-layout_mode = 2
-offset_left = 16.0
-offset_top = 45.0
-offset_right = 234.0
-offset_bottom = 381.0
-focus_mode = 0
-theme_override_constants/h_separation = 45
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 50
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_76ib4")
-icon = SubResource("AtlasTexture_fneho")
-autowrap_mode = 3
-icon_alignment = 1
-vertical_icon_alignment = 2
-expand_icon = true
-
-[node name="TowerName" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground8/InventoryPlaceholder"]
-layout_mode = 1
-offset_left = 9.0
-offset_top = -22.0
-offset_right = 212.0
-offset_bottom = 9.0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 30
-text = "WIZARD TOWER"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TowerLevel" type="Label" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground8/InventoryPlaceholder"]
-modulate = Color(0.873865, 4.71681e-06, 6.73831e-07, 1)
-layout_mode = 1
-offset_left = 9.0
-offset_top = 12.0
-offset_right = 77.0
-offset_bottom = 53.0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 35
-text = "100"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TraitIcon" type="TextureRect" parent="Traits/ScrollContainer/GridContainer/InventoryPlaceHolderBackground8/InventoryPlaceholder"]
+[node name="TraitIcon" type="TextureRect" parent="Traits/ScrollContainer/InventoryPlaceHolderBackground/InventoryPlaceholder"]
 layout_mode = 0
 offset_left = 158.0
 offset_top = 9.0
@@ -2835,6 +2404,7 @@ alignment = 1
 [node name="RerollTraitButton" type="Button" parent="Traits/PurchaseTraitReroll/HBoxContainer"]
 custom_minimum_size = Vector2(150, 79)
 layout_mode = 2
+focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_mk24d")
 theme_override_styles/normal = SubResource("StyleBoxTexture_ev6a5")
@@ -2924,6 +2494,7 @@ alignment = 1
 [node name="WaveLabel" type="Label" parent="HUD/WHMdisplay/Numbers"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
 text = "Wave: x/y"
 label_settings = SubResource("LabelSettings_r0vqw")
 horizontal_alignment = 1
@@ -2931,6 +2502,7 @@ horizontal_alignment = 1
 [node name="HealthLabel" type="Label" parent="HUD/WHMdisplay/Numbers"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
 text = "Health: xxx"
 label_settings = SubResource("LabelSettings_r0vqw")
 horizontal_alignment = 1
@@ -2960,61 +2532,205 @@ alignment = 1
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 25
 text = "$xxxxx"
 icon = SubResource("AtlasTexture_507ct")
 icon_alignment = 1
 vertical_icon_alignment = 0
 metadata/Index = 0
 
+[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower1"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 22.3333
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "XXX"
+horizontal_alignment = 1
+
+[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower1"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 30.0
+grow_horizontal = 0
+texture = SubResource("AtlasTexture_yn0ca")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Tower2" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 25
 text = "$xxxxx"
 icon = SubResource("AtlasTexture_x2mkn")
 icon_alignment = 1
 vertical_icon_alignment = 0
 metadata/Index = 1
 
+[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower2"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 22.3333
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "XXX"
+horizontal_alignment = 1
+
+[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower2"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 30.0
+grow_horizontal = 0
+texture = SubResource("AtlasTexture_yn0ca")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Tower3" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 25
 text = "$xxxxx"
 icon = SubResource("AtlasTexture_kp3kk")
 icon_alignment = 1
 vertical_icon_alignment = 0
 metadata/Index = 2
 
+[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower3"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 22.3333
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "XXX"
+horizontal_alignment = 1
+
+[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower3"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 30.0
+grow_horizontal = 0
+texture = SubResource("AtlasTexture_yn0ca")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Tower4" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 25
 text = "$xxxxx"
 icon = SubResource("AtlasTexture_2h21v")
 icon_alignment = 1
 vertical_icon_alignment = 0
 metadata/Index = 3
 
+[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower4"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 22.3333
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "XXX"
+horizontal_alignment = 1
+
+[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower4"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 30.0
+grow_horizontal = 0
+texture = SubResource("AtlasTexture_yn0ca")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Tower5" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 25
 text = "$xxxxx"
 icon = SubResource("AtlasTexture_p0xgb")
 icon_alignment = 1
 vertical_icon_alignment = 0
 metadata/Index = 4
 
+[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower5"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 22.3333
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "XXX"
+horizontal_alignment = 1
+
+[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower5"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 30.0
+grow_horizontal = 0
+texture = SubResource("AtlasTexture_yn0ca")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Tower6" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 25
 text = "$xxxxx"
 icon = SubResource("AtlasTexture_7i8pr")
 icon_alignment = 1
 vertical_icon_alignment = 0
 metadata/Index = 5
+
+[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower6"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 22.3333
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "XXX"
+horizontal_alignment = 1
+
+[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower6"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 30.0
+grow_horizontal = 0
+texture = SubResource("AtlasTexture_yn0ca")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="StartWaveButton" type="Button" parent="HUD"]
 custom_minimum_size = Vector2(250, 100)

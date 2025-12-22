@@ -5,12 +5,15 @@ extends Control
 @onready var chests
 @onready var HboxConatiner: HBoxContainer = $Panel/ScrollContainer/HBoxContainer
 @onready var ReferencePanel: Panel = $ReferencePanel
+@onready var TraitChanceDisplay = get_parent().get_node("Traits").get_node("OddsTable").get_child(0).get_children()
 
 var weight = [["Blue",null],["Purple",null],["Pink",null],["Red",null],["Gold",null]]
 
 var TowerOrTrait: bool = false
 
 var SelectedTower
+
+var TraitIconAtlasDictionary = Globals.TraitIconAtlasDictionary
 
 var TowersTier1 = ["wizard_tower.tscn"]
 var TowersTier2 = ["wizard_tower.tscn"]
@@ -26,12 +29,18 @@ var TraitsTier5 = ["Singularity"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	TraitChanceDisplay = get_parent().get_node("Traits").get_node("OddsTable").get_child(0).get_children()
 	for Chests in get_parent().get_node("Shop").get_child(0).get_child(0).get_children():
 		_modify_drop_rates(int(Chests.name.replace("chest","")))
 		var index = 0
 		for colors in Chests.get_child(1).get_children():
 			colors.get_child(1).text = "%0.1f%%" % (float(weight[index][1]) / 10)
 			index += 1
+	_modify_drop_rates("Trait")
+	var index = 0
+	for colors in TraitChanceDisplay:
+		colors.get_child(1).text = "%0.1f%%" % (float(weight[index][1]) / 10)
+		index += 1
 
 func _add_panels():
 	for panels in range(200):
@@ -42,19 +51,54 @@ func _add_panels():
 			total += w[1]
 			cumulative.append(total)
 		
-		var NewPanel = ReferencePanel.duplicate()
+		var NewPanel = ReferencePanel.duplicate(true)
+		NewPanel.add_to_group("GamblePanel")
+		var NewPanelColor: ColorRect = NewPanel.get_child(0)
+		var NewPanelTexture: TextureRect = NewPanel.get_child(0).get_child(0).get_child(0)
+		NewPanelTexture.texture = NewPanelTexture.texture.duplicate() #Ser till att Texturen är unik
+		
+		var NewPanelText: Label = NewPanel.get_child(0).get_child(0).get_child(1)
 		var num = randi_range(1,total) 
 		
 		if num <= cumulative[0]:
-			NewPanel.get_child(0).color = Color(0,0,1)
+			var ChosenTrait = TraitsTier1.pick_random()
+			
+			NewPanelColor.color = Color(0,0,1) #Blå
+			NewPanelTexture.texture.region = TraitIconAtlasDictionary[ChosenTrait][0]
+			NewPanelTexture.self_modulate = TraitIconAtlasDictionary[ChosenTrait][1]
+			NewPanelText.text = ChosenTrait.replace("_"," ")
+		
 		elif num <= cumulative[1]:
-			NewPanel.get_child(0).color = Color(0.6,0,1)
+			var ChosenTrait = TraitsTier2.pick_random()
+			
+			NewPanelColor.color = Color(0.6,0,1) #Lila
+			NewPanelTexture.texture.region = TraitIconAtlasDictionary[ChosenTrait][0]
+			NewPanelTexture.self_modulate = TraitIconAtlasDictionary[ChosenTrait][1]
+			NewPanelText.text = ChosenTrait.replace("_"," ")
+			
 		elif num <= cumulative[2]:
-			NewPanel.get_child(0).color = Color(1,0,1)
+			var ChosenTrait = TraitsTier3.pick_random()
+			
+			NewPanelColor.color = Color(1,0,1) #Rosa
+			NewPanelTexture.texture.region = TraitIconAtlasDictionary[ChosenTrait][0]
+			NewPanelTexture.self_modulate = TraitIconAtlasDictionary[ChosenTrait][1]
+			NewPanelText.text = ChosenTrait.replace("_"," ")
+			
 		elif num <= cumulative[3]:
-			NewPanel.get_child(0).color = Color(1,0,0)
+			var ChosenTrait = TraitsTier4.pick_random()
+			
+			NewPanelColor.color = Color(1,0,0) #Röd
+			NewPanelTexture.texture.region = TraitIconAtlasDictionary[ChosenTrait][0]
+			NewPanelTexture.self_modulate = TraitIconAtlasDictionary[ChosenTrait][1]
+			NewPanelText.text = ChosenTrait.replace("_"," ")
+			
 		else:
-			NewPanel.get_child(0).color = Color(1,0.843,0)
+			var ChosenTrait = TraitsTier5.pick_random()
+			
+			NewPanelColor.color = Color(1,0.843,0) #Guld
+			NewPanelTexture.texture.region = TraitIconAtlasDictionary[ChosenTrait][0]
+			NewPanelTexture.self_modulate = TraitIconAtlasDictionary[ChosenTrait][1]
+			NewPanelText.text = ChosenTrait.replace("_"," ")
 
 
 		NewPanel.visible = true
@@ -120,16 +164,5 @@ func _grant_gamble_reward():
 		# Om panel ligger direkt under den globala positionen
 		var global_rect = Rect2(panel.global_position, panel.size)
 		if global_rect.has_point(centerpos):
-			var rarityTier: String
-			if panel.get_child(0).color == Color(0,0,1):
-				rarityTier = TraitsTier1.pick_random()
-			elif panel.get_child(0).color == Color(0.6,0,1):
-				rarityTier = TraitsTier2.pick_random()
-			elif panel.get_child(0).color == Color(1,0,1):
-				rarityTier = TraitsTier3.pick_random()
-			elif panel.get_child(0).color == Color(1,0,0):
-				rarityTier = TraitsTier4.pick_random()
-			elif panel.get_child(0).color == Color(1,0.843,0):
-				rarityTier = TraitsTier4.pick_random()
 			queue_free()
-			return rarityTier
+			return panel.get_child(0).get_child(0).get_child(1).text.replace(" ","_")

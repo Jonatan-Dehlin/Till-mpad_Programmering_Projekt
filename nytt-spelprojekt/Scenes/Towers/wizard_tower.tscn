@@ -87,6 +87,8 @@ _data = {
 
 [node name="Wizard Tower" type="Node2D"]
 script = ExtResource("1_peykl")
+metadata/Level = 1
+metadata/Trait = "none"
 
 [node name="TowerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_fxrtq")

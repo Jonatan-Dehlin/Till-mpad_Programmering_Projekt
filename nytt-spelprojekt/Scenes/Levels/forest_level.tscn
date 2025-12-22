@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://bfeq4givm5br0"]
+[gd_scene load_steps=11 format=4 uid="uid://bfeq4givm5br0"]
 
 [ext_resource type="Script" path="res://Scripts/camera.gd" id="1_0ftrl"]
 [ext_resource type="Texture2D" uid="uid://eougpdy8gqpo" path="res://Assets/Tiles/Tileset/PNGs/Grass Tileset.png" id="1_0hp4p"]
@@ -10586,12 +10586,15 @@ sources/2 = SubResource("TileSetAtlasSource_mfc5p")
 
 [sub_resource type="Curve2D" id="Curve2D_5bi5j"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 64, 0, 0, 0, 0, 0, 64, 208, 0, 0, 0, 0, 256, 208, 0, 0, 0, 0, 292, 182, 0, 0, 0, 0, 412, 182, 0, 0, 0, 0, 448, 208, 0, 0, 0, 0, 900, 206, 0, 0, 0, 0, 942, 225, 0, 0, 0, 0, 959, 256, 0, 0, 0, 0, 961, 790, 0, 0, 0, 0, 979, 833, 0, 0, 0, 0, 1012, 848, 0, 0, 0, 0, 1229, 849, 0, 0, 0, 0, 1266, 828, 0, 0, 0, 0, 1279, 796, 0, 0, 0, 0, 1279, 588, 0, 0, 0, 0, 1263, 548, 0, 0, 0, 0, 1223, 527, 0, 0, 0, 0, 1057, 528, 0, 0, 0, 0, 1021, 503, 0, 0, 0, 0, 901, 501, 0, 0, 0, 0, 864, 525, 0, 0, 0, 0, 701, 528, 0, 0, 0, 0, 659, 547, 0, 0, 0, 0, 641, 581, 0, 0, 0, 0, 640, 933, 0, 0, 0, 0, 660, 977, 0, 0, 0, 0, 700, 994, 0, 0, 0, 0, 1410, 993, 0, 0, 0, 0, 1455, 972, 0, 0, 0, 0, 1472, 939, 0, 0, 0, 0, 1472, 0)
+"points": PackedVector2Array(0, 0, 0, 0, 64, 0, 0, 0, 0, 0, 64, 208, 0, 0, 0, 0, 256, 208, 0, 0, 0, 0, 292, 182, 0, 0, 0, 0, 412, 182, 0, 0, 0, 0, 448, 208, 0, 0, 0, 0, 900, 206, 0, 0, 0, 0, 942, 225, 0, 0, 0, 0, 959, 256, 0, 0, 0, 0, 961, 790, 0, 0, 0, 0, 979, 833, 0, 0, 0, 0, 1012, 848, 0, 0, 0, 0, 1229, 849, 0, 0, 0, 0, 1266, 828, 0, 0, 0, 0, 1279, 796, 0, 0, 0, 0, 1279, 588, 0, 0, 0, 0, 1263, 548, 0, 0, 0, 0, 1223, 527, 0, 0, 0, 0, 1057, 528, 0, 0, 0, 0, 1021, 503, 0, 0, 0, 0, 901, 501, 0, 0, 0, 0, 864, 525, 0, 0, 0, 0, 701, 528, 0, 0, 0, 0, 659, 547, 0, 0, 0, 0, 641, 581, 0, 0, 0, 0, 640, 933, 0, 0, 0, 0, 660, 977, 0, 0, 0, 0, 700, 994, 0, 0, 0, 0, 1410, 993, 0, 0, 0, 0, 1455, 972, 0, 0, 0, 0, 1472, 939, 0, 0, 0, 0, 1472, -63)
 }
 point_count = 32
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0bbi1"]
 size = Vector2(78, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lpuj0"]
+size = Vector2(71, 122)
 
 [node name="ForestLevel" type="Node2D"]
 
@@ -10639,5 +10642,15 @@ collision_mask = 4
 position = Vector2(654, 461)
 shape = SubResource("RectangleShape2D_0bbi1")
 
+[node name="EnemyExit" type="Area2D" parent="."]
+position = Vector2(1472, -58)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyExit"]
+position = Vector2(0, 32)
+shape = SubResource("RectangleShape2D_lpuj0")
+
 [connection signal="body_entered" from="BrigdeEntered" to="EnemyPath/PathFollow2D" method="_on_brigde_entered_body_entered"]
 [connection signal="body_entered" from="BridgeLeft" to="EnemyPath/PathFollow2D" method="_on_bridge_left_body_entered"]
+[connection signal="body_entered" from="EnemyExit" to="EnemyPath/PathFollow2D" method="_on_enemy_exit_body_entered"]

@@ -18,6 +18,8 @@ extends Control
 @onready var transitions: AnimationPlayer = $MenuTransitions
 @onready var Shop = $Shop
 @onready var Chests = $Shop/ScrollContainer/Chests
+
+#Hotbar
 @onready var EquippedTowersButtons = $HUD/TowerHotbar/HBoxContainer.get_children()
 
 #Player Stat Labels (och EXP bar)
@@ -31,6 +33,7 @@ extends Control
 #Saker som är användbara ingame
 @onready var current_level = $LevelPlaceHolder
 @onready var MoneyLabel: Label = $HUD/WHMdisplay/Numbers/MoneyLabel
+@onready var HealthLabel: Label = $HUD/WHMdisplay/Numbers/HealthLabel
 @onready var WaveTimer: Timer = $HUD/NextWaveTimer
 @onready var SkipTimer: Timer = $HUD/SkipTimer
 
@@ -88,41 +91,35 @@ func _ready() -> void:
 	#Ladda information från spelarens fil
 	_load_player_stats()
 	_load_inventory()
-	_update_selected_towers()
+	_update_equipped_towers_buttons()
 	_update_save_file()
 	_update_tower_buttons()
 	_read_wave_data(1)
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("Space"):
-		var new_number = int(PlayerInventory[0].split(",")[1].replace("LVL:",""))
-		PlayerInventory[0] = PlayerInventory[0].replace("LVL:1","LVL:2")
-		new_number += 1
-		_update_save_file()
+	if Playing:
+		var diff = Globals.cash - display_cash
+
+		# animerar cash visaren
+		var amount := 1
+		var abs_diff = abs(diff)
+
+		if abs_diff > 50000:
+			amount = 2000
+		elif abs_diff > 20000:
+			amount = 1000
+		elif abs_diff > 10000:
+			amount = 500
+		elif abs_diff > 1000:
+			amount = 100
+		elif abs_diff > 100:
+			amount = 50
+
+		# sign gör att ovanstående fungerar oavsett om diff är negativ eller positiv
+		display_cash += sign(diff) * amount
 		
-	
-	
-	var diff = Globals.cash - display_cash
-
-	# Bestäm steglängd baserat på avståndet
-	var amount := 1
-	var abs_diff = abs(diff)
-
-	if abs_diff > 50000:
-		amount = 2000
-	elif abs_diff > 20000:
-		amount = 1000
-	elif abs_diff > 10000:
-		amount = 500
-	elif abs_diff > 1000:
-		amount = 100
-	elif abs_diff > 100:
-		amount = 50
-
-	# Lägg till eller dra ifrån med sign
-	display_cash += sign(diff) * amount
-	
-	MoneyLabel.text = "Money: $" + str(Globals._format_number(display_cash))
+		MoneyLabel.text = "Money: $" + str(Globals._format_number(display_cash))
+		HealthLabel.text = "HP: " + str(Globals.health)
 
 func _physics_process(delta: float) -> void:
 	if Playing and _detect_every_enemy_defeated():
@@ -171,6 +168,11 @@ func _load_inventory():
 		_update_inventory()
 
 func _update_inventory():
+	for items in range(InventoryGrid.get_child_count()):
+		InventoryGrid.get_child(items).queue_free()
+		TraitInventoryGrid.get_child(items).queue_free()
+		print("Tog bort child nr: " + str(items))
+	
 	var id = 0
 	for towers in PlayerInventory:
 		var inventoryTowerDirectory = str(towers.split(",")[0] + ".tscn")
@@ -187,6 +189,11 @@ func _update_inventory():
 		DuplicateButton.get_node("TowerName").text = instance.name
 		DuplicateButton.get_node("TowerLevel").text = str(towers.split(",")[1])
 		
+		var Atlas = AtlasTexture.new()
+		Atlas.atlas = DuplicateButton.get_node("TraitIcon").texture
+		Atlas.region = Globals.TraitIconAtlasDictionary[towers.split(",")[2].replace("TRAIT:","")][0]
+		DuplicateButton.get_node("TraitIcon").texture = Atlas
+		
 		Duplicate.set_meta("Index",id)
 		id += 1
 		Duplicate.visible = true
@@ -197,15 +204,31 @@ func _update_inventory():
 		InventoryGrid.add_child(Duplicate)
 		TraitInventoryGrid.add_child(Duplicate2)
 
-func _update_selected_towers():
-	
+func _update_equipped_towers_buttons(): #Hotbaren
 	for button: Button in EquippedTowersButtons:
 		for i in range(EquippedTowers.size()):
 			if button.get_meta("Index") == EquippedTowers[i][1]:
 				var tower = load("res://Scenes/Towers/" + str(EquippedTowers[i][0]).split(",")[0]+".tscn")
-				var instance = tower.instantiate()
+				var instance: Node2D = tower.instantiate()
+				
+				if EquippedTowers[i][0].split(",")[2].replace("TRAIT:","") == "Singularity":
+					instance.place_cost *= 1.5
+				
 				button.icon.atlas = instance.get_node("TowerSprite").texture
 				button.text = "$" + str(instance.place_cost)
+			
+				# Ställer in metadata för de torn som är i hotbaren
+				instance.set_meta("Level",int(EquippedTowers[i][0].split(",")[1].replace("LEVEL:","")))
+				instance.set_meta("Trait",EquippedTowers[i][0].split(",")[2].replace("TRAIT:",""))
+				
+				#Ställer in leveltexten
+				button.get_node("LevelLabel").text = str(instance.get_meta("Level"))
+				
+				#Ställer in traitikonens texture
+				button.get_node("TraitIcon").texture = button.get_node("TraitIcon").texture.duplicate(true)
+				button.get_node("TraitIcon").texture.region = Globals.TraitIconAtlasDictionary[instance.get_meta("Trait")][0]
+
+				
 				if not button.is_connected("pressed", Callable(self, "_place_tower")):
 					button.pressed.connect(_place_tower.bind(EquippedTowers[i][0],instance))
 
@@ -263,7 +286,8 @@ func _update_tower_buttons():
 	for towers in TraitInventoryGrid.get_children():
 		var button: Button = towers.get_child(0)
 		
-		button.pressed.connect(_trait_reroll.bind(towers))
+		if not button.is_connected("pressed", Callable(self, "_trait_reroll")):
+			button.pressed.connect(_trait_reroll.bind(towers))
 
 func _calculate_required_EXP() -> int:
 	var BaseEXPRequirement: int = 100
@@ -302,23 +326,33 @@ func _trait_reroll(tower: TextureRect):
 		TraitLabel = PlayerInventory[tower.get_meta("Index")].split(",")[2].replace("_"," ")
 	else:
 		TraitLabel = PlayerInventory[tower.get_meta("Index")].split(",")[2]
-		print("Else")
 	CurrentTraitLabel.text = TraitLabel.replace("TRAIT:","")
 
 func _trait_change(NewTrait, tower):
-	print(PlayerInventory[tower.get_meta("Index")])
-	print(NewTrait)
 	var split = PlayerInventory[tower.get_meta("Index")].split(",")   # ["TOWER_NAME", "LVL:XXX", "TRAIT:XXX", "SLOT:XX"]
 	
 	for i in range(split.size()):
 		if split[i].begins_with("TRAIT:"):
 			split[i] = "TRAIT:" + NewTrait
-			CurrentTraitLabel.text = NewTrait
+			CurrentTraitLabel.text = NewTrait.replace("_"," ")
+			
 	
 	var joined = ",".join(split)
 	PlayerInventory[tower.get_meta("Index")] = joined
+
 	_update_save_file()
+	_update_inventory()
+	_update_tower_buttons()
 	
+	#Sparar tornets index i inventoryt, väntar en frame så att
+	#De gamla inventoryreferenserna hinner bytas ut i _update_inventory()
+	#Simulerar sedan ett tryck med _trait_reroll() för att uppdatera
+	#TraitIkonen för det stora tornet till höger i traitmenyn
+	var tower_index = tower.get_meta("Index")
+	await get_tree().process_frame
+	
+	_trait_reroll(TraitInventoryGrid.get_child(tower_index))
+
 ############# PLAY FUNCTIONS ##############
 func _start_play_mode():
 	Playing = true
@@ -336,9 +370,8 @@ func _start_map(MapID):
 	_start_play_mode()
 
 func _place_tower(TowerID, TowerInstance):
-	var TowerName = str(TowerID).split(",")[0]
 	if Globals.cash >= TowerInstance.place_cost:
-		TowerPlacer.preview_tower(TowerName)
+		TowerPlacer.preview_tower(TowerInstance)
 
 func _detect_every_enemy_defeated() -> bool:
 	if get_node(str(current_level.name)).get_node("EnemyPath").get_child_count() <= 1 and Finished_sending_wave:
@@ -484,7 +517,10 @@ func _on_reroll_trait_button_pressed() -> void:
 		GambleMenu.visible = true
 		if ((await GambleMenu.gamble("Trait")) == "ScrollFinished"):
 			var reward = GambleMenu._grant_gamble_reward()
-			_trait_change(reward,selected_trait_reroll_tower)
+			if reward == null:
+				print("Null reward")
+			else:
+				_trait_change(reward,selected_trait_reroll_tower)
 
 func _on_trait_menu_button_pressed() -> void:
 	if selected_menu == "Shop":

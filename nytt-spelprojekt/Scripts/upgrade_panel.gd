@@ -15,6 +15,9 @@ extends Control
 @onready var SellButton: Button = $Panel/VBoxContainer/HBoxContainer/SellTower
 @onready var ChangeTargetingButton: Button = $Panel/VBoxContainer/HBoxContainer/ChangeTargeting
 
+@onready var TraitIcon: TextureRect = $Panel/TowerName/HBoxContainer/TraitIcon
+@onready var LevelLabel: Label = $Panel/TowerName/HBoxContainer/LevelLabel
+
 var parent: Node2D #Referens till parent: tornet
 
 var targeting_options = ["First","Last","Strongest","Weakest","Closest","Furthest","Random"]
@@ -35,11 +38,21 @@ var UpgradeBCosts = {1:0,2:0,3:0,4:0,5:0}
 
 func _ready() -> void:
 	parent = get_parent().get_parent()
-	print(parent)
-	$Panel/TowerName.text = parent.name
+	$Panel/TowerName.text = parent.TowerName
+	
+	TraitIcon.texture = TraitIcon.texture.duplicate(true)
+	TraitIcon.texture.region = Globals.TraitIconAtlasDictionary[parent.get_meta("Trait")][0]
+	
+	LevelLabel.text = "LVL: " + str(parent.get_meta("Level"))
 	
 	UpgradeACosts = parent.UpgradeAPrices
 	UpgradeBCosts = parent.UpgradeBPrices
+	
+	#Ser till att alla texturer är unika
+	for texture in $Panel/VBoxContainer/UpgradePaths/PathA/UpgradeADisplay.get_children():
+		texture.texture = texture.texture.duplicate(true)
+	for texture in $Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay.get_children():
+		texture.texture = texture.texture.duplicate(true)
 
 func _process(delta: float) -> void:
 	#Om man inte har råd eller inte kan upgradera så stängs knapparna av

@@ -88,7 +88,10 @@ func _apply_explosion_damage():
 				parent.stats["DamageDealt"] += damage
 			else:
 				parent.stats["DamageDealt"] += i.current_health
-			Globals._damage(damage,i)
+			if parent.Trait == "Midas":
+				Globals._damage(damage,i,true)
+			else:
+				Globals._damage(damage,i,false)
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Enemy and not has_exploded: #Kontrollerar att det projektilen kolliderar med är en fiende

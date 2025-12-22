@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bn5ae4t8xid65"]
+[gd_scene load_steps=29 format=3 uid="uid://bn5ae4t8xid65"]
 
 [ext_resource type="Script" path="res://Scripts/upgrade_panel.gd" id="1_0idd4"]
 [ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/medieval.png" id="2_51bdg"]
@@ -87,6 +87,10 @@ region = Rect2(195, 67, 26, 26)
 atlas = ExtResource("4_romi5")
 region = Rect2(355, 99, 26, 26)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_t77y7"]
+atlas = ExtResource("4_romi5")
+region = Rect2(258, 674, 28, 28)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_0h7le"]
 atlas = ExtResource("2_51bdg")
 region = Rect2(593, 530, 14, 13)
@@ -124,12 +128,7 @@ offset_right = 254.0
 offset_bottom = 279.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 20
-alignment = 1
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="UpgradePanel/Panel/VBoxContainer"]
-custom_minimum_size = Vector2(280, 0)
-layout_mode = 2
+theme_override_constants/separation = 50
 alignment = 1
 
 [node name="UpgradePaths" type="HBoxContainer" parent="UpgradePanel/Panel/VBoxContainer"]
@@ -333,7 +332,7 @@ theme_override_constants/separation = 30
 alignment = 1
 
 [node name="SellTower" type="Button" parent="UpgradePanel/Panel/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 32)
+custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("2_q3l7l")
@@ -342,7 +341,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_1kkbf")
 text = "Sell: $xxxxx"
 
 [node name="ChangeTargeting" type="Button" parent="UpgradePanel/Panel/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(100, 32)
+custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("2_q3l7l")
@@ -465,6 +464,34 @@ theme_override_fonts/font = ExtResource("2_q3l7l")
 theme_override_font_sizes/font_size = 40
 text = "TowerName_PlaceHolder"
 horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UpgradePanel/Panel/TowerName"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.5
+offset_top = 21.6429
+offset_right = 128.5
+offset_bottom = 72.6429
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="LevelLabel" type="Label" parent="UpgradePanel/Panel/TowerName/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_q3l7l")
+theme_override_font_sizes/font_size = 35
+text = "XXX"
+
+[node name="TraitIcon" type="TextureRect" parent="UpgradePanel/Panel/TowerName/HBoxContainer"]
+custom_minimum_size = Vector2(65, 65)
+layout_mode = 2
+texture = SubResource("AtlasTexture_t77y7")
+stretch_mode = 5
 
 [node name="CloseMenuButton" type="TextureButton" parent="UpgradePanel/Panel"]
 custom_minimum_size = Vector2(30, 30)

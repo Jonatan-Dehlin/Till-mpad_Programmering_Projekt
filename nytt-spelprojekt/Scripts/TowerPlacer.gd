@@ -29,22 +29,21 @@ func _place_tower(instance):
 		parent.get_node("PlacedTowers").add_child(instance)
 		$Sprite2D.texture = null
 		Hitbox.get_child(0).queue_free()
-		Globals.cash -= selected_tower.place_cost
-	
 		
+		if selected_tower.get_meta("Trait") == "Singularity": # Singularity gör tornen dyrare
+			Globals.cash -= selected_tower.place_cost * 1.5
+		else:
+			Globals.cash -= selected_tower.place_cost
 
-func preview_tower(TowerName: String) -> void:
-	if FileAccess.file_exists("res://Scenes/Towers/" + TowerName + ".tscn"):
-		var scen = load("res://Scenes/Towers/" + TowerName + ".tscn")
-		var instance = scen.instantiate()
-		placed = false
-		selected_tower = instance
-		$Sprite2D.texture = instance.get_node("TowerSprite").texture
-		$Sprite2D.hframes = instance.get_node("TowerSprite").hframes
-		$Sprite2D.frame = instance.get_node("TowerSprite").frame
-		var InstanceHitbox = instance.get_node("TowerCollider").get_node("TowerHitbox")
-		Hitbox.add_child(InstanceHitbox.duplicate())
-		
+func preview_tower(TowerInstance) -> void:
+	var instance = TowerInstance.duplicate()
+	placed = false
+	selected_tower = instance
+	$Sprite2D.texture = instance.get_node("TowerSprite").texture
+	$Sprite2D.hframes = instance.get_node("TowerSprite").hframes
+	$Sprite2D.frame = instance.get_node("TowerSprite").frame
+	var InstanceHitbox = instance.get_node("TowerCollider").get_node("TowerHitbox")
+	Hitbox.add_child(InstanceHitbox.duplicate())
 
 func _on_area_2d_body_entered(_body: Node2D) -> void:
 	entered_bodies += 1
