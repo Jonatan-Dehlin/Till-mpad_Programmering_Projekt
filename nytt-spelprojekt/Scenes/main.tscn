@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://tbpoiyn0mbo1"]
+[gd_scene load_steps=71 format=3 uid="uid://tbpoiyn0mbo1"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_fip6x"]
 [ext_resource type="PackedScene" uid="uid://cwhs2ydv1qcji" path="res://Scenes/tower_placer.tscn" id="2_jo2xf"]
@@ -6,7 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/medieval.png" id="2_ral5c"]
 [ext_resource type="Texture2D" uid="uid://dfyhvur3oujdf" path="res://Fantasy RPG (Toony) 32x32.png" id="3_baln0"]
 [ext_resource type="Texture2D" uid="uid://c0mv7l0xunohp" path="res://Skärmavbild 2025-11-18 kl. 15.15.56.png" id="3_wdan3"]
+[ext_resource type="Texture2D" uid="uid://ufo5h6al0bee" path="res://Assets/SilverCoin.png" id="6_4boqv"]
 [ext_resource type="Texture2D" uid="uid://2dyamd5eme8k" path="res://#1 - Transparent Icons.png" id="7_h2fuq"]
+[ext_resource type="Texture2D" uid="uid://q7ls5cim2spy" path="res://Assets/GoldCoin.png" id="7_klchj"]
 [ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="7_ovdqn"]
 
 [sub_resource type="Animation" id="Animation_nsful"]
@@ -339,17 +341,9 @@ region = Rect2(240, 163, 20, 12)
 atlas = ExtResource("2_ral5c")
 region = Rect2(240, 163, 20, 12)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kk068"]
-atlas = ExtResource("2_ral5c")
-region = Rect2(108, 83, 5, 6)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_vii81"]
 atlas = ExtResource("2_ral5c")
 region = Rect2(272, 154, 1, 1)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_x4uad"]
-atlas = ExtResource("2_ral5c")
-region = Rect2(135, 145, 5, 6)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_trtci"]
 atlas = ExtResource("2_ral5c")
@@ -364,6 +358,35 @@ region = Rect2(849, 577, 14, 14)
 [sub_resource type="AtlasTexture" id="AtlasTexture_lbhoq"]
 atlas = ExtResource("2_ral5c")
 region = Rect2(864, 704, 97, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gxtxa"]
+atlas = ExtResource("2_ral5c")
+region = Rect2(864, 704, 97, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hbfh5"]
+atlas = ExtResource("2_ral5c")
+region = Rect2(517, 384, 118, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rcejq"]
+texture = SubResource("AtlasTexture_hbfh5")
+expand_margin_left = 15.0
+expand_margin_top = 15.0
+expand_margin_right = 15.0
+expand_margin_bottom = 15.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ufbn5"]
+atlas = ExtResource("7_h2fuq")
+region = Rect2(3, 3, 26, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_habb6"]
+atlas = ExtResource("2_ral5c")
+region = Rect2(321, 100, 90, 27)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bjswq"]
+texture = SubResource("AtlasTexture_habb6")
+texture_margin_left = 5.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g27gr"]
 atlas = ExtResource("2_ral5c")
@@ -490,8 +513,6 @@ cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
 cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cimy6"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -626,7 +647,7 @@ theme_override_constants/separation = 10
 [node name="Silver" type="TextureRect" parent="MainMenu/PlayerWallet/SilverAmount/Currency/Silver"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
-texture = SubResource("AtlasTexture_kk068")
+texture = ExtResource("6_4boqv")
 expand_mode = 1
 stretch_mode = 5
 
@@ -724,49 +745,7 @@ theme_override_constants/separation = 10
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 4
-texture = SubResource("AtlasTexture_x4uad")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="BackgroundBlockers" type="TextureRect" parent="MainMenu/PlayerWallet/GoldAmount/Currency/Gold/Gold"]
-custom_minimum_size = Vector2(1, 1)
-layout_mode = 2
-offset_top = 9.0
-offset_right = 6.0
-offset_bottom = 15.0
-texture = SubResource("AtlasTexture_vii81")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="BackgroundBlockers2" type="TextureRect" parent="MainMenu/PlayerWallet/GoldAmount/Currency/Gold/Gold"]
-custom_minimum_size = Vector2(1, 1)
-layout_mode = 2
-offset_left = 24.0
-offset_top = 9.0
-offset_right = 30.0
-offset_bottom = 15.0
-texture = SubResource("AtlasTexture_vii81")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="BackgroundBlockers3" type="TextureRect" parent="MainMenu/PlayerWallet/GoldAmount/Currency/Gold/Gold"]
-custom_minimum_size = Vector2(1, 1)
-layout_mode = 2
-offset_left = 24.0
-offset_top = 39.0
-offset_right = 30.0
-offset_bottom = 45.0
-texture = SubResource("AtlasTexture_vii81")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="BackgroundBlockers4" type="TextureRect" parent="MainMenu/PlayerWallet/GoldAmount/Currency/Gold/Gold"]
-custom_minimum_size = Vector2(1, 1)
-layout_mode = 2
-offset_top = 39.0
-offset_right = 6.0
-offset_bottom = 45.0
-texture = SubResource("AtlasTexture_vii81")
+texture = ExtResource("7_klchj")
 expand_mode = 1
 stretch_mode = 5
 
@@ -981,6 +960,288 @@ offset_top = 1012.0
 offset_right = 366.0
 offset_bottom = 1067.0
 text = "Back"
+
+[node name="SelectModifiers" type="TextureRect" parent="ChooseMap"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -535.5
+offset_top = -349.0
+offset_right = 535.5
+offset_bottom = 349.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_gxtxa")
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ChooseMap/SelectModifiers"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -286.5
+offset_top = -284.0
+offset_right = 287.5
+offset_bottom = -121.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Label" type="Label" parent="ChooseMap/SelectModifiers/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 50
+text = "Difficulty:"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ChooseMap/SelectModifiers/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="DifficultyLabel" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(270, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxTexture_rcejq")
+text = "Easy"
+icon = SubResource("AtlasTexture_ufbn5")
+expand_icon = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="SilverModifier" type="Label" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "+0%"
+
+[node name="TextureRect" type="TextureRect" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_4boqv")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="GoldModifier" type="Label" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "+0%"
+
+[node name="TextureRect2" type="TextureRect" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("7_klchj")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Difficulty" type="HBoxContainer" parent="ChooseMap/SelectModifiers/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Easy" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 22
+text = "Easy"
+metadata/SilverModifier = 0
+metadata/GoldModifier = 0
+
+[node name="Normal" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 22
+text = "Normal"
+metadata/SilverModifier = 50
+metadata/GoldModifier = 0
+
+[node name="Hard" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 22
+text = "Hard"
+metadata/SilverModifier = 100
+metadata/GoldModifier = 15
+
+[node name="Insane" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 22
+text = "Insane"
+metadata/SilverModifier = 150
+metadata/GoldModifier = 30
+
+[node name="Impossible" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 22
+text = "Impossible"
+metadata/SilverModifier = 200
+metadata/GoldModifier = 50
+
+[node name="Nightmare" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 22
+text = "Nightmare"
+metadata/SilverModifier = 500
+metadata/GoldModifier = 100
+
+[node name="CheckBoxContainer" type="VBoxContainer" parent="ChooseMap/SelectModifiers"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.5
+offset_top = -108.0
+offset_right = 250.5
+offset_bottom = 232.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Slow Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "Slow Towers:          +25%"
+icon = ExtResource("6_4boqv")
+icon_alignment = 2
+expand_icon = true
+
+[node name="Weak Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "Weak Towers           +25%"
+icon = ExtResource("6_4boqv")
+icon_alignment = 2
+expand_icon = true
+
+[node name="Blind Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "Blind Towers          +25%"
+icon = ExtResource("6_4boqv")
+icon_alignment = 2
+expand_icon = true
+
+[node name="Crippled Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "Crippled Towers       +50%
+"
+icon = ExtResource("6_4boqv")
+icon_alignment = 2
+expand_icon = true
+
+[node name="Expensive Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "Expensive Towers      +25%"
+icon = ExtResource("6_4boqv")
+icon_alignment = 2
+expand_icon = true
+
+[node name="Economic Depression" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "Economic Depression   +50%"
+icon = ExtResource("6_4boqv")
+icon_alignment = 2
+expand_icon = true
+
+[node name="Sudden Death" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "Sudden Death         +100%"
+icon = ExtResource("6_4boqv")
+icon_alignment = 2
+expand_icon = true
+
+[node name="Only One" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "Only One             +100%"
+icon = ExtResource("6_4boqv")
+icon_alignment = 2
+expand_icon = true
+
+[node name="FinalModifiers" type="HBoxContainer" parent="ChooseMap/SelectModifiers"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -172.5
+offset_top = -117.0
+offset_right = 172.5
+offset_bottom = -67.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="StartMapButton" type="Button" parent="ChooseMap/SelectModifiers/FinalModifiers"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/normal = SubResource("StyleBoxTexture_bjswq")
+text = "START"
+
+[node name="SilverModifier" type="Label" parent="ChooseMap/SelectModifiers/FinalModifiers"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "+0%"
+
+[node name="TextureRect" type="TextureRect" parent="ChooseMap/SelectModifiers/FinalModifiers"]
+layout_mode = 2
+texture = ExtResource("6_4boqv")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="GoldModifier" type="Label" parent="ChooseMap/SelectModifiers/FinalModifiers"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "+0%"
+
+[node name="TextureRect2" type="TextureRect" parent="ChooseMap/SelectModifiers/FinalModifiers"]
+layout_mode = 2
+texture = ExtResource("7_klchj")
+expand_mode = 2
+stretch_mode = 5
 
 [node name="Inventory" type="TextureRect" parent="."]
 layout_mode = 0
@@ -2066,8 +2327,9 @@ vertical_alignment = 1
 
 [node name="Traits" type="TextureRect" parent="."]
 layout_mode = 0
+offset_left = 1920.0
 offset_top = -1080.0
-offset_right = 1920.0
+offset_right = 3840.0
 texture = SubResource("AtlasTexture_6wws7")
 
 [node name="Label" type="Label" parent="Traits"]
@@ -2754,20 +3016,11 @@ process_callback = 0
 wait_time = 15.0
 one_shot = true
 
-[node name="Label" type="Label" parent="HUD"]
-offset_left = 1312.0
-offset_top = 104.0
-offset_right = 1459.0
-offset_bottom = 204.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_cimy6")
-text = "FPS"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Inventory" to="." method="_on_inventory_pressed"]
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Shop" to="." method="_on_shop_pressed"]
 [connection signal="pressed" from="ChooseMap/ReturnToMainMenuFromPlay" to="." method="_on_return_to_main_menu_from_play_pressed"]
+[connection signal="pressed" from="ChooseMap/SelectModifiers/FinalModifiers/StartMapButton" to="." method="_on_start_map_button_pressed"]
 [connection signal="pressed" from="Inventory/ReturnToMainMenuFromInventoryButton" to="." method="_on_return_to_main_menu_from_inventory_button_pressed"]
 [connection signal="pressed" from="Shop/ReturnToMainMenuButton" to="." method="_on_return_to_main_menu_button_pressed"]
 [connection signal="pressed" from="Shop/TraitMenuButton" to="." method="_on_trait_menu_button_pressed"]

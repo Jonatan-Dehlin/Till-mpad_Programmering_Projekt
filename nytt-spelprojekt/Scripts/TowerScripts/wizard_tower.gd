@@ -26,6 +26,7 @@ var total_cash_spent: int = 100
 var targeting: String = "First"
 
 @export var sell_value: int = place_cost * 0.7 #70% sellback
+@export var max_placement: int = 5
 
 var upgrade_level = 1
 
@@ -78,9 +79,11 @@ func _ready() -> void: # Används för att ställa in stats, när tornet placera
 
 func _apply_trait_modifiers():
 	var modifiers = Globals.TraitModifiers[Trait]
-	for stat in stats:
+	for stat in stats: # Applicerar traiteffekter på stats
 		if stat != "DamageDealt":
 			stats[stat] *= modifiers[stat]
+	if Trait == "Singularity":
+		max_placement = 1
 
 func _update_stats(AorB):
 	UniqueRangeShape.radius = stats["range"] # Ställer in range

@@ -5,10 +5,12 @@ extends Control
 @onready var MapContainers = $ChooseMap/ScrollContainer/HBoxContainer.get_children()
 @onready var TestChest = $Shop/ScrollContainer/Chests/Chest1/Chest1Button
 
+# Inventory
 @onready var InventoryButton: TextureButton = $MainMenu/BottomPanel/Buttons/Inventory
 @onready var InventoryButtonPlaceholder: TextureRect = $Inventory/InventoryPlaceHolderBackground
 @onready var InventoryGrid: GridContainer = $Inventory/ScrollContainer/InventoryGrid
 
+# Trait
 @onready var TraitInventoryGrid: GridContainer = $Traits/ScrollContainer/GridContainer
 @onready var TraitSelectedTower: CenterContainer = $Traits/CenterContainer
 @onready var CurrentTraitLabel: Label = $Traits/PurchaseTraitReroll2/CenterContainer/CurrentTrait
@@ -18,6 +20,16 @@ extends Control
 @onready var transitions: AnimationPlayer = $MenuTransitions
 @onready var Shop = $Shop
 @onready var Chests = $Shop/ScrollContainer/Chests
+
+# Modifiers
+@onready var SelectModifiers = $ChooseMap/SelectModifiers
+@onready var DifficultyLabel: Button = $ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer/DifficultyLabel
+@onready var DifficultyButtons = $ChooseMap/SelectModifiers/VBoxContainer/Difficulty.get_children()
+@onready var SilverModifierLabel = $ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer/HBoxContainer/SilverModifier
+@onready var GoldModifierLabel = $ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer/HBoxContainer/GoldModifier
+@onready var CheckBoxes = $ChooseMap/SelectModifiers/CheckBoxContainer.get_children()
+@onready var FinalModifers = $ChooseMap/SelectModifiers/FinalModifiers
+@onready var StartButton: Button = $ChooseMap/SelectModifiers/FinalModifiers/StartMapButton
 
 #Hotbar
 @onready var EquippedTowersButtons = $HUD/TowerHotbar/HBoxContainer.get_children()
@@ -57,15 +69,15 @@ var selected_trait_reroll_tower
 #Game variables
 var WaveDataFile = "user://WaveData.txt"
 var StartOrSkipPressed: bool = false
-
 var Playing: bool = false
+var WaitingForModifierFinished: bool = true
 var Finished_sending_wave: bool = false
 var Skip_availiable: bool = false
 var BetweenWaves: bool = false
 
 var max_wave = 100
-
 var display_cash: int
+
 
 var selected_menu: String = "Main"
 
@@ -86,7 +98,15 @@ func _ready() -> void:
 	#Koppla mapknapparna
 	for columns in MapContainers:
 		for maps: Button in columns.get_children():
-			maps.pressed.connect(_start_map.bind(maps.name))
+			maps.pressed.connect(_select_modifiers.bind(maps.name))
+	
+	#Koppla difficultyknapparna
+	for difficulty: Button in DifficultyButtons:
+		difficulty.pressed.connect(_change_difficulty.bind(difficulty.text,difficulty.get_meta("SilverModifier"),difficulty.get_meta("GoldModifier")))
+	
+	# Koppla ModifierCheckboxarna
+	for checkbox: CheckBox in CheckBoxes:
+		checkbox.pressed.connect(_modifier_handler.bind(checkbox.name))
 	
 	#Ladda information från spelarens fil
 	_load_player_stats()
@@ -128,8 +148,6 @@ func _physics_process(delta: float) -> void:
 			WaveTimer.start()
 			$HUD/StartWaveButton.visible = true
 		$HUD/StartWaveButton.text = "Next wave in: " + str(round(WaveTimer.time_left))
-	$HUD/Label.text = str(round(1/delta))
-	#print("uppdaterade FPS: " + str(round(1/delta)))
 
 func _load_player_stats():
 	if not FileAccess.file_exists(PlayerStatFile):
@@ -204,15 +222,19 @@ func _update_inventory():
 		InventoryGrid.add_child(Duplicate)
 		TraitInventoryGrid.add_child(Duplicate2)
 
-func _update_equipped_towers_buttons(): #Hotbaren
+func _update_equipped_towers_buttons(): # Hotbaren
 	for button: Button in EquippedTowersButtons:
 		for i in range(EquippedTowers.size()):
 			if button.get_meta("Index") == EquippedTowers[i][1]:
 				var tower = load("res://Scenes/Towers/" + str(EquippedTowers[i][0]).split(",")[0]+".tscn")
 				var instance: Node2D = tower.instantiate()
-				
+
+				# Räknar ut CostFactor för torn
+				var CostFactor: float = 1.0
 				if EquippedTowers[i][0].split(",")[2].replace("TRAIT:","") == "Singularity":
-					instance.place_cost *= 1.5
+					CostFactor += 0.5
+				CostFactor += Globals.return_cost_factor()
+				instance.place_cost *= CostFactor
 				
 				button.icon.atlas = instance.get_node("TowerSprite").texture
 				button.text = "$" + str(instance.place_cost)
@@ -228,9 +250,9 @@ func _update_equipped_towers_buttons(): #Hotbaren
 				button.get_node("TraitIcon").texture = button.get_node("TraitIcon").texture.duplicate(true)
 				button.get_node("TraitIcon").texture.region = Globals.TraitIconAtlasDictionary[instance.get_meta("Trait")][0]
 
-				
+				# Kopplar hotbarknapparna till _place_tower funktionen
 				if not button.is_connected("pressed", Callable(self, "_place_tower")):
-					button.pressed.connect(_place_tower.bind(EquippedTowers[i][0],instance))
+					button.pressed.connect(_place_tower.bind(EquippedTowers[i][0],instance,i))
 
 func _update_save_file():
 	if not FileAccess.file_exists(PlayerStatFile):
@@ -354,12 +376,46 @@ func _trait_change(NewTrait, tower):
 	_trait_reroll(TraitInventoryGrid.get_child(tower_index))
 
 ############# PLAY FUNCTIONS ##############
-func _start_play_mode():
-	Playing = true
-	MainMenu.visible = false
-	Shop.visible = false
-	$ChooseMap.visible = false
-	$HUD.visible = true
+func _change_difficulty(Difficulty: String, SilverModifier: int, GoldModifier: int):
+	DifficultyLabel.text = Difficulty
+	Globals.SelectedDifficulty = Difficulty
+	SilverModifierLabel.text = "+" + str(SilverModifier) + "%"
+	GoldModifierLabel.text = "+" + str(GoldModifier) + "%"
+
+	_display_final_modifier()
+
+func _modifier_handler(modification):
+	if Globals.SelectedModifiers[modification][0] == false:
+		Globals.SelectedModifiers[modification][0] = true
+	else:
+		Globals.SelectedModifiers[modification][0] = false
+		
+	_display_final_modifier()
+
+func _select_modifiers(MapID):
+	SelectModifiers.visible = true
+	
+	await StartButton.pressed
+	print("Startade Map")
+	_start_map(MapID)
+
+func _display_final_modifier(): # Visar den totala modifiern
+	var SilverModifier = FinalModifers.get_node("SilverModifier")
+	var GoldModifier = FinalModifers.get_node("GoldModifier")
+	var FinalSilverModifier = 0
+	var FinalGoldModifier = 0
+	
+	for items in DifficultyButtons:
+		if items.name == Globals.SelectedDifficulty:
+			FinalSilverModifier += items.get_meta("SilverModifier")
+			FinalGoldModifier += items.get_meta("GoldModifier")
+	
+	for items in Globals.SelectedModifiers:
+		if Globals.SelectedModifiers[items][0] == true:
+			FinalSilverModifier += Globals.SelectedModifiers[items][1]
+			FinalGoldModifier += Globals.SelectedModifiers[items][2]
+	SilverModifier.text = "+" + str(FinalSilverModifier) + "%"
+	GoldModifier.text = "+" + str(FinalGoldModifier) + "%"
 
 func _start_map(MapID):
 	var map = load("res://Scenes/Levels/"+ str(MapID) + ".tscn")
@@ -367,11 +423,23 @@ func _start_map(MapID):
 	current_level.replace_by(map)
 	current_level = map
 	
+	_update_equipped_towers_buttons()
 	_start_play_mode()
 
-func _place_tower(TowerID, TowerInstance):
+func _start_play_mode():
+	Playing = true
+	MainMenu.visible = false
+	Shop.visible = false
+	$ChooseMap.visible = false
+	$HUD.visible = true
+
+func _place_tower(TowerID, TowerInstance, i):
 	if Globals.cash >= TowerInstance.place_cost:
 		TowerPlacer.preview_tower(TowerInstance)
+		TowerPlacer.i = i
+		TowerInstance.set_meta("PlayerInventoryIndexReference",i)
+		if TowerInstance.get_meta("Trait") == "Singularity":
+			TowerInstance.max_placement = 1
 
 func _detect_every_enemy_defeated() -> bool:
 	if get_node(str(current_level.name)).get_node("EnemyPath").get_child_count() <= 1 and Finished_sending_wave:
@@ -423,6 +491,7 @@ func _wave_manager(wave) -> void:
 		enemies = _read_wave_data(Globals.current_wave)
 	else:
 		enemies = _generate_wave(Globals.current_wave)
+	Globals._apply_health_multiplier(Globals.current_wave)
 	for enemy in enemies:
 		var e = str_to_var(enemy)
 		
@@ -431,13 +500,14 @@ func _wave_manager(wave) -> void:
 		var EnemyCooldown = e[2]
 		var EnemyStartCooldown = e[3]
 		var EnemyLast = e[4]
-
+		
+		#Globals._apply_health_multiplier(Globals.current_wave)
 		_send_wave(EnemyName, EnemyAmount, EnemyCooldown, EnemyStartCooldown, EnemyLast)
 		#print("skickade: " + str(EnemyAmount) + " st " + str(EnemyName) + " Med cooldown på: " + str(EnemyCooldown))
 
 func _read_wave_data(wave: int) -> Array: #Läser wave-data fram till max_wave
 	if not FileAccess.file_exists(WaveDataFile):
-		print("Fatal error: no player data file found.")
+		print("Fatal error: no wave data file found.")
 	else:
 		var file = FileAccess.open(WaveDataFile, FileAccess.READ)
 		var WaveDataFound = false

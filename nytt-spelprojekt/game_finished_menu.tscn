@@ -1,0 +1,410 @@
+[gd_scene load_steps=9 format=3 uid="uid://cyfp805luoknq"]
+
+[ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/medieval.png" id="1_sseo8"]
+[ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="2_mgdof"]
+[ext_resource type="Texture2D" uid="uid://ufo5h6al0bee" path="res://Assets/SilverCoin.png" id="4_0l5to"]
+[ext_resource type="Texture2D" uid="uid://q7ls5cim2spy" path="res://Assets/GoldCoin.png" id="5_ix0bh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t8g63"]
+atlas = ExtResource("1_sseo8")
+region = Rect2(84, 274, 71, 92)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jqar"]
+atlas = ExtResource("1_sseo8")
+region = Rect2(864, 704, 97, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hh0ee"]
+atlas = ExtResource("1_sseo8")
+region = Rect2(517, 272, 118, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4aa4r"]
+texture = SubResource("AtlasTexture_hh0ee")
+
+[node name="GameFinishedMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -456.0
+offset_top = -332.0
+offset_right = 467.0
+offset_bottom = 344.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_t8g63")
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 152.5
+offset_top = -277.0
+offset_right = 867.5
+offset_bottom = 247.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_5jqar")
+stretch_mode = 5
+
+[node name="DefeatOrVictoryLabel" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -106.5
+offset_top = 86.0
+offset_right = 104.5
+offset_bottom = 153.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxTexture_4aa4r")
+text = "VICTORY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WavesSurvived" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.5
+offset_top = -208.0
+offset_right = 120.5
+offset_bottom = -98.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Waves defeated: XXX"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DifficultyFactors" type="VBoxContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -83.0
+offset_top = -125.5
+offset_right = 83.0
+offset_bottom = 125.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Difficulty" type="HBoxContainer" parent="TextureRect/DifficultyFactors"]
+layout_mode = 2
+
+[node name="Difficulty" type="Label" parent="TextureRect/DifficultyFactors/Difficulty"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Hard:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="TextureRect/DifficultyFactors/Difficulty"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="TextureRect/DifficultyFactors/Difficulty"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+150%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon3" type="TextureRect" parent="TextureRect/DifficultyFactors/Difficulty"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("5_ix0bh")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier2" type="Label" parent="TextureRect/DifficultyFactors/Difficulty"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+50%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slow Towers" type="HBoxContainer" parent="TextureRect/DifficultyFactors"]
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="TextureRect/DifficultyFactors/Slow Towers"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Slow Towers"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="TextureRect/DifficultyFactors/Slow Towers"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="TextureRect/DifficultyFactors/Slow Towers"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+25%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Weak Towers" type="HBoxContainer" parent="TextureRect/DifficultyFactors"]
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="TextureRect/DifficultyFactors/Weak Towers"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Weak Towers
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="TextureRect/DifficultyFactors/Weak Towers"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="TextureRect/DifficultyFactors/Weak Towers"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+25%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Bind Towers" type="HBoxContainer" parent="TextureRect/DifficultyFactors"]
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="TextureRect/DifficultyFactors/Bind Towers"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Blind Towers
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="TextureRect/DifficultyFactors/Bind Towers"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="TextureRect/DifficultyFactors/Bind Towers"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+25%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Crippled Towers" type="HBoxContainer" parent="TextureRect/DifficultyFactors"]
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="TextureRect/DifficultyFactors/Crippled Towers"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Crippled Towers
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="TextureRect/DifficultyFactors/Crippled Towers"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="TextureRect/DifficultyFactors/Crippled Towers"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+50%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Expensive Towers" type="HBoxContainer" parent="TextureRect/DifficultyFactors"]
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="TextureRect/DifficultyFactors/Expensive Towers"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Expensive Towers
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="TextureRect/DifficultyFactors/Expensive Towers"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="TextureRect/DifficultyFactors/Expensive Towers"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+25%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Economic Depression" type="HBoxContainer" parent="TextureRect/DifficultyFactors"]
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="TextureRect/DifficultyFactors/Economic Depression"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Economic Depression
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="TextureRect/DifficultyFactors/Economic Depression"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="TextureRect/DifficultyFactors/Economic Depression"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+50%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sudden Death" type="HBoxContainer" parent="TextureRect/DifficultyFactors"]
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="TextureRect/DifficultyFactors/Sudden Death"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Sudden Death
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="TextureRect/DifficultyFactors/Sudden Death"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="TextureRect/DifficultyFactors/Sudden Death"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Only One" type="HBoxContainer" parent="TextureRect/DifficultyFactors"]
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="TextureRect/DifficultyFactors/Only One"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Only One
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="TextureRect/DifficultyFactors/Only One"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="TextureRect/DifficultyFactors/Only One"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TotalEarned" type="HBoxContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -156.0
+offset_top = -128.0
+offset_right = 156.0
+offset_bottom = -88.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="TextureRect/TotalEarned"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+text = "Total Earned: "
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/TotalEarned"]
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="TextureRect/TotalEarned"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+text = "XXXXX"
+
+[node name="TextureRect2" type="TextureRect" parent="TextureRect/TotalEarned"]
+layout_mode = 2
+texture = ExtResource("5_ix0bh")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label3" type="Label" parent="TextureRect/TotalEarned"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+text = "XXXXX"

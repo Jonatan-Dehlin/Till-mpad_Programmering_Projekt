@@ -12,7 +12,7 @@ var speed: int
 
 func _ready() -> void:
 	current_health = Globals.enemy_health[name]
-	kill_reward = Globals.enemy_base_reward[name] * Globals.current_health_factor
+	kill_reward = Globals.enemy_base_reward[name]
 	healthbarprogress.max_value = current_health
 	z_index = round(Globals.enemy_base_health[name]/10)
 

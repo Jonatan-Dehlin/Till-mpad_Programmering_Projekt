@@ -89,6 +89,7 @@ _data = {
 script = ExtResource("1_peykl")
 metadata/Level = 1
 metadata/Trait = "none"
+metadata/PlayerInventoryIndexReference = 0
 
 [node name="TowerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_fxrtq")

@@ -4,6 +4,7 @@ var placed = true
 var selected_tower
 var entered_bodies = 0
 var towers = []
+var i
 
 @onready var parent = $".."
 @onready var Hitbox = $Area2D
@@ -25,15 +26,35 @@ func _place_tower(instance):
 	$Area2D.global_position = get_global_mouse_position()
 	z_index = int(get_global_mouse_position().y)
 	if Input.is_action_just_pressed("Left_click") and entered_bodies == 0 and selected_tower.place_cost <= Globals.cash:
-		placed = true
-		parent.get_node("PlacedTowers").add_child(instance)
-		$Sprite2D.texture = null
-		Hitbox.get_child(0).queue_free()
-		
+		#Beräkna placeringskostnaden
+		var CostFactor: float = 1.0
 		if selected_tower.get_meta("Trait") == "Singularity": # Singularity gör tornen dyrare
-			Globals.cash -= selected_tower.place_cost * 1.5
+			CostFactor += 0.5
+		if Globals.SelectedModifiers["Expensive Towers"][0] == true:
+			CostFactor += 0.5
+		if Globals.SelectedModifiers["Economic Depression"][0] == true:
+				CostFactor += 1
+		
+		if Globals.cash >= selected_tower.place_cost * CostFactor:
+			# Ser till att man inte kan placera fler av samma torn än Max placement värdet
+			var MaxPlace = instance.max_placement
+			var CurrentPlacement = 0
+			for tower in parent.get_node("PlacedTowers").get_children():
+				if tower.get_meta("PlayerInventoryIndexReference") == i:
+					CurrentPlacement += 1
+					
+			
+			if CurrentPlacement < MaxPlace:
+				placed = true
+				parent.get_node("PlacedTowers").add_child(instance)
+				$Sprite2D.texture = null
+				Hitbox.get_child(0).queue_free()
+
+				#Bekräfta köpet
+				Globals.cash -= selected_tower.place_cost * CostFactor
 		else:
-			Globals.cash -= selected_tower.place_cost
+			pass
+			#Eventuellt spela något ljud här
 
 func preview_tower(TowerInstance) -> void:
 	var instance = TowerInstance.duplicate()
@@ -48,14 +69,11 @@ func preview_tower(TowerInstance) -> void:
 func _on_area_2d_body_entered(_body: Node2D) -> void:
 	entered_bodies += 1
 
-
 func _on_area_2d_body_exited(_body: Node2D) -> void:
 	entered_bodies -= 1
 
-
 func _on_area_2d_area_entered(_area: Area2D) -> void:
 	entered_bodies += 1
-
 
 func _on_area_2d_area_exited(_area: Area2D) -> void:
 	entered_bodies -= 1

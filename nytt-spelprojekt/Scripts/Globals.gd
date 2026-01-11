@@ -10,12 +10,34 @@ var cash = 100000
 var enemies = {"FireBug":0,"LeafBug":0,"MagmaCrab":0,"Scorpion":0}
 var enemy_base_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
 var enemy_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
-var enemies_speed = {"FireBug":1000,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
+var enemies_speed = {"FireBug":100,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
 var enemy_base_reward = {"FireBug":10,"LeafBug":20,"MagmaCrab":50,"Scorpion":100}
 
 var current_health_factor: float = 1
 
-var TraitIconAtlasDictionary: Dictionary = { #Innehåller atlastexture koordinater och färg för traitikonerna
+var SelectedDifficulty: String = "Easy"
+
+var SelectedDifficultyModifiers: Dictionary = { # Modifiers beroende på vald difficulty
+	"Easy": {"EnemyHP": 1, "EnemySpeed": 1, "BaseHP": 15},
+	"Normal": {"EnemyHP": 1.5, "EnemySpeed": 1.1, "BaseHP": 10},
+	"Hard": {"EnemyHP": 2, "EnemySpeed": 1.2, "BaseHP": 5},
+	"Insane": {"EnemyHP": 5, "EnemySpeed": 1.5, "BaseHP": 2},
+	"Impossible": {"EnemyHP": 10, "EnemySpeed": 1.8, "BaseHP": 1.5},
+	"Nightmare": {"EnemyHP": 50, "EnemySpeed": 2, "BaseHP": 1}
+}
+
+var SelectedModifiers: Dictionary = { # Valbara modifiers som gör spelet svårare men ger mer belöningar
+	"Slow Towers": [false,25,0], # Långsammare attack speed
+	"Weak Towers": [false,25,0], # Mindre damage
+	"Blind Towers": [false,25,0], # Kortare range
+	"Crippled Towers": [false,50,0], # Mindre attack speed, range och damage
+	"Expensive Towers": [false,25,0], # Dyrare torn
+	"Economic Depression": [false,50,0], # Dyrare torn, mindre belöningar från pengatorn och fiende kills
+	"Sudden Death": [false,100,0], # Max HP sätts till 1
+	"Only One": [false,100,0], # Endast 1 placement per torn
+}
+
+var TraitIconAtlasDictionary: Dictionary = { # Innehåller atlastexture koordinater och färg för traitikonerna
 	"none": [Rect2(230,69,27,22), Color(0.5,0.5,1)],
 	"Rapid_I": [Rect2(100,261,27,22), Color(0.5,0.5,1)],
 	"Rapid_II": [Rect2(100,261,27,22), Color(1,1,1)],
@@ -33,7 +55,7 @@ var TraitIconAtlasDictionary: Dictionary = { #Innehåller atlastexture koordinat
 	"Singularity": [Rect2(258,674,28,28), Color(1,1,1)],
 }
 
-var TraitModifiers: Dictionary = { #Innehåller förändringsfaktorer som senare appliceras i tornens lokala kod
+var TraitModifiers: Dictionary = { # Innehåller förändringsfaktorer som senare appliceras i tornens lokala kod
 	"none": {"damage":1, # +0% i allting
 			"range":1,
 			"cooldown":1,
@@ -127,12 +149,28 @@ var TraitModifiers: Dictionary = { #Innehåller förändringsfaktorer som senare
 }
 
 func _ready() -> void:
-	pass
+	current_health_factor = 1
+
+func return_cost_factor(): # Räknar ut costfactor för torn beroende på modifiers
+	var CostFactor: float = 0
+	if Globals.SelectedModifiers["Expensive Towers"][0] == true:
+			CostFactor += 0.5
+	if Globals.SelectedModifiers["Economic Depression"][0] == true:
+			CostFactor += 1
+	return CostFactor
 
 func _apply_health_multiplier(wave) -> void:
+	current_health_factor = 1.05 ** (wave-1) * SelectedDifficultyModifiers[SelectedDifficulty]["EnemyHP"]
+	print(wave)
+	print(current_health_factor)
+	
+	# Ändrar HP för fienden så att de får mer HP fler rundor in
 	for enemy in enemy_health:
-		enemy_health[enemy] = round(enemy_base_health[enemy] * 1.05 ** wave)
-	current_health_factor *= 1.05
+		enemy_health[enemy] = round(enemy_base_health[enemy] * current_health_factor)
+	
+	# Ser till att korrigera kill-belöningen för att hålla den proportionelig med fiendens HP
+	for enemy in enemy_base_reward:
+		enemy_base_reward[enemy] *= current_health_factor
 
 func _damage(damage_dealt, targeted_enemy, midas: bool) -> void:
 	if damage_dealt >= targeted_enemy.current_health:
@@ -141,7 +179,7 @@ func _damage(damage_dealt, targeted_enemy, midas: bool) -> void:
 	else:
 		targeted_enemy.current_health -= damage_dealt
 
-func _format_number(n: int) -> String: #Gör om t.ex. 1000000 -> 1,000,000
+func _format_number(n: int) -> String: # Gör om t.ex. 1000000 -> 1,000,000
 	if n < 1000: #Om numret är under 1000 behöver det inte formatteras
 		return str(n)
 	else:

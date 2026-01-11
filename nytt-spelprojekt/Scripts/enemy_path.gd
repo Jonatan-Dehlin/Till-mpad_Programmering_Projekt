@@ -29,7 +29,5 @@ func _on_bridge_left_body_entered(body: Node2D) -> void:
 func _on_enemy_exit_body_entered(body: Node2D) -> void:
 	if body is Enemy:
 		Globals.health -= body.current_health
-		print("Enemy gick ut")
-		#await get_tree().physics_frame
 		if self.get_child_count() > 0:
 			queue_free()

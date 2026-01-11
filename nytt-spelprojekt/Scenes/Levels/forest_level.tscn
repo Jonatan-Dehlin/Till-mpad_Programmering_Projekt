@@ -10594,7 +10594,7 @@ point_count = 32
 size = Vector2(78, 112)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lpuj0"]
-size = Vector2(71, 122)
+size = Vector2(71, 52)
 
 [node name="ForestLevel" type="Node2D"]
 
@@ -10648,7 +10648,7 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyExit"]
-position = Vector2(0, 32)
+position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_lpuj0")
 
 [connection signal="body_entered" from="BrigdeEntered" to="EnemyPath/PathFollow2D" method="_on_brigde_entered_body_entered"]
