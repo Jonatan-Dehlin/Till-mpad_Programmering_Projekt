@@ -10,10 +10,15 @@ var cash = 100000
 var enemies = {"FireBug":0,"LeafBug":0,"MagmaCrab":0,"Scorpion":0}
 var enemy_base_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
 var enemy_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
-var enemies_speed = {"FireBug":100,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
+var enemy_speed = {"FireBug":100,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
 var enemy_base_reward = {"FireBug":10,"LeafBug":20,"MagmaCrab":50,"Scorpion":100}
 
+# Speed och HP faktorer för fiender
 var current_health_factor: float = 1
+var current_speed_factor: float = 1
+# konstanter för fienders HP och Speed ökning varje wave
+const HEALTH_FACTOR = 1.05
+const SPEED_FACTOR = 1.03
 
 var SelectedDifficulty: String = "Easy"
 
@@ -159,15 +164,15 @@ func return_cost_factor(): # Räknar ut costfactor för torn beroende på modifi
 			CostFactor += 1
 	return CostFactor
 
-func _apply_health_multiplier(wave) -> void:
-	current_health_factor = 1.05 ** (wave-1) * SelectedDifficultyModifiers[SelectedDifficulty]["EnemyHP"]
-	print(wave)
-	print(current_health_factor)
+func _apply_enemy_multipliers(wave) -> void:
+	current_health_factor = HEALTH_FACTOR ** (wave-1) * SelectedDifficultyModifiers[SelectedDifficulty]["EnemyHP"]
+	current_speed_factor = SPEED_FACTOR ** (wave-1)
 	
 	# Ändrar HP för fienden så att de får mer HP fler rundor in
 	for enemy in enemy_health:
 		enemy_health[enemy] = round(enemy_base_health[enemy] * current_health_factor)
-	
+		enemy_speed[enemy] = enemy_speed[enemy] * current_speed_factor
+		
 	# Ser till att korrigera kill-belöningen för att hålla den proportionelig med fiendens HP
 	for enemy in enemy_base_reward:
 		enemy_base_reward[enemy] *= current_health_factor

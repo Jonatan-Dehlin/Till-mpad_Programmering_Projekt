@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://tbpoiyn0mbo1"]
+[gd_scene load_steps=72 format=3 uid="uid://tbpoiyn0mbo1"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_fip6x"]
 [ext_resource type="PackedScene" uid="uid://cwhs2ydv1qcji" path="res://Scenes/tower_placer.tscn" id="2_jo2xf"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://2dyamd5eme8k" path="res://#1 - Transparent Icons.png" id="7_h2fuq"]
 [ext_resource type="Texture2D" uid="uid://q7ls5cim2spy" path="res://Assets/GoldCoin.png" id="7_klchj"]
 [ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="7_ovdqn"]
+[ext_resource type="PackedScene" uid="uid://cyfp805luoknq" path="res://Scenes/Menus/game_finished_menu.tscn" id="11_an6gb"]
 
 [sub_resource type="Animation" id="Animation_nsful"]
 resource_name = "InventoryTransition"
@@ -3015,6 +3016,13 @@ one_shot = true
 process_callback = 0
 wait_time = 15.0
 one_shot = true
+
+[node name="GameFinishedMenu" parent="." instance=ExtResource("11_an6gb")]
+layout_mode = 1
+offset_left = 1534.0
+offset_top = 384.0
+offset_right = 1534.0
+offset_bottom = 384.0
 
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Inventory" to="." method="_on_inventory_pressed"]
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Play" to="." method="_on_play_pressed"]

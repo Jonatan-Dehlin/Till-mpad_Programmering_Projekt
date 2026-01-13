@@ -50,7 +50,7 @@ extends Control
 @onready var SkipTimer: Timer = $HUD/SkipTimer
 
 #Gamble variables
-var Gamble = preload("res://Scenes/gamble.tscn").instantiate()
+var Gamble = preload("res://Scenes/Menus/gamble.tscn").instantiate()
 var GambleMenu: Control
 
 #Tower Directory
@@ -189,7 +189,6 @@ func _update_inventory():
 	for items in range(InventoryGrid.get_child_count()):
 		InventoryGrid.get_child(items).queue_free()
 		TraitInventoryGrid.get_child(items).queue_free()
-		print("Tog bort child nr: " + str(items))
 	
 	var id = 0
 	for towers in PlayerInventory:
@@ -396,7 +395,6 @@ func _select_modifiers(MapID):
 	SelectModifiers.visible = true
 	
 	await StartButton.pressed
-	print("Startade Map")
 	_start_map(MapID)
 
 func _display_final_modifier(): # Visar den totala modifiern
@@ -491,7 +489,7 @@ func _wave_manager(wave) -> void:
 		enemies = _read_wave_data(Globals.current_wave)
 	else:
 		enemies = _generate_wave(Globals.current_wave)
-	Globals._apply_health_multiplier(Globals.current_wave)
+	Globals._apply_enemy_multipliers(Globals.current_wave)
 	for enemy in enemies:
 		var e = str_to_var(enemy)
 		
@@ -537,31 +535,43 @@ func _generate_wave(wave: int) -> Array: #Genererar infinite waves
 func _on_shop_pressed() -> void:
 	if selected_menu == "Main":
 		transitions.play("ShopTransition")
+		selected_menu = "animating..."
+		await transitions.animation_finished
 		selected_menu = "Shop"
 
 func _on_play_pressed() -> void:
 	if selected_menu == "Main":
 		transitions.play("PlayTransition")
+		selected_menu = "animating..."
+		await transitions.animation_finished
 		selected_menu = "Play"
 
 func _on_inventory_pressed() -> void:
 	if selected_menu == "Main":
 		transitions.play("InventoryTransition")
+		selected_menu = "animating..."
+		await transitions.animation_finished
 		selected_menu = "Inventory"
 
 func _on_return_to_main_menu_button_pressed() -> void:
 	if selected_menu == "Shop":
 		transitions.play("ResetShop")
+		selected_menu = "animating..."
+		await transitions.animation_finished
 		selected_menu = "Main"
 
 func _on_return_to_main_menu_from_play_pressed() -> void:
 	if selected_menu == "Play":
 		transitions.play("ResetPlay")
+		selected_menu = "animating..."
+		await transitions.animation_finished
 		selected_menu = "Main"
 
 func _on_return_to_main_menu_from_inventory_button_pressed() -> void:
 	if selected_menu == "Inventory":
 		transitions.play("ResetInventory")
+		selected_menu = "animating..."
+		await transitions.animation_finished
 		selected_menu = "Main"
 
 func _on_start_wave_button_pressed() -> void:
@@ -595,9 +605,13 @@ func _on_reroll_trait_button_pressed() -> void:
 func _on_trait_menu_button_pressed() -> void:
 	if selected_menu == "Shop":
 		transitions.play("TraitTransition")
+		selected_menu = "animating..."
+		await transitions.animation_finished
 		selected_menu = "Trait"
 
 func _on_return_to_shop_menu_pressed() -> void:
 	if selected_menu == "Trait":
 		transitions.play("ResetTrait")
+		selected_menu = "animating..."
+		await transitions.animation_finished
 		selected_menu = "Shop"

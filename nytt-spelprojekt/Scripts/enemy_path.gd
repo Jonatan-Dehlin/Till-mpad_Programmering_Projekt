@@ -11,7 +11,7 @@ func _ready() -> void:
 		enemy = get_child(0)
 		z = enemy.z_index
 	if enemy != null:
-		speed = Globals.enemies_speed[enemy.name]
+		speed = Globals.enemy_speed[enemy.name]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
