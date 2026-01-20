@@ -8,6 +8,7 @@ var i
 
 @onready var parent = $".."
 @onready var Hitbox = $Area2D
+@onready var Anim = $"../AnimationPlayer"
 
 func _ready() -> void:
 	pass
@@ -36,25 +37,24 @@ func _place_tower(instance):
 				CostFactor += 1
 		
 		if Globals.cash >= selected_tower.place_cost * CostFactor:
-			# Ser till att man inte kan placera fler av samma torn än Max placement värdet
-			var MaxPlace = instance.max_placement
-			var CurrentPlacement = 0
-			for tower in parent.get_node("PlacedTowers").get_children():
-				if tower.get_meta("PlayerInventoryIndexReference") == i:
-					CurrentPlacement += 1
-					
+			placed = true
+			parent.get_node("PlacedTowers").add_child(instance)
+			$Sprite2D.texture = null
+			instance.set_meta("PlayerInventoryIndexReference",i)
+			Hitbox.get_child(0).queue_free()
 			
-			if CurrentPlacement < MaxPlace:
-				placed = true
-				parent.get_node("PlacedTowers").add_child(instance)
-				$Sprite2D.texture = null
-				Hitbox.get_child(0).queue_free()
-
-				#Bekräfta köpet
-				Globals.cash -= selected_tower.place_cost * CostFactor
+			Anim.play_backwards("RemoveHotbarAnim")
+			#Bekräfta köpet
+			Globals.cash -= selected_tower.place_cost * CostFactor
+			
 		else:
 			pass
 			#Eventuellt spela något ljud här
+	elif Input.is_action_just_pressed("Q"): # Avbryt placement
+		placed = true
+		$Sprite2D.texture = null
+		Hitbox.get_child(0).queue_free()
+		Anim.play_backwards("RemoveHotbarAnim")
 
 func preview_tower(TowerInstance) -> void:
 	var instance = TowerInstance.duplicate()

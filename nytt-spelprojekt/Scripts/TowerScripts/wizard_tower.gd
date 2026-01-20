@@ -74,14 +74,15 @@ func _ready() -> void: # Används för att ställa in stats, när tornet placera
 	z_index = int(position.y) # Z index anpassas för att torn ska kunna placeras nära varandra i y-led utan överlappningsproblem
 	UniqueRangeShape = RangeShape.duplicate() # Range shapen dupliceras för att alla torn inte ska dela samma range
 	$Range/CollisionShape2D.shape = UniqueRangeShape # Den nya duplicerade range shapen appliceras
-	_apply_trait_modifiers()
+	_apply_trait_and_level_modifiers()
 	_update_stats(null) # Uppdaterar stats utan hänsyn till A eller B upgrade paths
 
-func _apply_trait_modifiers():
-	var modifiers = Globals.TraitModifiers[Trait]
+func _apply_trait_and_level_modifiers():
+	var TraitModifiers = Globals.TraitModifiers[Trait]
+	var LevelModifiers = Globals.LevelModifiers
 	for stat in stats: # Applicerar traiteffekter på stats
 		if stat != "DamageDealt":
-			stats[stat] *= modifiers[stat]
+			stats[stat] *= (TraitModifiers[stat] + (LevelModifiers[stat] * Level))
 	if Trait == "Singularity":
 		max_placement = 1
 

@@ -1,12 +1,414 @@
-[gd_scene load_steps=2 format=3 uid="uid://favp6g35s8n6"]
+[gd_scene load_steps=18 format=3 uid="uid://favp6g35s8n6"]
 
 [ext_resource type="Script" path="res://Scripts/playing.gd" id="1_2adey"]
+[ext_resource type="PackedScene" uid="uid://cwhs2ydv1qcji" path="res://Scenes/tower_placer.tscn" id="2_3n5ts"]
+[ext_resource type="PackedScene" uid="uid://cyfp805luoknq" path="res://Scenes/Menus/game_finished_menu.tscn" id="3_lf7c0"]
+[ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="4_pft4x"]
+[ext_resource type="Texture2D" uid="uid://2dyamd5eme8k" path="res://#1 - Transparent Icons.png" id="5_a2xsb"]
+
+[sub_resource type="Animation" id="Animation_pbbup"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HUD/TowerHotbar/HBoxContainer:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HUD/TowerHotbar/HBoxContainer:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(750, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HUD/TowerHotbar/HBoxContainer:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 750)]
+}
+
+[sub_resource type="Animation" id="Animation_ow4eb"]
+resource_name = "RemoveHotbarAnim"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HUD/TowerHotbar/HBoxContainer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 750), Vector2(0, 1100)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8ygwy"]
+_data = {
+"RESET": SubResource("Animation_pbbup"),
+"RemoveHotbarAnim": SubResource("Animation_ow4eb")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_j16va"]
+font_size = 50
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hq1of"]
+region = Rect2(0, 0, 64, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_atmga"]
+atlas = ExtResource("5_a2xsb")
+region = Rect2(408, 42, 38, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4xh8t"]
+region = Rect2(0, 0, 64, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rorh1"]
+region = Rect2(0, 0, 64, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1gyvj"]
+region = Rect2(0, 0, 64, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nrs82"]
+region = Rect2(0, 0, 64, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_12o03"]
+region = Rect2(0, 0, 64, 0)
+
+[sub_resource type="FontFile" id="FontFile_6u6o6"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
 
 [node name="Playing" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -1920.0
+offset_bottom = -1080.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_2adey")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8ygwy")
+}
+
+[node name="PlacedTowers" type="Node2D" parent="."]
+
+[node name="TowerPlacer" parent="." instance=ExtResource("2_3n5ts")]
+
+[node name="LevelPlaceHolder" type="Node2D" parent="."]
+visible = false
+
+[node name="TowerProjectiles" type="Node2D" parent="."]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="GameFinishedMenu" parent="HUD" instance=ExtResource("3_lf7c0")]
+visible = false
+
+[node name="WHMdisplay" type="Panel" parent="HUD"]
+offset_top = 980.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Numbers" type="HBoxContainer" parent="HUD/WHMdisplay"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1920.0
+offset_right = -1.0
+offset_bottom = 100.0
+grow_horizontal = 0
+size_flags_horizontal = 0
+theme_override_constants/separation = 150
+alignment = 1
+
+[node name="WaveLabel" type="Label" parent="HUD/WHMdisplay/Numbers"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_pft4x")
+text = "Wave: 0/100"
+label_settings = SubResource("LabelSettings_j16va")
+horizontal_alignment = 1
+
+[node name="HealthLabel" type="Label" parent="HUD/WHMdisplay/Numbers"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_pft4x")
+text = "Health: xxx"
+label_settings = SubResource("LabelSettings_j16va")
+horizontal_alignment = 1
+
+[node name="MoneyLabel" type="Label" parent="HUD/WHMdisplay/Numbers"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_pft4x")
+text = "Money: $xxx"
+label_settings = SubResource("LabelSettings_j16va")
+horizontal_alignment = 1
+
+[node name="TowerHotbar" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/TowerHotbar"]
+custom_minimum_size = Vector2(1920, 50)
+layout_mode = 0
+offset_top = 750.0
+offset_right = 1920.0
+offset_bottom = 931.0
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="Tower1" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_pft4x")
+theme_override_font_sizes/font_size = 25
+text = "$xxxxx"
+icon = SubResource("AtlasTexture_hq1of")
+icon_alignment = 1
+vertical_icon_alignment = 0
+metadata/Index = 0
+
+[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower1"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 22.3333
+theme_override_fonts/font = ExtResource("4_pft4x")
+theme_override_font_sizes/font_size = 30
+text = "XXX"
+horizontal_alignment = 1
+
+[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower1"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 30.0
+grow_horizontal = 0
+texture = SubResource("AtlasTexture_atmga")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Tower2" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_pft4x")
+theme_override_font_sizes/font_size = 25
+text = "$xxxxx"
+icon = SubResource("AtlasTexture_4xh8t")
+icon_alignment = 1
+vertical_icon_alignment = 0
+metadata/Index = 1
+
+[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower2"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 22.3333
+theme_override_fonts/font = ExtResource("4_pft4x")
+theme_override_font_sizes/font_size = 30
+text = "XXX"
+horizontal_alignment = 1
+
+[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower2"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 30.0
+grow_horizontal = 0
+texture = SubResource("AtlasTexture_atmga")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Tower3" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_pft4x")
+theme_override_font_sizes/font_size = 25
+text = "$xxxxx"
+icon = SubResource("AtlasTexture_rorh1")
+icon_alignment = 1
+vertical_icon_alignment = 0
+metadata/Index = 2
+
+[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower3"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 22.3333
+theme_override_fonts/font = ExtResource("4_pft4x")
+theme_override_font_sizes/font_size = 30
+text = "XXX"
+horizontal_alignment = 1
+
+[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower3"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 30.0
+grow_horizontal = 0
+texture = SubResource("AtlasTexture_atmga")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Tower4" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_pft4x")
+theme_override_font_sizes/font_size = 25
+text = "$xxxxx"
+icon = SubResource("AtlasTexture_1gyvj")
+icon_alignment = 1
+vertical_icon_alignment = 0
+metadata/Index = 3
+
+[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower4"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 22.3333
+theme_override_fonts/font = ExtResource("4_pft4x")
+theme_override_font_sizes/font_size = 30
+text = "XXX"
+horizontal_alignment = 1
+
+[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower4"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 30.0
+grow_horizontal = 0
+texture = SubResource("AtlasTexture_atmga")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Tower5" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_pft4x")
+theme_override_font_sizes/font_size = 25
+text = "$xxxxx"
+icon = SubResource("AtlasTexture_nrs82")
+icon_alignment = 1
+vertical_icon_alignment = 0
+metadata/Index = 4
+
+[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower5"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 22.3333
+theme_override_fonts/font = ExtResource("4_pft4x")
+theme_override_font_sizes/font_size = 30
+text = "XXX"
+horizontal_alignment = 1
+
+[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower5"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 30.0
+grow_horizontal = 0
+texture = SubResource("AtlasTexture_atmga")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Tower6" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_pft4x")
+theme_override_font_sizes/font_size = 25
+text = "$xxxxx"
+icon = SubResource("AtlasTexture_12o03")
+icon_alignment = 1
+vertical_icon_alignment = 0
+metadata/Index = 5
+
+[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower6"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 22.3333
+theme_override_fonts/font = ExtResource("4_pft4x")
+theme_override_font_sizes/font_size = 30
+text = "XXX"
+horizontal_alignment = 1
+
+[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower6"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 30.0
+grow_horizontal = 0
+texture = SubResource("AtlasTexture_atmga")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StartWaveButton" type="Button" parent="HUD"]
+custom_minimum_size = Vector2(250, 100)
+offset_left = 835.0
+offset_top = 100.0
+offset_right = 1085.0
+offset_bottom = 200.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+focus_mode = 0
+theme_override_fonts/font = SubResource("FontFile_6u6o6")
+text = "Start wave?"
+
+[node name="NextWaveTimer" type="Timer" parent="HUD"]
+process_callback = 0
+wait_time = 30.0
+one_shot = true
+
+[node name="SkipTimer" type="Timer" parent="HUD"]
+process_callback = 0
+wait_time = 15.0
+one_shot = true
+
+[connection signal="pressed" from="HUD/StartWaveButton" to="." method="_on_start_wave_button_pressed"]
+[connection signal="timeout" from="HUD/NextWaveTimer" to="." method="_on_next_wave_timer_timeout"]
+[connection signal="timeout" from="HUD/SkipTimer" to="." method="_on_skip_timer_timeout"]

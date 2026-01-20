@@ -6,16 +6,30 @@ var health = 100
 
 var cash = 100000
 
+var MapID
+var MapDifficulty: String
+var TotalMultiplier: PackedFloat64Array = [1.0,1.0]
+
+var Playing: bool = false
+
+var EquippedTowers = []
 ################## ENEMY STATS ###################
 var enemies = {"FireBug":0,"LeafBug":0,"MagmaCrab":0,"Scorpion":0}
 var enemy_base_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
 var enemy_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
-var enemy_speed = {"FireBug":100,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
+var enemy_speed = {"FireBug":1000,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
 var enemy_base_reward = {"FireBug":10,"LeafBug":20,"MagmaCrab":50,"Scorpion":100}
+
+# Bidrar till spelarens belöningar EFTER spelets slut
+var enemy_kill_reward = {"FireBug":[10,0],"LeafBug":[20,0],"MagmaCrab":[50,5],"Scorpion":[100,10]} # Scalar med HP factor. Se _damage()
+var map_completed_reward = {"Easy":[1000,100],"Normal":[1500,200],"Advanced":[3000,250],"Expert":[5000,1000]}
+var accumulated_reward: Array = [0,0] # [silver, guld]
+
 
 # Speed och HP faktorer för fiender
 var current_health_factor: float = 1
 var current_speed_factor: float = 1
+
 # konstanter för fienders HP och Speed ökning varje wave
 const HEALTH_FACTOR = 1.05
 const SPEED_FACTOR = 1.03
@@ -153,6 +167,20 @@ var TraitModifiers: Dictionary = { # Innehåller förändringsfaktorer som senar
 			"AOESize": 1.5},
 }
 
+var LevelModifiers: Dictionary = { # Faktor per tornets Level
+	"damage": 0.02, 
+	"range": 0.005, 
+	"cooldown": 0.005,
+	"projectile_velocity": 0,
+	"projectile_lifetime": 0,
+	"AOESize": 0
+} 
+
+func reset() -> void:
+	current_wave = 0
+	cash = 100000
+	health = 100
+
 func _ready() -> void:
 	current_health_factor = 1
 
@@ -163,6 +191,12 @@ func return_cost_factor(): # Räknar ut costfactor för torn beroende på modifi
 	if Globals.SelectedModifiers["Economic Depression"][0] == true:
 			CostFactor += 1
 	return CostFactor
+
+func calculate_required_EXP(PlayerLevel) -> int:
+	var BaseEXPRequirement: int = 100
+	var EXPScalingFactor: float = 1.3
+
+	return BaseEXPRequirement * EXPScalingFactor ** int(PlayerLevel)
 
 func _apply_enemy_multipliers(wave) -> void:
 	current_health_factor = HEALTH_FACTOR ** (wave-1) * SelectedDifficultyModifiers[SelectedDifficulty]["EnemyHP"]
@@ -181,6 +215,8 @@ func _damage(damage_dealt, targeted_enemy, midas: bool) -> void:
 	if damage_dealt >= targeted_enemy.current_health:
 		targeted_enemy.get_parent().queue_free()
 		cash += targeted_enemy.kill_reward
+		accumulated_reward[0] += enemy_kill_reward[targeted_enemy.name][0] * current_health_factor
+		accumulated_reward[1] += enemy_kill_reward[targeted_enemy.name][1] * current_health_factor
 	else:
 		targeted_enemy.current_health -= damage_dealt
 

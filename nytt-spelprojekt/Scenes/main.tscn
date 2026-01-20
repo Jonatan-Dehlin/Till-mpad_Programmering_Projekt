@@ -1,7 +1,6 @@
-[gd_scene load_steps=72 format=3 uid="uid://tbpoiyn0mbo1"]
+[gd_scene load_steps=61 format=3 uid="uid://tbpoiyn0mbo1"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_fip6x"]
-[ext_resource type="PackedScene" uid="uid://cwhs2ydv1qcji" path="res://Scenes/tower_placer.tscn" id="2_jo2xf"]
 [ext_resource type="Texture2D" uid="uid://bvap3sergftsn" path="res://icon.svg" id="2_l7kl1"]
 [ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/medieval.png" id="2_ral5c"]
 [ext_resource type="Texture2D" uid="uid://dfyhvur3oujdf" path="res://Fantasy RPG (Toony) 32x32.png" id="3_baln0"]
@@ -10,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://2dyamd5eme8k" path="res://#1 - Transparent Icons.png" id="7_h2fuq"]
 [ext_resource type="Texture2D" uid="uid://q7ls5cim2spy" path="res://Assets/GoldCoin.png" id="7_klchj"]
 [ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="7_ovdqn"]
-[ext_resource type="PackedScene" uid="uid://cyfp805luoknq" path="res://Scenes/Menus/game_finished_menu.tscn" id="11_an6gb"]
 
 [sub_resource type="Animation" id="Animation_nsful"]
 resource_name = "InventoryTransition"
@@ -482,38 +480,6 @@ texture = SubResource("AtlasTexture_bs2jl")
 texture = SubResource("AtlasTexture_bs2jl")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s2b8e"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_r0vqw"]
-font_size = 50
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_507ct"]
-region = Rect2(0, 0, 64, 0)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yn0ca"]
-atlas = ExtResource("7_h2fuq")
-region = Rect2(408, 42, 38, 11)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_x2mkn"]
-region = Rect2(0, 0, 64, 0)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kp3kk"]
-region = Rect2(0, 0, 64, 0)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2h21v"]
-region = Rect2(0, 0, 64, 0)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p0xgb"]
-region = Rect2(0, 0, 64, 0)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7i8pr"]
-region = Rect2(0, 0, 64, 0)
-
-[sub_resource type="FontFile" id="FontFile_8cyt7"]
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -1011,6 +977,7 @@ alignment = 1
 [node name="DifficultyLabel" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(270, 0)
 layout_mode = 2
+mouse_filter = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
 theme_override_font_sizes/font_size = 40
 theme_override_styles/normal = SubResource("StyleBoxTexture_rcejq")
@@ -2723,307 +2690,6 @@ offset_right = 584.0
 offset_bottom = 1044.0
 text = "BACK"
 
-[node name="TowerPlacer" parent="." instance=ExtResource("2_jo2xf")]
-position = Vector2(97, -224)
-
-[node name="PlacedTowers" type="Node2D" parent="."]
-
-[node name="LevelPlaceHolder" type="Node2D" parent="."]
-visible = false
-
-[node name="TowerProjectiles" type="Node2D" parent="."]
-
-[node name="HUD" type="CanvasLayer" parent="."]
-visible = false
-
-[node name="WHMdisplay" type="Panel" parent="HUD"]
-offset_top = 980.0
-offset_right = 1920.0
-offset_bottom = 1080.0
-
-[node name="Numbers" type="HBoxContainer" parent="HUD/WHMdisplay"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -1920.0
-offset_right = -1.0
-offset_bottom = 100.0
-grow_horizontal = 0
-size_flags_horizontal = 0
-theme_override_constants/separation = 150
-alignment = 1
-
-[node name="WaveLabel" type="Label" parent="HUD/WHMdisplay/Numbers"]
-custom_minimum_size = Vector2(500, 0)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("7_ovdqn")
-text = "Wave: x/y"
-label_settings = SubResource("LabelSettings_r0vqw")
-horizontal_alignment = 1
-
-[node name="HealthLabel" type="Label" parent="HUD/WHMdisplay/Numbers"]
-custom_minimum_size = Vector2(500, 0)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("7_ovdqn")
-text = "Health: xxx"
-label_settings = SubResource("LabelSettings_r0vqw")
-horizontal_alignment = 1
-
-[node name="MoneyLabel" type="Label" parent="HUD/WHMdisplay/Numbers"]
-custom_minimum_size = Vector2(500, 0)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("7_ovdqn")
-text = "Money: $xxx"
-label_settings = SubResource("LabelSettings_r0vqw")
-horizontal_alignment = 1
-
-[node name="TowerHotbar" type="Control" parent="HUD"]
-layout_mode = 3
-anchors_preset = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/TowerHotbar"]
-custom_minimum_size = Vector2(1920, 50)
-layout_mode = 0
-offset_top = 750.0
-offset_right = 1920.0
-offset_bottom = 931.0
-theme_override_constants/separation = 40
-alignment = 1
-
-[node name="Tower1" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
-custom_minimum_size = Vector2(120, 120)
-layout_mode = 2
-focus_mode = 0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 25
-text = "$xxxxx"
-icon = SubResource("AtlasTexture_507ct")
-icon_alignment = 1
-vertical_icon_alignment = 0
-metadata/Index = 0
-
-[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower1"]
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 22.3333
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 30
-text = "XXX"
-horizontal_alignment = 1
-
-[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower1"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -30.0
-offset_bottom = 30.0
-grow_horizontal = 0
-texture = SubResource("AtlasTexture_yn0ca")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Tower2" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
-custom_minimum_size = Vector2(120, 120)
-layout_mode = 2
-focus_mode = 0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 25
-text = "$xxxxx"
-icon = SubResource("AtlasTexture_x2mkn")
-icon_alignment = 1
-vertical_icon_alignment = 0
-metadata/Index = 1
-
-[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower2"]
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 22.3333
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 30
-text = "XXX"
-horizontal_alignment = 1
-
-[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower2"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -30.0
-offset_bottom = 30.0
-grow_horizontal = 0
-texture = SubResource("AtlasTexture_yn0ca")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Tower3" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
-custom_minimum_size = Vector2(120, 120)
-layout_mode = 2
-focus_mode = 0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 25
-text = "$xxxxx"
-icon = SubResource("AtlasTexture_kp3kk")
-icon_alignment = 1
-vertical_icon_alignment = 0
-metadata/Index = 2
-
-[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower3"]
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 22.3333
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 30
-text = "XXX"
-horizontal_alignment = 1
-
-[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower3"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -30.0
-offset_bottom = 30.0
-grow_horizontal = 0
-texture = SubResource("AtlasTexture_yn0ca")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Tower4" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
-custom_minimum_size = Vector2(120, 120)
-layout_mode = 2
-focus_mode = 0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 25
-text = "$xxxxx"
-icon = SubResource("AtlasTexture_2h21v")
-icon_alignment = 1
-vertical_icon_alignment = 0
-metadata/Index = 3
-
-[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower4"]
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 22.3333
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 30
-text = "XXX"
-horizontal_alignment = 1
-
-[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower4"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -30.0
-offset_bottom = 30.0
-grow_horizontal = 0
-texture = SubResource("AtlasTexture_yn0ca")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Tower5" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
-custom_minimum_size = Vector2(120, 120)
-layout_mode = 2
-focus_mode = 0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 25
-text = "$xxxxx"
-icon = SubResource("AtlasTexture_p0xgb")
-icon_alignment = 1
-vertical_icon_alignment = 0
-metadata/Index = 4
-
-[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower5"]
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 22.3333
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 30
-text = "XXX"
-horizontal_alignment = 1
-
-[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower5"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -30.0
-offset_bottom = 30.0
-grow_horizontal = 0
-texture = SubResource("AtlasTexture_yn0ca")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Tower6" type="Button" parent="HUD/TowerHotbar/HBoxContainer"]
-custom_minimum_size = Vector2(120, 120)
-layout_mode = 2
-focus_mode = 0
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 25
-text = "$xxxxx"
-icon = SubResource("AtlasTexture_7i8pr")
-icon_alignment = 1
-vertical_icon_alignment = 0
-metadata/Index = 5
-
-[node name="LevelLabel" type="Label" parent="HUD/TowerHotbar/HBoxContainer/Tower6"]
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 22.3333
-theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 30
-text = "XXX"
-horizontal_alignment = 1
-
-[node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower6"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -30.0
-offset_bottom = 30.0
-grow_horizontal = 0
-texture = SubResource("AtlasTexture_yn0ca")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="StartWaveButton" type="Button" parent="HUD"]
-custom_minimum_size = Vector2(250, 100)
-offset_left = 835.0
-offset_top = 100.0
-offset_right = 1085.0
-offset_bottom = 200.0
-size_flags_horizontal = 4
-size_flags_vertical = 0
-focus_mode = 0
-theme_override_fonts/font = SubResource("FontFile_8cyt7")
-text = "Start wave?"
-
-[node name="NextWaveTimer" type="Timer" parent="HUD"]
-process_callback = 0
-wait_time = 30.0
-one_shot = true
-
-[node name="SkipTimer" type="Timer" parent="HUD"]
-process_callback = 0
-wait_time = 15.0
-one_shot = true
-
-[node name="GameFinishedMenu" parent="." instance=ExtResource("11_an6gb")]
-layout_mode = 1
-offset_left = 1534.0
-offset_top = 384.0
-offset_right = 1534.0
-offset_bottom = 384.0
-
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Inventory" to="." method="_on_inventory_pressed"]
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Shop" to="." method="_on_shop_pressed"]
@@ -3034,6 +2700,3 @@ offset_bottom = 384.0
 [connection signal="pressed" from="Shop/TraitMenuButton" to="." method="_on_trait_menu_button_pressed"]
 [connection signal="pressed" from="Traits/PurchaseTraitReroll/HBoxContainer/RerollTraitButton" to="." method="_on_reroll_trait_button_pressed"]
 [connection signal="pressed" from="Traits/ReturnToShopMenu" to="." method="_on_return_to_shop_menu_pressed"]
-[connection signal="pressed" from="HUD/StartWaveButton" to="." method="_on_start_wave_button_pressed"]
-[connection signal="timeout" from="HUD/NextWaveTimer" to="." method="_on_next_wave_timer_timeout"]
-[connection signal="timeout" from="HUD/SkipTimer" to="." method="_on_skip_timer_timeout"]
