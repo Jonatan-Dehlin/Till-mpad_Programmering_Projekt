@@ -12,7 +12,11 @@ var TotalMultiplier: PackedFloat64Array = [1.0,1.0]
 
 var Playing: bool = false
 
+var PlayerStatFile = "user://PlayerData.txt"
 var EquippedTowers = []
+var PlayerStats = {"Silver": 0, "Gold": 0, "Level": 0, "EXP": 0}
+var PlayerInventory = []
+
 ################## ENEMY STATS ###################
 var enemies = {"FireBug":0,"LeafBug":0,"MagmaCrab":0,"Scorpion":0}
 var enemy_base_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
@@ -43,6 +47,15 @@ var SelectedDifficultyModifiers: Dictionary = { # Modifiers beroende på vald di
 	"Insane": {"EnemyHP": 5, "EnemySpeed": 1.5, "BaseHP": 2},
 	"Impossible": {"EnemyHP": 10, "EnemySpeed": 1.8, "BaseHP": 1.5},
 	"Nightmare": {"EnemyHP": 50, "EnemySpeed": 2, "BaseHP": 1}
+}
+
+var SelectedDifficultyRewardMultipliers: Dictionary = {
+	"Easy": [1,1],
+	"Normal": [1.5,1],
+	"Hard": [2,1.15],
+	"Insane": [2.5,1.3],
+	"Impossible": [3,1,5],
+	"Nightmare": [5,2],
 }
 
 var SelectedModifiers: Dictionary = { # Valbara modifiers som gör spelet svårare men ger mer belöningar
@@ -180,9 +193,79 @@ func reset() -> void:
 	current_wave = 0
 	cash = 100000
 	health = 100
+	accumulated_reward = [0,0]
+	if not Playing:
+		for modifiers in SelectedModifiers:
+			SelectedModifiers[modifiers][0] = false
 
 func _ready() -> void:
 	current_health_factor = 1
+	current_speed_factor = 1
+
+func update_save_file():
+	if not FileAccess.file_exists(PlayerStatFile):
+		print("Fatal error: no player data file found.")
+	else:
+		var lines = []
+		
+		var file = FileAccess.open(PlayerStatFile, FileAccess.READ)
+		while not file.eof_reached():
+			lines.append(file.get_line())
+		file.close()
+		
+		#Save Player Stats
+		for line in range(lines.size()):
+			var stripped: String = lines[line].replace(" ", "").replace("	","")
+			
+			if stripped.begins_with("LEVEL:"):
+				lines[line] = "	LEVEL: " + str(Globals.PlayerStats["Level"])
+			elif stripped.begins_with("EXP:"):
+				lines[line] = "	EXP: " + str(Globals.PlayerStats["EXP"])
+			elif stripped.begins_with("SILVER:"):
+				lines[line] = "	SILVER: " + str(Globals.PlayerStats["Silver"])
+			elif stripped.begins_with("GOLD:"):
+				lines[line] = "	GOLD: " + str(Globals.PlayerStats["Gold"])
+		
+		#Save Tower Stats
+		var TowersFound = false
+		var index = 0
+		for line in range(lines.size()):
+			var stripped: String = lines[line].replace(" ", "").replace("	","")
+			
+			if TowersFound and stripped != "":
+				lines[line] = PlayerInventory[index]
+				index += 1
+			if stripped.contains("TOWERS:"):
+				TowersFound = true
+		file.close()
+		
+		# Sparar alltihop
+		file = FileAccess.open(PlayerStatFile, FileAccess.WRITE)
+		for line in lines:
+			file.store_line(line)
+		file.close()
+
+func fancy_increment(StartValue, TargetValue) -> int:
+	var diff = TargetValue - StartValue
+	var EndValue
+	# animerar cash visaren
+	var amount := 1
+	var abs_diff = abs(diff)
+
+	if abs_diff > 50000:
+		amount = 2000
+	elif abs_diff > 20000:
+		amount = 1000
+	elif abs_diff > 10000:
+		amount = 500
+	elif abs_diff > 1000:
+		amount = 100
+	elif abs_diff > 100:
+		amount = 50
+
+	# sign gör att ovanstående fungerar oavsett om diff är negativ eller positiv
+	EndValue = StartValue + sign(diff) * amount
+	return EndValue
 
 func return_cost_factor(): # Räknar ut costfactor för torn beroende på modifiers
 	var CostFactor: float = 0
@@ -220,7 +303,7 @@ func _damage(damage_dealt, targeted_enemy, midas: bool) -> void:
 	else:
 		targeted_enemy.current_health -= damage_dealt
 
-func _format_number(n: int) -> String: # Gör om t.ex. 1000000 -> 1,000,000
+func format_number(n: int) -> String: # Gör om t.ex. 1000000 -> 1,000,000
 	if n < 1000: #Om numret är under 1000 behöver det inte formatteras
 		return str(n)
 	else:

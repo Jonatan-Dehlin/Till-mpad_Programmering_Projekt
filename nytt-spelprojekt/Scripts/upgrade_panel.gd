@@ -82,7 +82,7 @@ func _display_sell_value(): #Visar tornets sell-värde
 func _display_active_stats():
 	for stats in parent.stats:
 		if StatValues.has_node(stats):
-			StatValues.get_node(stats).text = str(Globals._format_number(parent.stats[stats]))
+			StatValues.get_node(stats).text = str(Globals.format_number(parent.stats[stats]))
 
 func _display_upgrade_pricing():
 	#Ritar ut kostnaden för uppgraderingsväg A

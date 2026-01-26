@@ -40,30 +40,11 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if Globals.Playing:
-		var diff = Globals.cash - display_cash
-
-		# animerar cash visaren
-		var amount := 1
-		var abs_diff = abs(diff)
-
-		if abs_diff > 50000:
-			amount = 2000
-		elif abs_diff > 20000:
-			amount = 1000
-		elif abs_diff > 10000:
-			amount = 500
-		elif abs_diff > 1000:
-			amount = 100
-		elif abs_diff > 100:
-			amount = 50
-
-		# sign gör att ovanstående fungerar oavsett om diff är negativ eller positiv
-		display_cash += sign(diff) * amount
+		display_cash = Globals.fancy_increment(display_cash, Globals.cash)
 		
-		MoneyLabel.text = "Money: $" + str(Globals._format_number(display_cash))
+		MoneyLabel.text = "Money: $" + str(Globals.format_number(display_cash))
 		HealthLabel.text = "HP: " + str(Globals.health)
 		WaveLabel.text = "Wave: " + str(Globals.current_wave) + "/" + str(max_wave)
-		
 
 func _physics_process(delta: float) -> void:
 	if _detect_every_enemy_defeated():

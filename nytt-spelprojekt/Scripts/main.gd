@@ -49,10 +49,8 @@ var GambleMenu: Control
 var tower_directory = DirAccess.open("res://Scenes/Towers/")
 
 #Player Stats
-var PlayerStatFile = "user://PlayerData.txt"
 var PlayerName: String
-var PlayerStats = {"Coins": 0, "Diamonds": 0, "Level": 0, "EXP": 0}
-var PlayerInventory = []
+
 
 #Trait Reroll variables
 var selected_trait_reroll_tower
@@ -91,43 +89,43 @@ func _ready() -> void:
 	#Ladda information från spelarens fil
 	_load_player_stats()
 	_load_inventory()
-	_update_save_file()
+	Globals.update_save_file()
 	_update_tower_buttons()
 
 func _process(_delta: float) -> void:
-	pass
+	_update_labels()
 
 func _load_player_stats():
-	if not FileAccess.file_exists(PlayerStatFile):
+	if not FileAccess.file_exists(Globals.PlayerStatFile):
 		print("Fatal error: no player data file found.")
 	else:
-		var file = FileAccess.open(PlayerStatFile, FileAccess.READ)
+		var file = FileAccess.open(Globals.PlayerStatFile, FileAccess.READ)
 		
 		while not file.eof_reached():
 			var line = file.get_line().replace(" ", "").replace("	", "")
 			if line.contains("LEVEL:"):
-				PlayerStats["Level"] = int(line.replace("LEVEL:",""))
+				Globals.PlayerStats["Level"] = int(line.replace("LEVEL:",""))
 			elif line.contains("NAME:"):
 				PlayerName = line.replace("NAME:","")
 			elif line.contains("EXP:"):
-				PlayerStats["EXP"] = int(line.replace("EXP:",""))
-			elif line.contains("COINS:"):
-				PlayerStats["Coins"] = int(line.replace("COINS:",""))
-			elif line.contains("DIAMONDS:"):
-				PlayerStats["Diamonds"] = int(line.replace("DIAMONDS:",""))
+				Globals.PlayerStats["EXP"] = int(line.replace("EXP:",""))
+			elif line.contains("SILVER:"):
+				Globals.PlayerStats["Silver"] = int(line.replace("COINS:",""))
+			elif line.contains("GOLD:"):
+				Globals.PlayerStats["Gold"] = int(line.replace("DIAMONDS:",""))
 		file.close()
 
 func _load_inventory():
-	if not FileAccess.file_exists(PlayerStatFile):
+	if not FileAccess.file_exists(Globals.PlayerStatFile):
 		print("Fatal error: no player data file found.")
 	else:
-		var file = FileAccess.open(PlayerStatFile, FileAccess.READ)
+		var file = FileAccess.open(Globals.PlayerStatFile, FileAccess.READ)
 		var TowersFound = false
 		
 		while not file.eof_reached():
 			var line = file.get_line().replace(" ", "").replace("	", "")
 			if TowersFound and line != "":
-				PlayerInventory.append(line)
+				Globals.PlayerInventory.append(line)
 			if line.contains("TOWERS:"):
 				TowersFound = true
 		file.close()
@@ -139,7 +137,7 @@ func _update_inventory():
 		TraitInventoryGrid.get_child(items).queue_free()
 	
 	var id = 0
-	for towers in PlayerInventory:
+	for towers in Globals.PlayerInventory:
 		var inventoryTowerDirectory = str(towers.split(",")[0] + ".tscn")
 		var tower = load("res://Scenes/Towers/" + inventoryTowerDirectory)
 		var instance = tower.instantiate()
@@ -169,55 +167,15 @@ func _update_inventory():
 		InventoryGrid.add_child(Duplicate)
 		TraitInventoryGrid.add_child(Duplicate2)
 
-func _update_save_file():
-	if not FileAccess.file_exists(PlayerStatFile):
-		print("Fatal error: no player data file found.")
-	else:
-		var lines = []
-		
-		var file = FileAccess.open(PlayerStatFile, FileAccess.READ)
-		while not file.eof_reached():
-			lines.append(file.get_line())
-		file.close()
-		
-		#Save Player Stats
-		for line in range(lines.size()):
-			var stripped: String = lines[line].replace(" ", "").replace("	","")
-			
-			if stripped.begins_with("LEVEL:"):
-				lines[line] = "	LEVEL: " + str(PlayerStats["Level"])
-			elif stripped.begins_with("EXP:"):
-				lines[line] = "	EXP: " + str(PlayerStats["EXP"])
-			elif stripped.begins_with("COINS:"):
-				lines[line] = "	COINS: " + str(PlayerStats["Coins"])
-			elif stripped.begins_with("DIAMONDS:"):
-				lines[line] = "	DIAMONDS: " + str(PlayerStats["Diamonds"])
-		#Save Tower Stats
-		var TowersFound = false
-		var index = 0
-		for line in range(lines.size()):
-			var stripped: String = lines[line].replace(" ", "").replace("	","")
-			
-			if TowersFound and stripped != "":
-				lines[line] = PlayerInventory[index]
-				index += 1
-			if stripped.contains("TOWERS:"):
-				TowersFound = true
-		file.close()
-		
-		file = FileAccess.open(PlayerStatFile, FileAccess.WRITE)
-		for line in lines:
-			file.store_line(line)
-		file.close()
-		
-		#Uppdatera visade värden i spelet
-		CoinLabel.text = str(Globals._format_number(PlayerStats["Coins"]))
-		DiamondLabel.text = str(Globals._format_number(PlayerStats["Diamonds"]))
-		PlayerNameLabel.text = PlayerName
-		PlayerLevelLabel.text = str(PlayerStats["Level"])
-		EXPProgressBar.max_value = Globals.calculate_required_EXP(PlayerStats["Level"])
-		EXPProgressBar.value = PlayerStats["EXP"]
-		PlayerEXPLabel.text = str(PlayerStats["EXP"]) + "/" + str(Globals.calculate_required_EXP(PlayerStats["Level"]))
+func _update_labels():
+	#Uppdatera visade värden i spelet
+	CoinLabel.text = str(Globals.format_number(Globals.PlayerStats["Silver"]))
+	DiamondLabel.text = str(Globals.format_number(Globals.PlayerStats["Gold"]))
+	PlayerNameLabel.text = PlayerName
+	PlayerLevelLabel.text = str(Globals.PlayerStats["Level"])
+	EXPProgressBar.max_value = Globals.calculate_required_EXP(Globals.PlayerStats["Level"])
+	EXPProgressBar.value = Globals.PlayerStats["EXP"]
+	PlayerEXPLabel.text = str(Globals.PlayerStats["EXP"]) + "/" + str(Globals.calculate_required_EXP(Globals.PlayerStats["Level"]))
 
 func _update_tower_buttons():
 	for towers in TraitInventoryGrid.get_children():
@@ -254,14 +212,14 @@ func _trait_reroll(tower: TextureRect):
 	selected_trait_reroll_tower = tower
 	
 	var TraitLabel: String
-	if PlayerInventory[tower.get_meta("Index")].split(",")[2].contains("_"):
-		TraitLabel = PlayerInventory[tower.get_meta("Index")].split(",")[2].replace("_"," ")
+	if Globals.PlayerInventory[tower.get_meta("Index")].split(",")[2].contains("_"):
+		TraitLabel = Globals.PlayerInventory[tower.get_meta("Index")].split(",")[2].replace("_"," ")
 	else:
-		TraitLabel = PlayerInventory[tower.get_meta("Index")].split(",")[2]
+		TraitLabel = Globals.PlayerInventory[tower.get_meta("Index")].split(",")[2]
 	CurrentTraitLabel.text = TraitLabel.replace("TRAIT:","")
 
 func _trait_change(NewTrait, tower):
-	var split = PlayerInventory[tower.get_meta("Index")].split(",")   # ["TOWER_NAME", "LVL:XXX", "TRAIT:XXX", "SLOT:XX"]
+	var split = Globals.PlayerInventory[tower.get_meta("Index")].split(",")   # ["TOWER_NAME", "LVL:XXX", "TRAIT:XXX", "SLOT:XX"]
 	
 	for i in range(split.size()):
 		if split[i].begins_with("TRAIT:"):
@@ -270,9 +228,9 @@ func _trait_change(NewTrait, tower):
 			
 	
 	var joined = ",".join(split)
-	PlayerInventory[tower.get_meta("Index")] = joined
+	Globals.PlayerInventory[tower.get_meta("Index")] = joined
 
-	_update_save_file()
+	Globals.update_save_file()
 	_update_inventory()
 	_update_tower_buttons()
 	

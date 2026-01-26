@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cyfp805luoknq"]
+[gd_scene load_steps=14 format=3 uid="uid://cyfp805luoknq"]
 
 [ext_resource type="Script" path="res://Scripts/game_finished_menu.gd" id="1_81qqe"]
 [ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/medieval.png" id="1_sseo8"]
@@ -25,12 +25,28 @@ texture = SubResource("AtlasTexture_hh0ee")
 atlas = ExtResource("1_sseo8")
 region = Rect2(321, 100, 90, 27)
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_74h2i"]
+texture = SubResource("AtlasTexture_b8h75")
+texture_margin_left = 10.0
+texture_margin_top = 15.0
+texture_margin_right = 10.0
+texture_margin_bottom = 13.0
+modulate_color = Color(0.691357, 0.691357, 0.691357, 1)
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_autof"]
 texture = SubResource("AtlasTexture_b8h75")
 texture_margin_left = 10.0
 texture_margin_top = 15.0
 texture_margin_right = 10.0
 texture_margin_bottom = 13.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vx1x8"]
+texture = SubResource("AtlasTexture_b8h75")
+texture_margin_left = 10.0
+texture_margin_top = 15.0
+texture_margin_right = 10.0
+texture_margin_bottom = 13.0
+modulate_color = Color(0.691357, 0.691357, 0.691357, 1)
 
 [node name="GameFinishedMenu" type="Control"]
 process_mode = 3
@@ -109,7 +125,7 @@ grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
 theme_override_fonts/font = ExtResource("2_mgdof")
 theme_override_font_sizes/font_size = 20
-text = "Waves defeated: XXX"
+text = "Waves Survived: XXX"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -183,6 +199,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Slow Towers" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
 layout_mode = 2
 
 [node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Slow Towers"]
@@ -211,6 +228,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Weak Towers" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
 layout_mode = 2
 
 [node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Weak Towers"]
@@ -240,6 +258,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Blind Towers" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
 layout_mode = 2
 
 [node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Blind Towers"]
@@ -269,6 +288,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Crippled Towers" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
 layout_mode = 2
 
 [node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Crippled Towers"]
@@ -298,6 +318,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Expensive Towers" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
 layout_mode = 2
 
 [node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Expensive Towers"]
@@ -327,6 +348,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Economic Depression" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
 layout_mode = 2
 
 [node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Economic Depression"]
@@ -356,6 +378,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Sudden Death" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
 layout_mode = 2
 
 [node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Sudden Death"]
@@ -385,6 +408,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Only One" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
 layout_mode = 2
 
 [node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Only One"]
@@ -431,6 +455,7 @@ grow_vertical = 0
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
 theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 19
 text = "Total Earned: "
 
 [node name="TextureRect" type="TextureRect" parent="Main Panel/TotalEarned"]
@@ -443,7 +468,8 @@ stretch_mode = 5
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
 theme_override_fonts/font = ExtResource("2_mgdof")
-text = "XXXXX"
+theme_override_font_sizes/font_size = 19
+text = "0"
 
 [node name="TextureRect2" type="TextureRect" parent="Main Panel/TotalEarned"]
 layout_mode = 2
@@ -455,7 +481,8 @@ stretch_mode = 5
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
 theme_override_fonts/font = ExtResource("2_mgdof")
-text = "XXXXX"
+theme_override_font_sizes/font_size = 19
+text = "0"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Main Panel"]
 layout_mode = 1
@@ -474,16 +501,20 @@ grow_vertical = 0
 [node name="ReturnToMenuButton" type="Button" parent="Main Panel/HBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+focus_mode = 0
 theme_override_fonts/font = ExtResource("2_mgdof")
 theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = SubResource("StyleBoxTexture_74h2i")
 theme_override_styles/normal = SubResource("StyleBoxTexture_autof")
 text = "Main Menu"
 
 [node name="ReplayButton" type="Button" parent="Main Panel/HBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+focus_mode = 0
 theme_override_fonts/font = ExtResource("2_mgdof")
 theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = SubResource("StyleBoxTexture_vx1x8")
 theme_override_styles/normal = SubResource("StyleBoxTexture_autof")
 text = "Replay"
 

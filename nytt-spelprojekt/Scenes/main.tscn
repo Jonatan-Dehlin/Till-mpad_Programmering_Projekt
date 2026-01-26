@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://tbpoiyn0mbo1"]
+[gd_scene load_steps=62 format=3 uid="uid://tbpoiyn0mbo1"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_fip6x"]
 [ext_resource type="Texture2D" uid="uid://bvap3sergftsn" path="res://icon.svg" id="2_l7kl1"]
@@ -381,9 +381,16 @@ region = Rect2(3, 3, 26, 26)
 atlas = ExtResource("2_ral5c")
 region = Rect2(321, 100, 90, 27)
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6huj8"]
+texture = SubResource("AtlasTexture_habb6")
+texture_margin_left = 9.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+modulate_color = Color(0.690196, 0.690196, 0.690196, 1)
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bjswq"]
 texture = SubResource("AtlasTexture_habb6")
-texture_margin_left = 5.0
+texture_margin_left = 9.0
 texture_margin_top = 4.0
 texture_margin_right = 4.0
 
@@ -1184,6 +1191,7 @@ layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
 theme_override_font_sizes/font_size = 45
+theme_override_styles/hover = SubResource("StyleBoxTexture_6huj8")
 theme_override_styles/normal = SubResource("StyleBoxTexture_bjswq")
 text = "START"
 
