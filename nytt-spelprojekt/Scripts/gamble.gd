@@ -29,15 +29,16 @@ var TraitsTier5 = ["Singularity"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	var index
 	TraitChanceDisplay = get_parent().get_node("Traits").get_node("OddsTable").get_child(0).get_children()
 	for Chests in get_parent().get_node("Shop").get_child(0).get_child(0).get_children():
 		_modify_drop_rates(int(Chests.name.replace("chest","")))
-		var index = 0
+		index = 0
 		for colors in Chests.get_child(1).get_children():
 			colors.get_child(1).text = "%0.1f%%" % (float(weight[index][1]) / 10)
 			index += 1
 	_modify_drop_rates("Trait")
-	var index = 0
+	index = 0
 	for colors in TraitChanceDisplay:
 		colors.get_child(1).text = "%0.1f%%" % (float(weight[index][1]) / 10)
 		index += 1

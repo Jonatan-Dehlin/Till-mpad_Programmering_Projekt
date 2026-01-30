@@ -72,9 +72,11 @@ func _place_indicator(): #Gör så att projektilen anpassar sin bana för att in
 	rotation = get_angle_to(predicted_pos)
 
 func _physics_process(delta: float) -> void:
+	# Projektilen rör sig med hänsyn till vinkeln från _place_indicator(), hastigheten och delta
 	position += Vector2(cos(rotation), sin(rotation)) * velocity * delta
 	time_passed += delta
 	if time_passed >= lifetime:
+		# Om projektilen levt länge nog tas den bort
 		queue_free()
 	
 	selected_sprite.global_rotation = 0
@@ -85,13 +87,18 @@ func _apply_explosion_damage():
 	for i in enemies:
 		if i is Enemy and is_instance_valid(parent):
 			if i.current_health >= damage:
+				# Om fienden överlever attacken läggs hela skadan till
 				parent.stats["DamageDealt"] += damage
+				Globals.PlacedTowers[parent.get_meta("PlayerInventoryIndexReference")][1] += damage
 			else:
+				# Om fienden inte överlever läggs endast fiendens HP till
 				parent.stats["DamageDealt"] += i.current_health
+				Globals.PlacedTowers[parent.get_meta("PlayerInventoryIndexReference")][1] += i.current_health
 			if parent.Trait == "Midas":
-				Globals._damage(damage,i,true)
+				# Om tornet har midas trait ska de få mer pengar ifall fienden dör
+				Globals.damage(damage,i,true)
 			else:
-				Globals._damage(damage,i,false)
+				Globals.damage(damage,i,false)
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Enemy and not has_exploded: #Kontrollerar att det projektilen kolliderar med är en fiende
@@ -109,11 +116,9 @@ func _on_body_entered(body: Node2D) -> void:
 		selected_sprite.visible = false
 		velocity = 0
 
-
 func _on_hit_explosion_frame_changed() -> void:
 	if selected_explosion.frame == 5: #frame där explosionen faktiskt händer
 		_apply_explosion_damage()
-
 
 func _on_hit_explosion_animation_finished() -> void:
 	queue_free()

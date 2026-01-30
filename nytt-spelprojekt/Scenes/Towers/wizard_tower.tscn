@@ -91,6 +91,7 @@ metadata/Level = 1
 metadata/Trait = "none"
 metadata/PlayerInventoryIndexReference = 0
 metadata/MaxPlace = 5
+metadata/XP = 0
 
 [node name="TowerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_fxrtq")

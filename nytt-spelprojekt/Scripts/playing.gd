@@ -26,7 +26,6 @@ var Finished_sending_wave: bool = false
 var Skip_availiable: bool = false
 var BetweenWaves: bool = false
 
-var EquippedTowers = []
 
 var victory: bool = false
 var max_wave = 100
@@ -38,7 +37,7 @@ func _ready() -> void:
 	_read_wave_data(1)
 	_start_map(Globals.MapID, replay)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Globals.Playing:
 		display_cash = Globals.fancy_increment(display_cash, Globals.cash)
 		
@@ -46,7 +45,7 @@ func _process(delta: float) -> void:
 		HealthLabel.text = "HP: " + str(Globals.health)
 		WaveLabel.text = "Wave: " + str(Globals.current_wave) + "/" + str(max_wave)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if _detect_every_enemy_defeated():
 		if not BetweenWaves:
 			BetweenWaves = true
@@ -66,6 +65,7 @@ func _detect_game_over():
 			Globals.accumulated_reward[1] += Globals.map_completed_reward[Globals.MapDifficulty][1]
 
 		FinishedMenu._ready()
+		Globals.grant_exp()
 		get_tree().paused = true
 
 func _detect_every_enemy_defeated() -> bool:
@@ -74,8 +74,8 @@ func _detect_every_enemy_defeated() -> bool:
 	else:
 		return false
 
-func _start_map(MapID, replay: bool):
-	if not replay:
+func _start_map(MapID, Replay: bool):
+	if not Replay:
 		var map = load("res://Scenes/Levels/"+ str(MapID) + ".tscn")
 		map = map.instantiate()
 		current_level.replace_by(map)
@@ -124,7 +124,7 @@ func _place_tower(TowerInstance, i):
 func _update_equipped_towers_buttons(): # Hotbaren
 	for button: Button in EquippedTowersButtons:
 		for i in range(Globals.EquippedTowers.size()):
-			if button.get_meta("Index") == Globals.EquippedTowers[i][1]:
+			if str(button.get_meta("Index")) == str(Globals.EquippedTowers[i][1]):
 				var tower = load("res://Scenes/Towers/" + str(Globals.EquippedTowers[i][0]).split(",")[0]+".tscn")
 				var instance: Node2D = tower.instantiate()
 
@@ -141,6 +141,7 @@ func _update_equipped_towers_buttons(): # Hotbaren
 				# Ställer in metadata för de torn som är i hotbaren
 				instance.set_meta("Level",int(Globals.EquippedTowers[i][0].split(",")[1].replace("LEVEL:","")))
 				instance.set_meta("Trait",Globals.EquippedTowers[i][0].split(",")[2].replace("TRAIT:",""))
+				instance.set_meta("XP",Globals.EquippedTowers[i][0].split(",")[3].replace("XP:",""))
 				
 				#Ställer in leveltexten
 				button.get_node("LevelLabel").text = str(instance.get_meta("Level"))
@@ -190,7 +191,7 @@ func _send_wave(enemy: String, amount: int, cooldown: float, startcooldown: floa
 	if last:
 		Finished_sending_wave = true
 
-func _wave_manager(wave) -> void:
+func _wave_manager() -> void:
 	Globals.current_wave += 1
 	var enemies
 	if Globals.current_wave <= max_wave:
@@ -232,7 +233,7 @@ func _read_wave_data(wave: int) -> Array: #Läser wave-data fram till max_wave
 				return new
 	return []
 
-func _generate_wave(wave: int) -> Array: #Genererar infinite waves
+func _generate_wave(_wave: int) -> Array: #Genererar infinite waves
 	#format exempel: ["[\"FireBug.tscn\",10,1,false]", "[\"FireBug.tscn\",10,0.1,false]"]
 	#Tillgängliga fiender: FireBug.tscn, LeafBug.tscn, MagmaCrab.tscn, Scorpion.tscn
 	
@@ -242,7 +243,7 @@ func _generate_wave(wave: int) -> Array: #Genererar infinite waves
 ################# SIGNALS #################
 
 func _on_start_wave_button_pressed() -> void:
-	_wave_manager(Globals.current_wave)
+	_wave_manager()
 	$HUD/StartWaveButton.visible = false
 	SkipTimer.start()
 
@@ -251,6 +252,6 @@ func _on_skip_timer_timeout() -> void:
 	$HUD/StartWaveButton.visible = true
 
 func _on_next_wave_timer_timeout() -> void:
-	_wave_manager(Globals.current_wave)
+	_wave_manager()
 	$HUD/StartWaveButton.visible = false
 	SkipTimer.start()

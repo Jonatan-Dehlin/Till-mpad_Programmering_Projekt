@@ -91,6 +91,7 @@ func _ready() -> void:
 	_load_inventory()
 	Globals.update_save_file()
 	_update_tower_buttons()
+	#print(Globals.EquippedTowers)
 
 func _process(_delta: float) -> void:
 	_update_labels()
@@ -146,7 +147,8 @@ func _update_inventory():
 		
 		if not str(towers.split(",")[3]).contains("n/a"):
 			var SlotPos = int(str(towers.split(",")[3]).replace("SLOT:",""))
-			Globals.EquippedTowers.append([str(towers.split(",")[0]) + "," + str(towers.split(",")[1]) + "," + str(towers.split(",")[2]),SlotPos])
+			Globals.EquippedTowers.append([towers,SlotPos])
+		
 		
 		DuplicateButton.icon.atlas = instance.get_node("TowerSprite").texture
 		DuplicateButton.get_node("TowerName").text = instance.name
@@ -173,9 +175,9 @@ func _update_labels():
 	DiamondLabel.text = str(Globals.format_number(Globals.PlayerStats["Gold"]))
 	PlayerNameLabel.text = PlayerName
 	PlayerLevelLabel.text = str(Globals.PlayerStats["Level"])
-	EXPProgressBar.max_value = Globals.calculate_required_EXP(Globals.PlayerStats["Level"])
+	EXPProgressBar.max_value = Globals.calculate_required_EXP(Globals.PlayerStats["Level"],true)
 	EXPProgressBar.value = Globals.PlayerStats["EXP"]
-	PlayerEXPLabel.text = str(Globals.PlayerStats["EXP"]) + "/" + str(Globals.calculate_required_EXP(Globals.PlayerStats["Level"]))
+	PlayerEXPLabel.text = str(Globals.PlayerStats["EXP"]) + "/" + str(Globals.calculate_required_EXP(Globals.PlayerStats["Level"],true))
 
 func _update_tower_buttons():
 	for towers in TraitInventoryGrid.get_children():
@@ -203,12 +205,12 @@ func _open_chest(chestID, reset: bool):
 		var chest: Button = Chests.get_node("Chest" + str(chestID)).get_child(0)
 		chest.icon.region.position.y -= 96
 
-func _trait_reroll(tower: TextureRect):
+func _trait_reroll(tower: TextureRect): # Den stora preview:en i trait menyn
 	var Duplicate = tower.duplicate()
 	
-	if TraitSelectedTower.get_child_count() != 0:
-		TraitSelectedTower.get_child(0).queue_free()
-	TraitSelectedTower.add_child(Duplicate)
+	if TraitSelectedTower.get_child_count() != 0: # Om det redan finns ett torn valt:
+		TraitSelectedTower.get_child(0).queue_free() # Ta bort det
+	TraitSelectedTower.add_child(Duplicate) # Lägg in det nya
 	selected_trait_reroll_tower = tower
 	
 	var TraitLabel: String
@@ -228,8 +230,9 @@ func _trait_change(NewTrait, tower):
 			
 	
 	var joined = ",".join(split)
-	Globals.PlayerInventory[tower.get_meta("Index")] = joined
-
+	
+	Globals.inventory_replace_tower(joined)
+	
 	Globals.update_save_file()
 	_update_inventory()
 	_update_tower_buttons()
@@ -260,7 +263,7 @@ func _change_difficulty(Difficulty: String, SilverModifier: int, GoldModifier: i
 
 	_display_final_modifier()
 
-func _modifier_handler(modification):
+func _modifier_handler(modification): # Är kopplad till modifier checkboxes
 	if Globals.SelectedModifiers[modification][0] == false:
 		Globals.SelectedModifiers[modification][0] = true
 	else:
@@ -350,16 +353,16 @@ func _on_return_to_shop_menu_pressed() -> void:
 		await transitions.animation_finished
 		selected_menu = "Shop"
 
-func _on_reroll_trait_button_pressed() -> void:
-	if selected_trait_reroll_tower != null:
-		var NewGamblePanel = Gamble.duplicate()
-		add_child(NewGamblePanel)
-		NewGamblePanel._ready()
+func _on_reroll_trait_button_pressed() -> void: # När trait reroll knappen trycks
+	if selected_trait_reroll_tower != null: # Om spelaren har valt ett torn för trait reroll
+		var NewGamblePanel = Gamble.duplicate() # Skapa en ny gamblepanel
+		add_child(NewGamblePanel) # Lägg till den
+		NewGamblePanel._ready() # Kör dess _ready()
 		GambleMenu = NewGamblePanel
-		GambleMenu.visible = true
-		if ((await GambleMenu.gamble("Trait")) == "ScrollFinished"):
-			var reward = GambleMenu._grant_gamble_reward()
-			if reward == null:
+		GambleMenu.visible = true # Gör den synlig
+		if ((await GambleMenu.gamble("Trait")) == "ScrollFinished"): # Avvakta gambleanimationen färdig
+			var reward = GambleMenu._grant_gamble_reward() # _grant_gamble_reward() ger vunnen trait
+			if reward == null: # Bara för säkerhets skull
 				print("Null reward")
 			else:
-				_trait_change(reward,selected_trait_reroll_tower)
+				_trait_change(reward,selected_trait_reroll_tower) # Byter traiten

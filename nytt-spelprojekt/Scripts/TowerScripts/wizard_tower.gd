@@ -4,6 +4,8 @@ class_name Tower
 
 var TowerName = "Wizard Tower"
 
+var XP_earned: int = 0
+
 var enemies_in_range: Array = []
 var is_attacking: bool = false
 var targeted_enemy
@@ -25,7 +27,7 @@ var total_cash_spent: int = 100
 
 var targeting: String = "First"
 
-@export var sell_value: int = place_cost * 0.7 #70% sellback
+@export var sell_value: int = int(place_cost * 0.7) #70% sellback
 @export var max_placement: int = 5
 
 var upgrade_level = 1
@@ -212,11 +214,9 @@ func _draw():
 	if UniqueRangeShape is CircleShape2D and (hovering_over_tower or UpgradePanel.visible):
 		draw_circle(Vector2.ZERO, UniqueRangeShape.radius, Color(0, 0, 1, 0.1))
 
-
 func _on_mouse_hover_detector_mouse_entered() -> void:
 	TowerOutline.visible = true
 	hovering_over_tower = true
-	
 
 func _on_mouse_hover_detector_mouse_exited() -> void:
 	if not UpgradePanel.visible:

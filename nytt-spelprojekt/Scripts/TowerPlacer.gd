@@ -44,9 +44,16 @@ func _place_tower(instance):
 			Hitbox.get_child(0).queue_free()
 			
 			Anim.play_backwards("RemoveHotbarAnim")
-			#Bekräfta köpet
+			
+			# Bekräftar köpet
 			Globals.cash -= selected_tower.place_cost * CostFactor
 			
+			# Sparar tornets referens i en separat variabel för att ändå ge XP
+			# Ifall tornet tas bort i efterhand.
+			if Globals.PlacedTowers.has(instance.get_meta("PlayerInventoryIndexReference")):
+				Globals.PlacedTowers[instance.get_meta("PlayerInventoryIndexReference")][0] += 1
+			else:
+				Globals.PlacedTowers[instance.get_meta("PlayerInventoryIndexReference")] = [1,0]
 		else:
 			pass
 			#Eventuellt spela något ljud här

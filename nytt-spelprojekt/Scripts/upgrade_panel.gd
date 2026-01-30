@@ -54,7 +54,7 @@ func _ready() -> void:
 	for texture in $Panel/VBoxContainer/UpgradePaths/PathB/UpgradeBDisplay.get_children():
 		texture.texture = texture.texture.duplicate(true)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	#Om man inte har råd eller inte kan upgradera så stängs knapparna av
 	if UpgradeA == MaxAUpgrades or UpgradeACosts[UpgradeA+1] > Globals.cash:
 		UpgradeAButton.disabled = true

@@ -6,6 +6,7 @@ extends Control
 @onready var DefeatedWaves = $"Main Panel/WavesSurvived"
 @onready var Difficulty = $"Main Panel/Difficulty"
 @onready var Parent = $"../.."
+@onready var LevelUpPlaceholder = $"Main Panel/TextureRect2/LevelUpContainer/Placeholder"
 
 var main = load("res://Scenes/main.tscn")
 
@@ -37,7 +38,7 @@ func _ready() -> void:
 		Globals.PlayerStats["Gold"] += TotalEarnedGold
 		Globals.update_save_file()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if DoneAnimating:
 		if TotalEarnedSilver >= DisplayedSilverValue:
 			DisplayedSilverValue = Globals.fancy_increment(DisplayedSilverValue, TotalEarnedSilver)
@@ -45,6 +46,38 @@ func _process(delta: float) -> void:
 		if TotalEarnedGold >= DisplayedGoldValue:
 			DisplayedGoldValue = Globals.fancy_increment(DisplayedGoldValue, TotalEarnedGold)
 			EarnedGold.text = str(Globals.format_number(DisplayedGoldValue))
+	
+
+func fancy_display_xp(StartLevel, PreviousXP, GainedXP):
+	var pattern = LevelUpPlaceholder
+	var progressbar: ProgressBar = LevelUpPlaceholder.get_node("ProgressBar")
+	var progressbarLabel: Label = progressbar.get_node("Label")
+	var totalXPlabel: Label = LevelUpPlaceholder.get_node("Label")
+	
+	var currentLVL: int = StartLevel
+	var currentOverflow: int = GainedXP
+	progressbar.value = PreviousXP
+	
+	while currentOverflow > 0:
+		progressbar.max_value = Globals.calculate_required_EXP(currentLVL, false)
+		
+		if currentOverflow >= progressbar.max_value: # Kontrollerar ifall XP kommer räcka för levelup
+			progressbar.value += round(progressbar.max_value / 10)
+		
+			if progressbar.value >= progressbar.max_value: # Ifall baren är fylld
+				currentOverflow -= progressbar.max_value
+				currentLVL += 1
+				progressbar.value = 0
+		else: # Ifall XP inte räcker till levelup
+			progressbar.value += round(progressbar.max_value / 100)
+			currentOverflow -= round(progressbar.max_value / 100)
+			if progressbar.value >= currentOverflow:
+				currentOverflow = 0
+		
+		totalXPlabel.text = "+" + str(currentOverflow)
+		progressbarLabel.text = str(progressbar.value) + "/" + str(progressbar.max_value)
+		
+		await get_tree().create_timer(0.01).timeout
 
 #################### SIGNALS ######################
 func _on_return_to_menu_button_pressed() -> void:

@@ -6,6 +6,8 @@ var health = 100
 
 var cash = 100000
 
+var GameFinishedMenu
+
 var MapID
 var MapDifficulty: String
 var TotalMultiplier: PackedFloat64Array = [1.0,1.0]
@@ -21,13 +23,14 @@ var PlayerInventory = []
 var enemies = {"FireBug":0,"LeafBug":0,"MagmaCrab":0,"Scorpion":0}
 var enemy_base_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
 var enemy_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
-var enemy_speed = {"FireBug":1000,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
+var enemy_speed = {"FireBug":3000,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
 var enemy_base_reward = {"FireBug":10,"LeafBug":20,"MagmaCrab":50,"Scorpion":100}
 
 # Bidrar till spelarens belöningar EFTER spelets slut
 var enemy_kill_reward = {"FireBug":[10,0],"LeafBug":[20,0],"MagmaCrab":[50,5],"Scorpion":[100,10]} # Scalar med HP factor. Se _damage()
 var map_completed_reward = {"Easy":[1000,100],"Normal":[1500,200],"Advanced":[3000,250],"Expert":[5000,1000]}
 var accumulated_reward: Array = [0,0] # [silver, guld]
+var accumulated_player_EXP: int = 0
 
 
 # Speed och HP faktorer för fiender
@@ -37,6 +40,9 @@ var current_speed_factor: float = 1
 # konstanter för fienders HP och Speed ökning varje wave
 const HEALTH_FACTOR = 1.05
 const SPEED_FACTOR = 1.03
+const DAMAGE_TO_XP_FACTOR: float = 0.01
+
+var PlacedTowers: Dictionary = {} # {"Specifik tornreference": [antal placerade, total dmg dealt]}
 
 var SelectedDifficulty: String = "Easy"
 
@@ -165,7 +171,7 @@ var TraitModifiers: Dictionary = { # Innehåller förändringsfaktorer som senar
 			"cooldown":1,
 			"projectile_velocity": 2,
 			"projectile_lifetime": 1,
-			"AOESize": 2/3},
+			"AOESize": 0.6667},
 	"Midas": {"damage":1, # 50% mer pengar från kill, samt 50% mer money generation. Dessa effekter appliceras här i Globals för extra kill money, men lokalt i tornkoden för money generation.
 			"range":1,
 			"cooldown":1,
@@ -189,20 +195,27 @@ var LevelModifiers: Dictionary = { # Faktor per tornets Level
 	"AOESize": 0
 } 
 
-func reset() -> void:
-	current_wave = 0
-	cash = 100000
-	health = 100
-	accumulated_reward = [0,0]
-	if not Playing:
-		for modifiers in SelectedModifiers:
-			SelectedModifiers[modifiers][0] = false
-
+#################### GENERAL FUNCTIONS ####################
 func _ready() -> void:
 	current_health_factor = 1
 	current_speed_factor = 1
 
-func update_save_file():
+func get_tower_id(TowerString: String) -> String:
+	for parts in TowerString.split(","):
+		if parts.contains("ID:"):
+			return parts.replace("ID:","")
+	return ""
+
+func inventory_replace_tower(TowerString: String) -> void:
+	var CheckingID = get_tower_id(TowerString)
+
+	for i in range(PlayerInventory.size()):
+		var OldTower = PlayerInventory[i]
+		
+		if get_tower_id(OldTower) == CheckingID:
+			Globals.PlayerInventory[i] = TowerString
+
+func update_save_file(): # Uppdaterar spelarens save file
 	if not FileAccess.file_exists(PlayerStatFile):
 		print("Fatal error: no player data file found.")
 	else:
@@ -234,10 +247,12 @@ func update_save_file():
 			
 			if TowersFound and stripped != "":
 				lines[line] = PlayerInventory[index]
+				
 				index += 1
 			if stripped.contains("TOWERS:"):
 				TowersFound = true
 		file.close()
+		
 		
 		# Sparar alltihop
 		file = FileAccess.open(PlayerStatFile, FileAccess.WRITE)
@@ -245,7 +260,7 @@ func update_save_file():
 			file.store_line(line)
 		file.close()
 
-func fancy_increment(StartValue, TargetValue) -> int:
+func fancy_increment(StartValue, TargetValue) -> int: # Skapar fina uppräkningar av värden
 	var diff = TargetValue - StartValue
 	var EndValue
 	# animerar cash visaren
@@ -267,48 +282,23 @@ func fancy_increment(StartValue, TargetValue) -> int:
 	EndValue = StartValue + sign(diff) * amount
 	return EndValue
 
-func return_cost_factor(): # Räknar ut costfactor för torn beroende på modifiers
-	var CostFactor: float = 0
-	if Globals.SelectedModifiers["Expensive Towers"][0] == true:
-			CostFactor += 0.5
-	if Globals.SelectedModifiers["Economic Depression"][0] == true:
-			CostFactor += 1
-	return CostFactor
-
-func calculate_required_EXP(PlayerLevel) -> int:
+func calculate_required_EXP(Level, player: bool) -> int: # Räknar ut hur mycket EXP som krävs för nästa spelarnivå
 	var BaseEXPRequirement: int = 100
-	var EXPScalingFactor: float = 1.3
-
-	return BaseEXPRequirement * EXPScalingFactor ** int(PlayerLevel)
-
-func _apply_enemy_multipliers(wave) -> void:
-	current_health_factor = HEALTH_FACTOR ** (wave-1) * SelectedDifficultyModifiers[SelectedDifficulty]["EnemyHP"]
-	current_speed_factor = SPEED_FACTOR ** (wave-1)
+	var EXPScalingFactor: float
 	
-	# Ändrar HP för fienden så att de får mer HP fler rundor in
-	for enemy in enemy_health:
-		enemy_health[enemy] = round(enemy_base_health[enemy] * current_health_factor)
-		enemy_speed[enemy] = enemy_speed[enemy] * current_speed_factor
-		
-	# Ser till att korrigera kill-belöningen för att hålla den proportionelig med fiendens HP
-	for enemy in enemy_base_reward:
-		enemy_base_reward[enemy] *= current_health_factor
-
-func _damage(damage_dealt, targeted_enemy, midas: bool) -> void:
-	if damage_dealt >= targeted_enemy.current_health:
-		targeted_enemy.get_parent().queue_free()
-		cash += targeted_enemy.kill_reward
-		accumulated_reward[0] += enemy_kill_reward[targeted_enemy.name][0] * current_health_factor
-		accumulated_reward[1] += enemy_kill_reward[targeted_enemy.name][1] * current_health_factor
+	if player:
+		EXPScalingFactor = 1.3
+		return BaseEXPRequirement * EXPScalingFactor ** Level
 	else:
-		targeted_enemy.current_health -= damage_dealt
+		EXPScalingFactor = 1.1
+		return BaseEXPRequirement * EXPScalingFactor ** Level
 
 func format_number(n: int) -> String: # Gör om t.ex. 1000000 -> 1,000,000
 	if n < 1000: #Om numret är under 1000 behöver det inte formatteras
 		return str(n)
 	else:
 		var s = str(n)
-		var result: String
+		var result: String = ""
 		var numbers_added = 0
 		
 		s = s.reverse() #Vänder på stringen för att få "," på rätt ställen
@@ -321,3 +311,93 @@ func format_number(n: int) -> String: # Gör om t.ex. 1000000 -> 1,000,000
 		result = result.reverse() #Vänder tillbaks string så att det blir rätt håll
 		
 		return result
+
+func grant_exp(): # 
+	GameFinishedMenu = get_tree().current_scene.get_node("HUD").get_node("GameFinishedMenu")
+	for i in range(EquippedTowers.size()): # [Towers har formatet "tower_name,LVL:x,TRAIT:x,SLOT:x,XP:x,ID:x, num]
+		var Towers = EquippedTowers[i]
+		if PlacedTowers.has(Towers[1]): # Ifall tornet har placerats någon gång under spelets gång
+			var split = Towers[0].split(",") # Plockar isär towersträngen så att vi kan komma åt t.ex XP
+			var PreviousXP = int(split[4].replace("XP:","")) # Plockar ut XP delen av strängen
+			var GainedXP = PlacedTowers[Towers[1]][1] + 100000 # Kollar i PlacedTowers, där totala skadan för något torn sparas
+			var TotalXP = PreviousXP + GainedXP # Totala XPn för tornet
+			var PreviousLVL = int(split[1].replace("LVL:","")) # Föregående nivån
+			
+			var GainedLVL: int = 0 # Levels tjänade
+			var OverflowXP: int = TotalXP # XP som är över efter levelup
+			while check_level_up(OverflowXP, PreviousLVL + GainedLVL): # Så länge OverflowXP räcker för att levla upp
+				OverflowXP -= calculate_required_EXP(PreviousLVL + GainedLVL, false) # Drar av XP som krävs för levelup från overflow
+				GainedLVL += 1 # Ökar leveln med 1
+			
+			
+			var RemainingXP = calculate_required_EXP(PreviousLVL + GainedLVL, false) + OverflowXP # XP som är över efter levelup är klar
+			split[1] = "LVL:" + str(PreviousLVL + GainedLVL) # Byter ut LVL delen av Towerstringen
+			split[4] = "XP:" + str(RemainingXP) # Byter ut XP delen av Towerstringen
+			var NewTowerString = ",".join(split) # Bygger ihop den nya Towerstringen
+			
+			EquippedTowers[i] = [NewTowerString,Towers[1]] # Uppdaterar towerstringen i Equippedtowers
+			GameFinishedMenu.fancy_display_xp(PreviousLVL, PreviousXP, GainedXP)
+			
+		
+			inventory_replace_tower(NewTowerString) # Uppdaterar tornet i spelarens inventory
+	level_up_player()
+	update_save_file() # Sparar allting i save filen
+
+func check_level_up(TotalXP, level): # Kollar ifall det finns nog med XP för att levla upp
+	if TotalXP >= calculate_required_EXP(level, false):
+		return true
+	else:
+		return false
+
+func level_up_player():
+	while PlayerStats["EXP"] >= calculate_required_EXP(PlayerStats["Level"], true):
+		PlayerStats["EXP"] -= calculate_required_EXP(PlayerStats["Level"], true)
+		PlayerStats["Level"] += 1
+	
+	update_save_file()
+
+###################### PLAY FUNCTIONS #####################
+func reset() -> void:
+	current_wave = 0
+	cash = 100000
+	health = 100
+	accumulated_reward = [0,0]
+	if not Playing:
+		for modifiers in SelectedModifiers:
+			SelectedModifiers[modifiers][0] = false
+
+func return_cost_factor(): # Räknar ut costfactor för torn beroende på modifiers
+	var CostFactor: float = 0
+	if Globals.SelectedModifiers["Expensive Towers"][0] == true:
+			CostFactor += 0.5
+	if Globals.SelectedModifiers["Economic Depression"][0] == true:
+			CostFactor += 1
+	return CostFactor
+
+func _apply_enemy_multipliers(wave) -> void: # Applicerar fiendes multipliers
+	current_health_factor = HEALTH_FACTOR ** (wave-1) * SelectedDifficultyModifiers[SelectedDifficulty]["EnemyHP"]
+	current_speed_factor = SPEED_FACTOR ** (wave-1)
+	
+	# Ändrar HP för fienden så att de får mer HP fler rundor in
+	for enemy in enemy_health:
+		enemy_health[enemy] = round(enemy_base_health[enemy] * current_health_factor)
+		enemy_speed[enemy] = enemy_speed[enemy] * current_speed_factor
+		
+	# Ser till att korrigera kill-belöningen för att hålla den proportionelig med fiendens HP
+	for enemy in enemy_base_reward:
+		enemy_base_reward[enemy] *= current_health_factor
+
+func damage(damage_dealt, targeted_enemy, midas: bool) -> void:
+	if damage_dealt >= targeted_enemy.current_health: # Om attacken besegrar fienden:
+		targeted_enemy.get_parent().queue_free() # Ta bort fienden genom att ta bort dess förälder, PathFollow2D
+		if midas:
+			cash += targeted_enemy.kill_reward * 1.5
+		else:
+			cash += targeted_enemy.kill_reward
+		# Lägger till värden i accumulated_reward[silver] och [guld] som sedan visas vid game over
+		# Ser även till att anpassa kill reward så att den är proportionelig til fiendernas HP-ökning.
+		accumulated_reward[0] += enemy_kill_reward[targeted_enemy.name][0] * current_health_factor
+		accumulated_reward[1] += enemy_kill_reward[targeted_enemy.name][1] * current_health_factor
+	else:
+		# Om fienden inte besegras drar vi helt enkelt av skadan från fiendens HP
+		targeted_enemy.current_health -= damage_dealt

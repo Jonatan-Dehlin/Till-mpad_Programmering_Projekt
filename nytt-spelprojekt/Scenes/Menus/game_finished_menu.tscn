@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://cyfp805luoknq"]
+[gd_scene load_steps=16 format=3 uid="uid://cyfp805luoknq"]
 
 [ext_resource type="Script" path="res://Scripts/game_finished_menu.gd" id="1_81qqe"]
 [ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/medieval.png" id="1_sseo8"]
 [ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="2_mgdof"]
+[ext_resource type="Texture2D" uid="uid://di68gim02dr7c" path="res://Assets/Towers/Towers bases/PNGs/Tower 05.png" id="3_300f6"]
 [ext_resource type="Texture2D" uid="uid://ufo5h6al0bee" path="res://Assets/SilverCoin.png" id="4_0l5to"]
 [ext_resource type="Texture2D" uid="uid://q7ls5cim2spy" path="res://Assets/GoldCoin.png" id="5_ix0bh"]
 
@@ -13,6 +14,10 @@ region = Rect2(84, 274, 71, 92)
 [sub_resource type="AtlasTexture" id="AtlasTexture_5jqar"]
 atlas = ExtResource("1_sseo8")
 region = Rect2(864, 704, 97, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j07os"]
+atlas = ExtResource("3_300f6")
+region = Rect2(0, 22, 64, 106)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hh0ee"]
 atlas = ExtResource("1_sseo8")
@@ -91,6 +96,60 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_5jqar")
 stretch_mode = 5
+
+[node name="LevelUpContainer" type="VBoxContainer" parent="Main Panel/TextureRect2"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -215.5
+offset_top = 44.0
+offset_right = 215.5
+offset_bottom = 480.0
+grow_horizontal = 2
+
+[node name="Placeholder" type="HBoxContainer" parent="Main Panel/TextureRect2/LevelUpContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+metadata/HotbarIndex = 0
+
+[node name="TextureRect" type="TextureRect" parent="Main Panel/TextureRect2/LevelUpContainer/Placeholder"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = SubResource("AtlasTexture_j07os")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ProgressBar" type="ProgressBar" parent="Main Panel/TextureRect2/LevelUpContainer/Placeholder"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_mgdof")
+show_percentage = false
+
+[node name="Label" type="Label" parent="Main Panel/TextureRect2/LevelUpContainer/Placeholder/ProgressBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -7.0
+offset_right = 23.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 30
+text = "XX/XX"
+
+[node name="Label" type="Label" parent="Main Panel/TextureRect2/LevelUpContainer/Placeholder"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+ XX,XXX"
 
 [node name="DefeatOrVictoryLabel" type="Label" parent="Main Panel"]
 layout_mode = 1
