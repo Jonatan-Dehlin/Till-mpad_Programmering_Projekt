@@ -100,7 +100,7 @@ size = Vector2(340.66, 613.541)
 
 [node name="UpgradePanelCanvas" type="CanvasLayer"]
 
-[node name="UpgradePanel" type="Control" parent="."]
+[node name="UpgradePanel" type="Control" parent="." groups=["UpgradePanel"]]
 visible = false
 layout_mode = 3
 anchors_preset = 0

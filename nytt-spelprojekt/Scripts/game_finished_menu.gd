@@ -6,7 +6,8 @@ extends Control
 @onready var DefeatedWaves = $"Main Panel/WavesSurvived"
 @onready var Difficulty = $"Main Panel/Difficulty"
 @onready var Parent = $"../.."
-@onready var LevelUpPlaceholder = $"Main Panel/TextureRect2/LevelUpContainer/Placeholder"
+@onready var LevelUpPlaceholder = $"Main Panel/TextureRect2/ScrollContainer/Placeholder"
+@onready var LevelUpContainer: VBoxContainer = $"Main Panel/TextureRect2/ScrollContainer/LevelUpContainer"
 
 var main = load("res://Scenes/main.tscn")
 
@@ -19,6 +20,12 @@ var TotalEarnedGold: int = 0
 
 func _ready() -> void:
 	if visible: # Innebär att spelet är avslutat
+		for children in LevelUpContainer.get_children(): # Tar bort gamla XP progressbars och sånt
+			children.queue_free()
+		
+		for UpgradePanels in get_tree().get_nodes_in_group("UpgradePanel"): # Ser till att gömma alla upgradepanels så att de inte skulle skymma gamefinishedmenyn
+			UpgradePanels.visible = false
+		
 		Difficulty.get_node("Difficulty").text = Globals.SelectedDifficulty
 		Difficulty.get_node("Modifier").text = (str(Globals.SelectedDifficultyRewardMultipliers[Globals.SelectedDifficulty][0] * 100) + "%")
 		Difficulty.get_node("Modifier2").text = (str(Globals.SelectedDifficultyRewardMultipliers[Globals.SelectedDifficulty][1] * 100) + "%")
@@ -46,36 +53,59 @@ func _process(_delta: float) -> void:
 		if TotalEarnedGold >= DisplayedGoldValue:
 			DisplayedGoldValue = Globals.fancy_increment(DisplayedGoldValue, TotalEarnedGold)
 			EarnedGold.text = str(Globals.format_number(DisplayedGoldValue))
-	
 
 func fancy_display_xp(StartLevel, PreviousXP, GainedXP):
-	var pattern = LevelUpPlaceholder
-	var progressbar: ProgressBar = LevelUpPlaceholder.get_node("ProgressBar")
+	var pattern = LevelUpPlaceholder.duplicate()
+	
+	LevelUpContainer.add_child(pattern)
+	pattern.visible = true
+	var progressbar: ProgressBar = pattern.get_node("ProgressBar")
 	var progressbarLabel: Label = progressbar.get_node("Label")
-	var totalXPlabel: Label = LevelUpPlaceholder.get_node("Label")
+	var totalXPlabel: Label = pattern.get_node("Double").get_node("XPLabel")
+	var LVLLabel: Label = pattern.get_node("Double").get_node("LevelLabel")
 	
 	var currentLVL: int = StartLevel
 	var currentOverflow: int = GainedXP
 	progressbar.value = PreviousXP
+	progressbar.max_value = Globals.calculate_required_EXP(StartLevel, false)
+	progressbar.value = PreviousXP
+	progressbarLabel.text = str(progressbar.value) + "/" + str(progressbar.max_value)
+	totalXPlabel.text = "+0"
+	LVLLabel.text = str(StartLevel) + " -> " + str(StartLevel)
 	
 	while currentOverflow > 0:
 		progressbar.max_value = Globals.calculate_required_EXP(currentLVL, false)
 		
-		if currentOverflow >= progressbar.max_value: # Kontrollerar ifall XP kommer räcka för levelup
+		if progressbar.value + currentOverflow >= progressbar.max_value: # Kontrollerar ifall XP kommer räcka för levelup
 			progressbar.value += round(progressbar.max_value / 10)
 		
 			if progressbar.value >= progressbar.max_value: # Ifall baren är fylld
+				@warning_ignore("narrowing_conversion")
 				currentOverflow -= progressbar.max_value
 				currentLVL += 1
 				progressbar.value = 0
 		else: # Ifall XP inte räcker till levelup
-			progressbar.value += round(progressbar.max_value / 100)
-			currentOverflow -= round(progressbar.max_value / 100)
+			var completionSteps: int = 100 # Hur många iterations för att fylla baren
+			@warning_ignore("narrowing_conversion")
+			var targetValue: int = currentOverflow
+			print("TargetValue: " + str(targetValue))
+			@warning_ignore("integer_division")
+			var stepSize: int = targetValue / completionSteps
+			var rest: int = targetValue % completionSteps
+			
+			for i in range(completionSteps):
+				progressbar.value += stepSize
+				currentOverflow -= stepSize
+			# Tar sedan bort resten
+			progressbar.value += rest
+			currentOverflow -= rest
 			if progressbar.value >= currentOverflow:
 				currentOverflow = 0
 		
 		totalXPlabel.text = "+" + str(currentOverflow)
+		print("Progressbarvalue1: " + str(progressbar.value))
 		progressbarLabel.text = str(progressbar.value) + "/" + str(progressbar.max_value)
+		LVLLabel.text = str(StartLevel) + " -> " + str(currentLVL)
 		
 		await get_tree().create_timer(0.01).timeout
 

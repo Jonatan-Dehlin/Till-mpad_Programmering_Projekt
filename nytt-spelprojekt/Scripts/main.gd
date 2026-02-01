@@ -13,6 +13,7 @@ extends Control
 @onready var TraitInventoryGrid: GridContainer = $Traits/ScrollContainer/GridContainer
 @onready var TraitSelectedTower: CenterContainer = $Traits/CenterContainer
 @onready var CurrentTraitLabel: Label = $Traits/PurchaseTraitReroll2/CenterContainer/CurrentTrait
+@onready var TraitCostLabel: Label = $Traits/PurchaseTraitReroll/HBoxContainer/HBoxContainer/TraitCost
 
 @onready var PlayButton: TextureButton = $MainMenu/BottomPanel/Buttons/Play
 @onready var ShopButton: TextureButton = $MainMenu/BottomPanel/Buttons/Shop
@@ -31,31 +32,33 @@ extends Control
 @onready var StartButton: Button = $ChooseMap/SelectModifiers/FinalModifiers/StartMapButton
 
 
-#Player Stat Labels (och EXP bar)
+# Player Stat Labels (och EXP bar)
 @onready var PlayerNameLabel = $MainMenu/PlayerStats/PlayerUsername
-@onready var CoinLabel = $MainMenu/PlayerWallet/SilverAmount/Currency/Silver/SilverLabel
-@onready var DiamondLabel = $MainMenu/PlayerWallet/GoldAmount/Currency/Gold/GoldLabel
 @onready var PlayerLevelLabel = $MainMenu/PlayerStats/Level
 @onready var PlayerEXPLabel = $MainMenu/PlayerStats/ProgressBar/Label
 @onready var EXPProgressBar = $MainMenu/PlayerStats/ProgressBar
 
-#Saker som är användbara ingame
+# Konstanter
+const TRAIT_COST: int = 1000
+const CHEST_COSTS: Dictionary = {
+	"hej": 100,
+}
 
-#Gamble variables
+# Gamble variables
 var Gamble = preload("res://Scenes/Menus/gamble.tscn").instantiate()
 var GambleMenu: Control
 
-#Tower Directory
+# Tower Directory
 var tower_directory = DirAccess.open("res://Scenes/Towers/")
 
-#Player Stats
+# Player Stats
 var PlayerName: String
 
 
-#Trait Reroll variables
+# Trait Reroll variables
 var selected_trait_reroll_tower
 
-#Game variables
+# Game variables
 var PlayMode = preload("res://Scenes/playing.tscn")
 
 var selected_menu: String = "Main"
@@ -171,13 +174,17 @@ func _update_inventory():
 
 func _update_labels():
 	#Uppdatera visade värden i spelet
-	CoinLabel.text = str(Globals.format_number(Globals.PlayerStats["Silver"]))
-	DiamondLabel.text = str(Globals.format_number(Globals.PlayerStats["Gold"]))
+	for labels in get_tree().get_nodes_in_group("SilverAmount"):
+		labels.text = str(Globals.format_number(Globals.PlayerStats["Silver"]))
+	for labels in get_tree().get_nodes_in_group("GoldAmount"):
+		labels.text = str(Globals.format_number(Globals.PlayerStats["Gold"]))
+	
 	PlayerNameLabel.text = PlayerName
 	PlayerLevelLabel.text = str(Globals.PlayerStats["Level"])
 	EXPProgressBar.max_value = Globals.calculate_required_EXP(Globals.PlayerStats["Level"],true)
 	EXPProgressBar.value = Globals.PlayerStats["EXP"]
 	PlayerEXPLabel.text = str(Globals.PlayerStats["EXP"]) + "/" + str(Globals.calculate_required_EXP(Globals.PlayerStats["Level"],true))
+	TraitCostLabel.text = str(Globals.format_number(TRAIT_COST))
 
 func _update_tower_buttons():
 	for towers in TraitInventoryGrid.get_children():
@@ -230,6 +237,11 @@ func _trait_change(NewTrait, tower):
 			
 	
 	var joined = ",".join(split)
+	# Uppdaterar Equipped Towers också
+	var tower_index = tower.get_meta("Index")
+	for i in range(Globals.EquippedTowers.size()):
+		if Globals.EquippedTowers[i][1] == tower_index:
+			Globals.EquippedTowers[i][0] = joined
 	
 	Globals.inventory_replace_tower(joined)
 	
@@ -241,7 +253,6 @@ func _trait_change(NewTrait, tower):
 	#De gamla inventoryreferenserna hinner bytas ut i _update_inventory()
 	#Simulerar sedan ett tryck med _trait_reroll() för att uppdatera
 	#TraitIkonen för det stora tornet till höger i traitmenyn
-	var tower_index = tower.get_meta("Index")
 	await get_tree().process_frame
 	
 	_trait_reroll(TraitInventoryGrid.get_child(tower_index))
@@ -252,8 +263,6 @@ func _select_modifiers(MapID): # Körs när spelaren trycker på en karta. Avvak
 	Globals.MapID = MapID
 	_display_final_modifier()
 
-	await StartButton.pressed
-	_start_play_mode()
 
 func _change_difficulty(Difficulty: String, SilverModifier: int, GoldModifier: int):
 	DifficultyLabel.text = Difficulty
@@ -336,6 +345,7 @@ func _on_return_to_main_menu_from_play_pressed() -> void:
 	if selected_menu == "Play":
 		transitions.play("ResetPlay")
 		selected_menu = "animating..."
+		SelectModifiers.visible = false
 		await transitions.animation_finished
 		selected_menu = "Main"
 
@@ -354,7 +364,8 @@ func _on_return_to_shop_menu_pressed() -> void:
 		selected_menu = "Shop"
 
 func _on_reroll_trait_button_pressed() -> void: # När trait reroll knappen trycks
-	if selected_trait_reroll_tower != null: # Om spelaren har valt ett torn för trait reroll
+	if selected_trait_reroll_tower != null and Globals.PlayerStats["Gold"] >= TRAIT_COST: # Om spelaren har valt ett torn för trait reroll
+		Globals.PlayerStats["Gold"] -= TRAIT_COST # Tar betalt av spelaren
 		var NewGamblePanel = Gamble.duplicate() # Skapa en ny gamblepanel
 		add_child(NewGamblePanel) # Lägg till den
 		NewGamblePanel._ready() # Kör dess _ready()
@@ -366,3 +377,6 @@ func _on_reroll_trait_button_pressed() -> void: # När trait reroll knappen tryc
 				print("Null reward")
 			else:
 				_trait_change(reward,selected_trait_reroll_tower) # Byter traiten
+
+func _on_start_map_button_pressed() -> void:
+	_start_play_mode()

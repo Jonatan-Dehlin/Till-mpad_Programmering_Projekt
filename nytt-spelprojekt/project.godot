@@ -29,6 +29,10 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray()
 
+[global_group]
+
+UpgradePanel="UpgradePanel. Gruppen används för att kunna gömma Upgradepanels från annan kod ifall det skulle behövas."
+
 [gui]
 
 theme/default_font_multichannel_signed_distance_field=true

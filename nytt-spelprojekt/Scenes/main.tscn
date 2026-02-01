@@ -493,7 +493,7 @@ texture = SubResource("AtlasTexture_bs2jl")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ev6a5"]
 texture = SubResource("AtlasTexture_bs2jl")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s2b8e"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8s43a"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -674,7 +674,7 @@ texture = SubResource("AtlasTexture_vii81")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SilverLabel" type="Label" parent="MainMenu/PlayerWallet/SilverAmount/Currency/Silver"]
+[node name="SilverLabel" type="Label" parent="MainMenu/PlayerWallet/SilverAmount/Currency/Silver" groups=["SilverAmount"]]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -730,7 +730,7 @@ texture = ExtResource("7_klchj")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="GoldLabel" type="Label" parent="MainMenu/PlayerWallet/GoldAmount/Currency/Gold"]
+[node name="GoldLabel" type="Label" parent="MainMenu/PlayerWallet/GoldAmount/Currency/Gold" groups=["GoldAmount"]]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -2309,6 +2309,157 @@ text = "Towers"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="SilverAmount" type="TextureRect" parent="Shop"]
+offset_left = 1096.0
+offset_top = 86.0
+offset_right = 1496.0
+offset_bottom = 170.0
+texture = SubResource("AtlasTexture_su40n")
+stretch_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="Shop/SilverAmount"]
+layout_mode = 0
+offset_left = 140.0
+offset_right = 282.0
+offset_bottom = 84.0
+texture = SubResource("AtlasTexture_5he7j")
+expand_mode = 1
+stretch_mode = 4
+flip_h = true
+
+[node name="Currency" type="HBoxContainer" parent="Shop/SilverAmount"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -27.0
+offset_right = 45.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="Silver" type="HBoxContainer" parent="Shop/SilverAmount/Currency"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Silver" type="TextureRect" parent="Shop/SilverAmount/Currency/Silver"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+texture = ExtResource("6_4boqv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BackgroundBlockers" type="TextureRect" parent="Shop/SilverAmount/Currency/Silver/Silver"]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 0
+offset_top = 9.0
+offset_right = 6.0
+offset_bottom = 15.0
+texture = SubResource("AtlasTexture_vii81")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BackgroundBlockers2" type="TextureRect" parent="Shop/SilverAmount/Currency/Silver/Silver"]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 0
+offset_left = 24.0
+offset_top = 9.0
+offset_right = 30.0
+offset_bottom = 15.0
+texture = SubResource("AtlasTexture_vii81")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BackgroundBlockers3" type="TextureRect" parent="Shop/SilverAmount/Currency/Silver/Silver"]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 0
+offset_left = 24.0
+offset_top = 39.0
+offset_right = 30.0
+offset_bottom = 45.0
+texture = SubResource("AtlasTexture_vii81")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BackgroundBlockers4" type="TextureRect" parent="Shop/SilverAmount/Currency/Silver/Silver"]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 0
+offset_top = 39.0
+offset_right = 6.0
+offset_bottom = 45.0
+texture = SubResource("AtlasTexture_vii81")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SilverLabel" type="Label" parent="Shop/SilverAmount/Currency/Silver" groups=["SilverAmount"]]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 35
+text = "XXX,XXX"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="GoldAmount" type="TextureRect" parent="Shop"]
+offset_left = 1400.0
+offset_top = 86.0
+offset_right = 1544.0
+offset_bottom = 170.0
+texture = SubResource("AtlasTexture_su40n")
+stretch_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="Shop/GoldAmount"]
+layout_mode = 0
+offset_left = 140.0
+offset_right = 282.0
+offset_bottom = 84.0
+texture = SubResource("AtlasTexture_5he7j")
+expand_mode = 1
+stretch_mode = 4
+flip_h = true
+
+[node name="Currency" type="HBoxContainer" parent="Shop/GoldAmount"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -27.0
+offset_right = 173.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="Gold" type="HBoxContainer" parent="Shop/GoldAmount/Currency"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Gold" type="TextureRect" parent="Shop/GoldAmount/Currency/Gold"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("7_klchj")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GoldLabel" type="Label" parent="Shop/GoldAmount/Currency/Gold" groups=["GoldAmount"]]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 35
+text = "XXX,XXX"
+horizontal_alignment = 1
+vertical_alignment = 2
+
 [node name="Traits" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 1920.0
@@ -2644,7 +2795,7 @@ offset_right = 183.0
 offset_bottom = 39.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 45
+theme_override_constants/separation = 30
 alignment = 1
 
 [node name="RerollTraitButton" type="Button" parent="Traits/PurchaseTraitReroll/HBoxContainer"]
@@ -2656,11 +2807,25 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_mk24d")
 theme_override_styles/normal = SubResource("StyleBoxTexture_ev6a5")
 text = "Reroll Trait"
 
-[node name="TraitCost" type="Label" parent="Traits/PurchaseTraitReroll/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Traits/PurchaseTraitReroll/HBoxContainer"]
 layout_mode = 2
+
+[node name="GoldCoin" type="TextureRect" parent="Traits/PurchaseTraitReroll/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+texture = ExtResource("7_klchj")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TraitCost" type="Label" parent="Traits/PurchaseTraitReroll/HBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_styles/normal = SubResource("StyleBoxFlat_s2b8e")
-text = "$xx,xxx"
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
+text = "xx,xxx"
+vertical_alignment = 1
 
 [node name="PurchaseTraitReroll2" type="TextureRect" parent="Traits"]
 layout_mode = 1
@@ -2705,6 +2870,157 @@ offset_top = 975.0
 offset_right = 584.0
 offset_bottom = 1044.0
 text = "BACK"
+
+[node name="SilverAmount" type="TextureRect" parent="Traits"]
+offset_left = 1096.0
+offset_top = 86.0
+offset_right = 1496.0
+offset_bottom = 170.0
+texture = SubResource("AtlasTexture_su40n")
+stretch_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="Traits/SilverAmount"]
+layout_mode = 0
+offset_left = 140.0
+offset_right = 282.0
+offset_bottom = 84.0
+texture = SubResource("AtlasTexture_5he7j")
+expand_mode = 1
+stretch_mode = 4
+flip_h = true
+
+[node name="Currency" type="HBoxContainer" parent="Traits/SilverAmount"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -27.0
+offset_right = 45.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="Silver" type="HBoxContainer" parent="Traits/SilverAmount/Currency"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Silver" type="TextureRect" parent="Traits/SilverAmount/Currency/Silver"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+texture = ExtResource("6_4boqv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BackgroundBlockers" type="TextureRect" parent="Traits/SilverAmount/Currency/Silver/Silver"]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 0
+offset_top = 9.0
+offset_right = 6.0
+offset_bottom = 15.0
+texture = SubResource("AtlasTexture_vii81")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BackgroundBlockers2" type="TextureRect" parent="Traits/SilverAmount/Currency/Silver/Silver"]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 0
+offset_left = 24.0
+offset_top = 9.0
+offset_right = 30.0
+offset_bottom = 15.0
+texture = SubResource("AtlasTexture_vii81")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BackgroundBlockers3" type="TextureRect" parent="Traits/SilverAmount/Currency/Silver/Silver"]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 0
+offset_left = 24.0
+offset_top = 39.0
+offset_right = 30.0
+offset_bottom = 45.0
+texture = SubResource("AtlasTexture_vii81")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BackgroundBlockers4" type="TextureRect" parent="Traits/SilverAmount/Currency/Silver/Silver"]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 0
+offset_top = 39.0
+offset_right = 6.0
+offset_bottom = 45.0
+texture = SubResource("AtlasTexture_vii81")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SilverLabel" type="Label" parent="Traits/SilverAmount/Currency/Silver" groups=["SilverAmount"]]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 35
+text = "XXX,XXX"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="GoldAmount" type="TextureRect" parent="Traits"]
+offset_left = 1400.0
+offset_top = 86.0
+offset_right = 1544.0
+offset_bottom = 170.0
+texture = SubResource("AtlasTexture_su40n")
+stretch_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="Traits/GoldAmount"]
+layout_mode = 0
+offset_left = 140.0
+offset_right = 282.0
+offset_bottom = 84.0
+texture = SubResource("AtlasTexture_5he7j")
+expand_mode = 1
+stretch_mode = 4
+flip_h = true
+
+[node name="Currency" type="HBoxContainer" parent="Traits/GoldAmount"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -27.0
+offset_right = 173.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+
+[node name="Gold" type="HBoxContainer" parent="Traits/GoldAmount/Currency"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Gold" type="TextureRect" parent="Traits/GoldAmount/Currency/Gold"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("7_klchj")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GoldLabel" type="Label" parent="Traits/GoldAmount/Currency/Gold" groups=["GoldAmount"]]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 35
+text = "XXX,XXX"
+horizontal_alignment = 1
+vertical_alignment = 2
 
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Inventory" to="." method="_on_inventory_pressed"]
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Play" to="." method="_on_play_pressed"]

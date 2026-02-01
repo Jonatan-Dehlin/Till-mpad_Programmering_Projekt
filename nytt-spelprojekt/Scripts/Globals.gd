@@ -312,25 +312,28 @@ func format_number(n: int) -> String: # Gör om t.ex. 1000000 -> 1,000,000
 		
 		return result
 
-func grant_exp(): # 
+func grant_exp(): # Ger XP till torn och spelare vid game over
 	GameFinishedMenu = get_tree().current_scene.get_node("HUD").get_node("GameFinishedMenu")
 	for i in range(EquippedTowers.size()): # [Towers har formatet "tower_name,LVL:x,TRAIT:x,SLOT:x,XP:x,ID:x, num]
 		var Towers = EquippedTowers[i]
 		if PlacedTowers.has(Towers[1]): # Ifall tornet har placerats någon gång under spelets gång
 			var split = Towers[0].split(",") # Plockar isär towersträngen så att vi kan komma åt t.ex XP
 			var PreviousXP = int(split[4].replace("XP:","")) # Plockar ut XP delen av strängen
-			var GainedXP = PlacedTowers[Towers[1]][1] + 100000 # Kollar i PlacedTowers, där totala skadan för något torn sparas
+			var GainedXP = PlacedTowers[Towers[1]][1] + 0 # Kollar i PlacedTowers, där totala skadan för något torn sparas
 			var TotalXP = PreviousXP + GainedXP # Totala XPn för tornet
 			var PreviousLVL = int(split[1].replace("LVL:","")) # Föregående nivån
 			
 			var GainedLVL: int = 0 # Levels tjänade
 			var OverflowXP: int = TotalXP # XP som är över efter levelup
 			while check_level_up(OverflowXP, PreviousLVL + GainedLVL): # Så länge OverflowXP räcker för att levla upp
+				print("Prev.Level: " + str(PreviousLVL + GainedLVL))
+				
 				OverflowXP -= calculate_required_EXP(PreviousLVL + GainedLVL, false) # Drar av XP som krävs för levelup från overflow
 				GainedLVL += 1 # Ökar leveln med 1
+				print("Overflow: " + str(OverflowXP))
+				print("XP for next lvl: " + str(calculate_required_EXP(PreviousLVL + GainedLVL, false)))
 			
-			
-			var RemainingXP = calculate_required_EXP(PreviousLVL + GainedLVL, false) + OverflowXP # XP som är över efter levelup är klar
+			var RemainingXP = OverflowXP # XP som är över efter levelup är klar
 			split[1] = "LVL:" + str(PreviousLVL + GainedLVL) # Byter ut LVL delen av Towerstringen
 			split[4] = "XP:" + str(RemainingXP) # Byter ut XP delen av Towerstringen
 			var NewTowerString = ",".join(split) # Bygger ihop den nya Towerstringen
@@ -362,6 +365,7 @@ func reset() -> void:
 	cash = 100000
 	health = 100
 	accumulated_reward = [0,0]
+	PlacedTowers = {}
 	if not Playing:
 		for modifiers in SelectedModifiers:
 			SelectedModifiers[modifiers][0] = false
