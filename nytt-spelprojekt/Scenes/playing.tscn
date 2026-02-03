@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://favp6g35s8n6"]
+[gd_scene load_steps=19 format=3 uid="uid://favp6g35s8n6"]
 
 [ext_resource type="Script" path="res://Scripts/playing.gd" id="1_2adey"]
 [ext_resource type="PackedScene" uid="uid://cwhs2ydv1qcji" path="res://Scenes/tower_placer.tscn" id="2_3n5ts"]
 [ext_resource type="PackedScene" uid="uid://cyfp805luoknq" path="res://Scenes/Menus/game_finished_menu.tscn" id="3_lf7c0"]
 [ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="4_pft4x"]
 [ext_resource type="Texture2D" uid="uid://2dyamd5eme8k" path="res://#1 - Transparent Icons.png" id="5_a2xsb"]
+[ext_resource type="PackedScene" uid="uid://il8yu6rtfu8h" path="res://Scenes/Menus/pause_menu.tscn" id="6_mcen5"]
 
 [sub_resource type="Animation" id="Animation_pbbup"]
 length = 0.001
@@ -389,6 +390,9 @@ grow_horizontal = 0
 texture = SubResource("AtlasTexture_atmga")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="PauseMenu" parent="HUD" instance=ExtResource("6_mcen5")]
+visible = false
 
 [node name="StartWaveButton" type="Button" parent="HUD"]
 custom_minimum_size = Vector2(250, 100)

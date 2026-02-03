@@ -436,6 +436,8 @@ texture = SubResource("AtlasTexture_u6flm")
 atlas = ExtResource("3_baln0")
 region = Rect2(96, 128, 32, 32)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8s43a"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_nmvur"]
 atlas = ExtResource("3_baln0")
 region = Rect2(192, 128, 32, 32)
@@ -492,8 +494,6 @@ texture = SubResource("AtlasTexture_bs2jl")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ev6a5"]
 texture = SubResource("AtlasTexture_bs2jl")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8s43a"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -1362,11 +1362,18 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
 [node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest1"]
 custom_minimum_size = Vector2(250, 250)
-layout_mode = 2
-offset_left = 100.0
-offset_top = 410.0
-offset_right = 400.0
-offset_bottom = 710.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -15.0
+offset_right = 125.0
+offset_bottom = 235.0
+grow_horizontal = 2
+grow_vertical = 2
 focus_mode = 0
 icon = SubResource("AtlasTexture_6mo7p")
 flat = true
@@ -1470,6 +1477,41 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -103.0
+offset_top = -143.0
+offset_right = 103.0
+offset_bottom = -92.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 7
+alignment = 1
+
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest1/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+texture = ExtResource("6_4boqv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
+text = "xx,xxx"
+vertical_alignment = 1
+
 [node name="Chest2" type="Panel" parent="Shop/ScrollContainer/Chests"]
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
@@ -1478,10 +1520,10 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 [node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest2"]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
-offset_left = 100.0
-offset_top = 410.0
-offset_right = 400.0
-offset_bottom = 710.0
+offset_left = 125.0
+offset_top = 385.0
+offset_right = 375.0
+offset_bottom = 635.0
 focus_mode = 0
 icon = SubResource("AtlasTexture_nmvur")
 flat = true
@@ -1585,6 +1627,41 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -103.0
+offset_top = -143.0
+offset_right = 103.0
+offset_bottom = -92.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 7
+alignment = 1
+
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest2/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+texture = ExtResource("6_4boqv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
+text = "xx,xxx"
+vertical_alignment = 1
+
 [node name="Chest3" type="Panel" parent="Shop/ScrollContainer/Chests"]
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
@@ -1593,10 +1670,10 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 [node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest3"]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
-offset_left = 100.0
-offset_top = 410.0
-offset_right = 400.0
-offset_bottom = 710.0
+offset_left = 125.0
+offset_top = 385.0
+offset_right = 375.0
+offset_bottom = 635.0
 focus_mode = 0
 icon = SubResource("AtlasTexture_1wged")
 flat = true
@@ -1700,6 +1777,41 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -103.0
+offset_top = -143.0
+offset_right = 103.0
+offset_bottom = -92.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 7
+alignment = 1
+
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest3/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+texture = ExtResource("6_4boqv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
+text = "xx,xxx"
+vertical_alignment = 1
+
 [node name="Chest4" type="Panel" parent="Shop/ScrollContainer/Chests"]
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
@@ -1708,10 +1820,10 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 [node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest4"]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
-offset_left = 100.0
-offset_top = 410.0
-offset_right = 400.0
-offset_bottom = 710.0
+offset_left = 125.0
+offset_top = 385.0
+offset_right = 375.0
+offset_bottom = 635.0
 focus_mode = 0
 icon = SubResource("AtlasTexture_fygx5")
 flat = true
@@ -1815,6 +1927,41 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -103.0
+offset_top = -143.0
+offset_right = 103.0
+offset_bottom = -92.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 7
+alignment = 1
+
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest4/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+texture = ExtResource("6_4boqv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
+text = "xx,xxx"
+vertical_alignment = 1
+
 [node name="Chest5" type="Panel" parent="Shop/ScrollContainer/Chests"]
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
@@ -1823,10 +1970,10 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 [node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest5"]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
-offset_left = 100.0
-offset_top = 410.0
-offset_right = 400.0
-offset_bottom = 710.0
+offset_left = 125.0
+offset_top = 385.0
+offset_right = 375.0
+offset_bottom = 635.0
 focus_mode = 0
 icon = SubResource("AtlasTexture_ucard")
 flat = true
@@ -1930,6 +2077,41 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -103.0
+offset_top = -143.0
+offset_right = 103.0
+offset_bottom = -92.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 7
+alignment = 1
+
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest5/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+texture = ExtResource("6_4boqv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
+text = "xx,xxx"
+vertical_alignment = 1
+
 [node name="Chest6" type="Panel" parent="Shop/ScrollContainer/Chests"]
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
@@ -1938,10 +2120,10 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 [node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest6"]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
-offset_left = 100.0
-offset_top = 410.0
-offset_right = 400.0
-offset_bottom = 710.0
+offset_left = 125.0
+offset_top = 385.0
+offset_right = 375.0
+offset_bottom = 635.0
 focus_mode = 0
 icon = SubResource("AtlasTexture_avwph")
 flat = true
@@ -2045,6 +2227,41 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -103.0
+offset_top = -143.0
+offset_right = 103.0
+offset_bottom = -92.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 7
+alignment = 1
+
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest6/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+texture = ExtResource("6_4boqv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
+text = "xx,xxx"
+vertical_alignment = 1
+
 [node name="Chest7" type="Panel" parent="Shop/ScrollContainer/Chests"]
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
@@ -2053,10 +2270,10 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 [node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest7"]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
-offset_left = 100.0
-offset_top = 410.0
-offset_right = 400.0
-offset_bottom = 710.0
+offset_left = 125.0
+offset_top = 385.0
+offset_right = 375.0
+offset_bottom = 635.0
 focus_mode = 0
 icon = SubResource("AtlasTexture_g7kxp")
 flat = true
@@ -2160,6 +2377,41 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -103.0
+offset_top = -143.0
+offset_right = 103.0
+offset_bottom = -92.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 7
+alignment = 1
+
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest7/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+texture = ExtResource("6_4boqv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
+text = "xx,xxx"
+vertical_alignment = 1
+
 [node name="Chest8" type="Panel" parent="Shop/ScrollContainer/Chests"]
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
@@ -2168,10 +2420,10 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 [node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest8"]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
-offset_left = 100.0
-offset_top = 410.0
-offset_right = 400.0
-offset_bottom = 710.0
+offset_left = 125.0
+offset_top = 385.0
+offset_right = 375.0
+offset_bottom = 635.0
 focus_mode = 0
 icon = SubResource("AtlasTexture_g8of2")
 flat = true
@@ -2273,6 +2525,41 @@ theme_override_fonts/font = ExtResource("7_ovdqn")
 theme_override_font_sizes/font_size = 60
 text = "xx.x%"
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -103.0
+offset_top = -143.0
+offset_right = 103.0
+offset_bottom = -92.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 7
+alignment = 1
+
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest8/HBoxContainer"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+texture = ExtResource("6_4boqv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
+text = "xx,xxx"
 vertical_alignment = 1
 
 [node name="ReturnToMainMenuButton" type="Button" parent="Shop"]

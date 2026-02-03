@@ -41,7 +41,14 @@ extends Control
 # Konstanter
 const TRAIT_COST: int = 1000
 const CHEST_COSTS: Dictionary = {
-	"hej": 100,
+	"Chest1": 100,
+	"Chest2": 500,
+	"Chest3": 1000,
+	"Chest4": 2000,
+	"Chest5": 5000,
+	"Chest6": 10000,
+	"Chest7": 25000,
+	"Chest8": 50000,
 }
 
 # Gamble variables
@@ -179,11 +186,15 @@ func _update_labels():
 	for labels in get_tree().get_nodes_in_group("GoldAmount"):
 		labels.text = str(Globals.format_number(Globals.PlayerStats["Gold"]))
 	
+	for chests in Chests.get_children():
+		var CostLabel: Label = chests.get_node("HBoxContainer").get_node("TraitCost")
+		CostLabel.text = Globals.format_number(CHEST_COSTS[chests.name])
+	
 	PlayerNameLabel.text = PlayerName
 	PlayerLevelLabel.text = str(Globals.PlayerStats["Level"])
 	EXPProgressBar.max_value = Globals.calculate_required_EXP(Globals.PlayerStats["Level"],true)
 	EXPProgressBar.value = Globals.PlayerStats["EXP"]
-	PlayerEXPLabel.text = str(Globals.PlayerStats["EXP"]) + "/" + str(Globals.calculate_required_EXP(Globals.PlayerStats["Level"],true))
+	PlayerEXPLabel.text = str(Globals.format_number(Globals.PlayerStats["EXP"])) + "/" + str(Globals.format_number(Globals.calculate_required_EXP(Globals.PlayerStats["Level"],true)))
 	TraitCostLabel.text = str(Globals.format_number(TRAIT_COST))
 
 func _update_tower_buttons():
@@ -194,23 +205,49 @@ func _update_tower_buttons():
 			button.pressed.connect(_trait_reroll.bind(towers))
 
 func _open_chest(chestID, reset: bool):
-	if reset == false:
-		var chest: Button = Chests.get_node("Chest" + str(chestID)).get_child(0)
-		for i in range(3):
+	if Globals.PlayerStats["Silver"] >= CHEST_COSTS["Chest" + str(chestID)]:
+		if reset == false:
+			Globals.PlayerStats["Silver"] -= CHEST_COSTS["Chest" + str(chestID)]
+			var chest: Button = Chests.get_node("Chest" + str(chestID)).get_child(0)
+			for i in range(3):
+				
+				chest.icon.region.position.y += 32
+				await get_tree().create_timer(0.1).timeout
 			
-			chest.icon.region.position.y += 32
-			await get_tree().create_timer(0.1).timeout
-		
-		if not has_node("Gamble"):
-			var NewGamblePanel = Gamble.duplicate()
-			add_child(NewGamblePanel)
-			NewGamblePanel._ready()
-			GambleMenu = NewGamblePanel
-		GambleMenu.visible = true
-		GambleMenu.gamble(chestID)
-	else:
-		var chest: Button = Chests.get_node("Chest" + str(chestID)).get_child(0)
-		chest.icon.region.position.y -= 96
+			if not has_node("Gamble"):
+				var NewGamblePanel = Gamble.duplicate()
+				add_child(NewGamblePanel)
+				NewGamblePanel._ready()
+				GambleMenu = NewGamblePanel
+			GambleMenu.visible = true
+			GambleMenu.gamble(chestID)
+			
+			await GambleMenu.GambleFinished # Avvakta gambleanimationen färdig
+			var reward = GambleMenu._grant_gamble_reward() # _grant_gamble_reward() ger vunnen trait
+			if reward == null: # Bara för säkerhets skull
+				print("Null reward")
+			else:
+				var unique = false
+				var uniqueID: String
+				while not unique:
+					var ID = str(randi_range(0, 999999999)).pad_zeros(9)
+					for towers in Globals.PlayerInventory:
+						var IDs = towers.split(",")[5].replace("ID:","")
+						if IDs == ID:
+							print("Hittade")
+							break
+					uniqueID = ID
+					unique = true
+				print(uniqueID)
+				var NewTower: String = reward.to_lower() + ",LVL:0,TRAIT:none,SLOT:n/a,XP:0,ID:" + uniqueID
+				print(NewTower)
+				Globals.PlayerInventory.append(NewTower)
+				Globals.update_save_file()
+				_update_inventory()
+				_update_tower_buttons()
+		else:
+			var chest: Button = Chests.get_node("Chest" + str(chestID)).get_child(0)
+			chest.icon.region.position.y -= 96
 
 func _trait_reroll(tower: TextureRect): # Den stora preview:en i trait menyn
 	var Duplicate = tower.duplicate()
@@ -262,7 +299,6 @@ func _select_modifiers(MapID): # Körs när spelaren trycker på en karta. Avvak
 	SelectModifiers.visible = true
 	Globals.MapID = MapID
 	_display_final_modifier()
-
 
 func _change_difficulty(Difficulty: String, SilverModifier: int, GoldModifier: int):
 	DifficultyLabel.text = Difficulty
@@ -371,12 +407,14 @@ func _on_reroll_trait_button_pressed() -> void: # När trait reroll knappen tryc
 		NewGamblePanel._ready() # Kör dess _ready()
 		GambleMenu = NewGamblePanel
 		GambleMenu.visible = true # Gör den synlig
-		if ((await GambleMenu.gamble("Trait")) == "ScrollFinished"): # Avvakta gambleanimationen färdig
-			var reward = GambleMenu._grant_gamble_reward() # _grant_gamble_reward() ger vunnen trait
-			if reward == null: # Bara för säkerhets skull
-				print("Null reward")
-			else:
-				_trait_change(reward,selected_trait_reroll_tower) # Byter traiten
+		NewGamblePanel.gamble("Trait")
+		
+		await GambleMenu.GambleFinished # Avvakta gambleanimationen färdig
+		var reward = GambleMenu._grant_gamble_reward() # _grant_gamble_reward() ger vunnen trait
+		if reward == null: # Bara för säkerhets skull
+			print("Null reward")
+		else:
+			_trait_change(reward,selected_trait_reroll_tower) # Byter traiten
 
 func _on_start_map_button_pressed() -> void:
 	_start_play_mode()

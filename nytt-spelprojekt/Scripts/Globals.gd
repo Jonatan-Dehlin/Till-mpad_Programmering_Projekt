@@ -17,13 +17,13 @@ var Playing: bool = false
 var PlayerStatFile = "user://PlayerData.txt"
 var EquippedTowers = []
 var PlayerStats = {"Silver": 0, "Gold": 0, "Level": 0, "EXP": 0}
-var PlayerInventory = []
+var PlayerInventory = [] # Format: [wizard_tower,LVL:62,TRAIT:Singularity,SLOT:0,XP:0,ID:000000000]
 
 ################## ENEMY STATS ###################
 var enemies = {"FireBug":0,"LeafBug":0,"MagmaCrab":0,"Scorpion":0}
 var enemy_base_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
 var enemy_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
-var enemy_speed = {"FireBug":3000,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
+var enemy_speed = {"FireBug":100,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
 var enemy_base_reward = {"FireBug":10,"LeafBug":20,"MagmaCrab":50,"Scorpion":100}
 
 # Bidrar till spelarens belöningar EFTER spelets slut
@@ -240,20 +240,23 @@ func update_save_file(): # Uppdaterar spelarens save file
 				lines[line] = "	GOLD: " + str(Globals.PlayerStats["Gold"])
 		
 		#Save Tower Stats
-		var TowersFound = false
-		var index = 0
-		for line in range(lines.size()):
-			var stripped: String = lines[line].replace(" ", "").replace("	","")
-			
-			if TowersFound and stripped != "":
-				lines[line] = PlayerInventory[index]
-				
-				index += 1
-			if stripped.contains("TOWERS:"):
-				TowersFound = true
-		file.close()
+		var tower_index = -1
+		for i in range(lines.size()):
+			if lines[i].strip_edges() == "TOWERS:":
+				tower_index = i
+				break
 		
+		if tower_index == -1:
+			print("Fatal error: TOWERS: hittades inte i datafilen")
+			return
 		
+		# Ta bort alla rader efter TOWERS:
+		lines = lines.slice(0, tower_index + 1)
+		
+		# Lägg till alla torn från PlayerInventory
+		for tower in PlayerInventory:
+			lines.append(tower)
+
 		# Sparar alltihop
 		file = FileAccess.open(PlayerStatFile, FileAccess.WRITE)
 		for line in lines:
@@ -283,15 +286,17 @@ func fancy_increment(StartValue, TargetValue) -> int: # Skapar fina uppräkninga
 	return EndValue
 
 func calculate_required_EXP(Level, player: bool) -> int: # Räknar ut hur mycket EXP som krävs för nästa spelarnivå
+	const MAX_LEVEL: int = 100
+	const XP_TO_MAX_PLAYER_LEVEL = 10000000
+	const XP_TO_MAX_TOWER_LEVEL = 1000000
+	# Vid level 90 har hälften av all XP tjänats:
+	var EXPScalingFactor: float = log(0.5) / log(0.9)
 	var BaseEXPRequirement: int = 100
-	var EXPScalingFactor: float
 	
 	if player:
-		EXPScalingFactor = 1.3
-		return BaseEXPRequirement * EXPScalingFactor ** Level
+		return XP_TO_MAX_PLAYER_LEVEL * pow(float(Level) / MAX_LEVEL, EXPScalingFactor)
 	else:
-		EXPScalingFactor = 1.1
-		return BaseEXPRequirement * EXPScalingFactor ** Level
+		return XP_TO_MAX_TOWER_LEVEL * pow(float(Level) / MAX_LEVEL, EXPScalingFactor)
 
 func format_number(n: int) -> String: # Gör om t.ex. 1000000 -> 1,000,000
 	if n < 1000: #Om numret är under 1000 behöver det inte formatteras
@@ -314,6 +319,7 @@ func format_number(n: int) -> String: # Gör om t.ex. 1000000 -> 1,000,000
 
 func grant_exp(): # Ger XP till torn och spelare vid game over
 	GameFinishedMenu = get_tree().current_scene.get_node("HUD").get_node("GameFinishedMenu")
+	var PlayerEXP: int = 0
 	for i in range(EquippedTowers.size()): # [Towers har formatet "tower_name,LVL:x,TRAIT:x,SLOT:x,XP:x,ID:x, num]
 		var Towers = EquippedTowers[i]
 		if PlacedTowers.has(Towers[1]): # Ifall tornet har placerats någon gång under spelets gång
@@ -326,12 +332,9 @@ func grant_exp(): # Ger XP till torn och spelare vid game over
 			var GainedLVL: int = 0 # Levels tjänade
 			var OverflowXP: int = TotalXP # XP som är över efter levelup
 			while check_level_up(OverflowXP, PreviousLVL + GainedLVL): # Så länge OverflowXP räcker för att levla upp
-				print("Prev.Level: " + str(PreviousLVL + GainedLVL))
 				
 				OverflowXP -= calculate_required_EXP(PreviousLVL + GainedLVL, false) # Drar av XP som krävs för levelup från overflow
 				GainedLVL += 1 # Ökar leveln med 1
-				print("Overflow: " + str(OverflowXP))
-				print("XP for next lvl: " + str(calculate_required_EXP(PreviousLVL + GainedLVL, false)))
 			
 			var RemainingXP = OverflowXP # XP som är över efter levelup är klar
 			split[1] = "LVL:" + str(PreviousLVL + GainedLVL) # Byter ut LVL delen av Towerstringen
@@ -339,10 +342,11 @@ func grant_exp(): # Ger XP till torn och spelare vid game over
 			var NewTowerString = ",".join(split) # Bygger ihop den nya Towerstringen
 			
 			EquippedTowers[i] = [NewTowerString,Towers[1]] # Uppdaterar towerstringen i Equippedtowers
-			GameFinishedMenu.fancy_display_xp(PreviousLVL, PreviousXP, GainedXP)
+			GameFinishedMenu.fancy_display_xp(PreviousLVL, PreviousXP, GainedXP, Towers[0])
+			PlayerEXP += TotalXP
 			
-		
 			inventory_replace_tower(NewTowerString) # Uppdaterar tornet i spelarens inventory
+	PlayerStats["EXP"] += round(PlayerEXP / 1000)
 	level_up_player()
 	update_save_file() # Sparar allting i save filen
 
@@ -400,8 +404,8 @@ func damage(damage_dealt, targeted_enemy, midas: bool) -> void:
 			cash += targeted_enemy.kill_reward
 		# Lägger till värden i accumulated_reward[silver] och [guld] som sedan visas vid game over
 		# Ser även till att anpassa kill reward så att den är proportionelig til fiendernas HP-ökning.
-		accumulated_reward[0] += enemy_kill_reward[targeted_enemy.name][0] * current_health_factor
-		accumulated_reward[1] += enemy_kill_reward[targeted_enemy.name][1] * current_health_factor
+		accumulated_reward[0] += enemy_kill_reward[targeted_enemy.name][0] * current_health_factor * 0.1
+		accumulated_reward[1] += enemy_kill_reward[targeted_enemy.name][1] * current_health_factor * 1
 	else:
 		# Om fienden inte besegras drar vi helt enkelt av skadan från fiendens HP
 		targeted_enemy.current_health -= damage_dealt

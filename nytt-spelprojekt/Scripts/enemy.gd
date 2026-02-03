@@ -17,8 +17,16 @@ func _ready() -> void:
 	z_index = round(Globals.enemy_base_health[name]/10)
 
 func _physics_process(_delta: float) -> void:
-	healthbarprogress.global_position = global_position + Vector2(0,-20)
-	healthbarprogress.rotation = - get_parent().rotation
+	healthbarprogress.position = Vector2(-35.5, -6)
+	healthbarprogress.rotation = -get_parent().rotation
 	healthbarprogress.value = current_health
 	if healthbarlabel != null:
 		healthbarlabel.text = str(round(healthbarprogress.value))
+
+func _on_mouse_entered() -> void:
+	#healthbarprogress.visible = true
+	pass
+
+func _on_mouse_exited() -> void:
+	#healthbarprogress.visible = false
+	pass

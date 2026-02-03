@@ -11,6 +11,7 @@ extends Control
 @onready var EquippedTowersButtons = $HUD/TowerHotbar/HBoxContainer.get_children()
 @onready var PlacedTowers = $PlacedTowers
 @onready var Anim = $AnimationPlayer
+@onready var PauseMenu = $HUD/PauseMenu
 
 @onready var HUD = $HUD
 @onready var FinishedMenu = $HUD/GameFinishedMenu
@@ -44,6 +45,11 @@ func _process(_delta: float) -> void:
 		MoneyLabel.text = "Money: $" + str(Globals.format_number(display_cash))
 		HealthLabel.text = "HP: " + str(Globals.health)
 		WaveLabel.text = "Wave: " + str(Globals.current_wave) + "/" + str(max_wave)
+		
+		if Input.is_action_just_pressed("Esc"):
+			get_tree().paused = true
+			PauseMenu.visible = true
+			PauseMenu._ready()
 
 func _physics_process(_delta: float) -> void:
 	if _detect_every_enemy_defeated():

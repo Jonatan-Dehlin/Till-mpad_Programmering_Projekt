@@ -81,6 +81,7 @@ bg_color = Color(8.18223e-07, 0.641867, 0.311666, 1)
 [node name="FireBug" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 0
+input_pickable = true
 script = ExtResource("1_q4ryf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -95,18 +96,21 @@ frame_progress = 0.584487
 shape = SubResource("CapsuleShape2D_1bnx4")
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
+z_index = 200
 layout_direction = 2
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -35.0
-offset_top = -43.0
-offset_right = 36.0
-offset_bottom = -31.0
+anchor_bottom = 0.5
+offset_left = -35.5
+offset_top = -6.0
+offset_right = 35.5
+offset_bottom = 6.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+pivot_offset = Vector2(35.5, 6)
 theme_override_styles/background = SubResource("StyleBoxFlat_lj3pv")
 theme_override_styles/fill = SubResource("StyleBoxFlat_f52bi")
 value = 100.0
@@ -130,3 +134,6 @@ theme_override_font_sizes/font_size = 14
 text = "XX"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

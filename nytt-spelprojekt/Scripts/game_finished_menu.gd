@@ -54,8 +54,15 @@ func _process(_delta: float) -> void:
 			DisplayedGoldValue = Globals.fancy_increment(DisplayedGoldValue, TotalEarnedGold)
 			EarnedGold.text = str(Globals.format_number(DisplayedGoldValue))
 
-func fancy_display_xp(StartLevel, PreviousXP, GainedXP):
+func fancy_display_xp(StartLevel, PreviousXP, GainedXP, TowerString):
 	var pattern = LevelUpPlaceholder.duplicate()
+	var TowerIcon: TextureRect = pattern.get_node("TowerIcon")
+	var TraitIcon: TextureRect = TowerIcon.get_node("TraitIcon")
+	var tower = load("res://Scenes/Towers/" + TowerString.split(",")[0] + ".tscn")
+	var instance: Node2D = tower.instantiate()
+	TowerIcon.texture.atlas = instance.get_node("TowerSprite").texture
+	TraitIcon.texture = TraitIcon.texture.duplicate(true)
+	TraitIcon.texture.region = Globals.TraitIconAtlasDictionary[TowerString.split(",")[2].replace("TRAIT:","")][0]
 	
 	LevelUpContainer.add_child(pattern)
 	pattern.visible = true
@@ -88,7 +95,6 @@ func fancy_display_xp(StartLevel, PreviousXP, GainedXP):
 			var completionSteps: int = 100 # Hur många iterations för att fylla baren
 			@warning_ignore("narrowing_conversion")
 			var targetValue: int = currentOverflow
-			print("TargetValue: " + str(targetValue))
 			@warning_ignore("integer_division")
 			var stepSize: int = targetValue / completionSteps
 			var rest: int = targetValue % completionSteps
@@ -102,8 +108,7 @@ func fancy_display_xp(StartLevel, PreviousXP, GainedXP):
 			if progressbar.value >= currentOverflow:
 				currentOverflow = 0
 		
-		totalXPlabel.text = "+" + str(currentOverflow)
-		print("Progressbarvalue1: " + str(progressbar.value))
+		totalXPlabel.text = "+" + str(Globals.format_number(currentOverflow))
 		progressbarLabel.text = str(progressbar.value) + "/" + str(progressbar.max_value)
 		LVLLabel.text = str(StartLevel) + " -> " + str(currentLVL)
 		

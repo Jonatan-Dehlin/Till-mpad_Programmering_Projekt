@@ -7,6 +7,8 @@ extends Control
 @onready var ReferencePanel: Panel = $ReferencePanel
 @onready var TraitChanceDisplay = get_parent().get_node("Traits").get_node("OddsTable").get_child(0).get_children()
 
+signal GambleFinished
+
 var weight = [["Blue",null],["Purple",null],["Pink",null],["Red",null],["Gold",null]]
 
 var TowerOrTrait: bool = false
@@ -14,6 +16,12 @@ var TowerOrTrait: bool = false
 var SelectedTower
 
 var TraitIconAtlasDictionary = Globals.TraitIconAtlasDictionary
+
+var TraitBaseTexture: Texture = preload("res://#1 - Transparent Icons.png")
+var TowerTextures = { # Förladdar texturerna till tornen
+	"wizard_tower.tscn": preload("res://Assets/Towers/Towers bases/PNGs/Tower 05.png")
+	
+}
 
 var TowersTier1 = ["wizard_tower.tscn"]
 var TowersTier2 = ["wizard_tower.tscn"]
@@ -43,7 +51,8 @@ func _ready() -> void:
 		colors.get_child(1).text = "%0.1f%%" % (float(weight[index][1]) / 10)
 		index += 1
 
-func _add_panels():
+func _add_panels(Trait: bool):
+	print("Kom till add panel")
 	for panels in range(200):
 		var cumulative = []
 		var total = 0
@@ -60,46 +69,87 @@ func _add_panels():
 		
 		var NewPanelText: Label = NewPanel.get_child(0).get_child(0).get_child(1)
 		var num = randi_range(1,total) 
+		if Trait: # Om trait
+			if num <= cumulative[0]:
+				var ChosenTrait = TraitsTier1.pick_random()
+				
+				NewPanelColor.color = Color(0,0,1) #Blå
+				NewPanelTexture.texture.region = TraitIconAtlasDictionary[ChosenTrait][0]
+				NewPanelTexture.self_modulate = TraitIconAtlasDictionary[ChosenTrait][1]
+				NewPanelText.text = ChosenTrait.replace("_"," ")
+			
+			elif num <= cumulative[1]:
+				var ChosenTrait = TraitsTier2.pick_random()
+				
+				NewPanelColor.color = Color(0.6,0,1) #Lila
+				NewPanelTexture.texture.region = TraitIconAtlasDictionary[ChosenTrait][0]
+				NewPanelTexture.self_modulate = TraitIconAtlasDictionary[ChosenTrait][1]
+				NewPanelText.text = ChosenTrait.replace("_"," ")
+				
+			elif num <= cumulative[2]:
+				var ChosenTrait = TraitsTier3.pick_random()
+				
+				NewPanelColor.color = Color(1,0,1) #Rosa
+				NewPanelTexture.texture.region = TraitIconAtlasDictionary[ChosenTrait][0]
+				NewPanelTexture.self_modulate = TraitIconAtlasDictionary[ChosenTrait][1]
+				NewPanelText.text = ChosenTrait.replace("_"," ")
+				
+			elif num <= cumulative[3]:
+				var ChosenTrait = TraitsTier4.pick_random()
+				
+				NewPanelColor.color = Color(1,0,0) #Röd
+				NewPanelTexture.texture.region = TraitIconAtlasDictionary[ChosenTrait][0]
+				NewPanelTexture.self_modulate = TraitIconAtlasDictionary[ChosenTrait][1]
+				NewPanelText.text = ChosenTrait.replace("_"," ")
+				
+			else:
+				var ChosenTrait = TraitsTier5.pick_random()
+				
+				NewPanelColor.color = Color(1,0.843,0) #Guld
+				NewPanelTexture.texture.region = TraitIconAtlasDictionary[ChosenTrait][0]
+				NewPanelTexture.self_modulate = TraitIconAtlasDictionary[ChosenTrait][1]
+				NewPanelText.text = ChosenTrait.replace("_"," ")
 		
-		if num <= cumulative[0]:
-			var ChosenTrait = TraitsTier1.pick_random()
+		else: # Om torn
+			if num <= cumulative[0]:
+				var ChosenTower = TowersTier1.pick_random()
+				var texture = TowerTextures[ChosenTower]
+				NewPanelColor.color = Color(0,0,1) #Blå
+				NewPanelTexture.texture.atlas = texture
+				NewPanelTexture.texture.region = Rect2(0,0,64,128)
+				NewPanelText.text = ChosenTower.replace("_"," ").replace(".tscn","").capitalize()
 			
-			NewPanelColor.color = Color(0,0,1) #Blå
-			NewPanelTexture.texture.region = TraitIconAtlasDictionary[ChosenTrait][0]
-			NewPanelTexture.self_modulate = TraitIconAtlasDictionary[ChosenTrait][1]
-			NewPanelText.text = ChosenTrait.replace("_"," ")
-		
-		elif num <= cumulative[1]:
-			var ChosenTrait = TraitsTier2.pick_random()
-			
-			NewPanelColor.color = Color(0.6,0,1) #Lila
-			NewPanelTexture.texture.region = TraitIconAtlasDictionary[ChosenTrait][0]
-			NewPanelTexture.self_modulate = TraitIconAtlasDictionary[ChosenTrait][1]
-			NewPanelText.text = ChosenTrait.replace("_"," ")
-			
-		elif num <= cumulative[2]:
-			var ChosenTrait = TraitsTier3.pick_random()
-			
-			NewPanelColor.color = Color(1,0,1) #Rosa
-			NewPanelTexture.texture.region = TraitIconAtlasDictionary[ChosenTrait][0]
-			NewPanelTexture.self_modulate = TraitIconAtlasDictionary[ChosenTrait][1]
-			NewPanelText.text = ChosenTrait.replace("_"," ")
-			
-		elif num <= cumulative[3]:
-			var ChosenTrait = TraitsTier4.pick_random()
-			
-			NewPanelColor.color = Color(1,0,0) #Röd
-			NewPanelTexture.texture.region = TraitIconAtlasDictionary[ChosenTrait][0]
-			NewPanelTexture.self_modulate = TraitIconAtlasDictionary[ChosenTrait][1]
-			NewPanelText.text = ChosenTrait.replace("_"," ")
-			
-		else:
-			var ChosenTrait = TraitsTier5.pick_random()
-			
-			NewPanelColor.color = Color(1,0.843,0) #Guld
-			NewPanelTexture.texture.region = TraitIconAtlasDictionary[ChosenTrait][0]
-			NewPanelTexture.self_modulate = TraitIconAtlasDictionary[ChosenTrait][1]
-			NewPanelText.text = ChosenTrait.replace("_"," ")
+			elif num <= cumulative[1]:
+				var ChosenTower = TowersTier2.pick_random()
+				var texture = TowerTextures[ChosenTower]
+				NewPanelColor.color = Color(0.6,0,1) # Lila
+				NewPanelTexture.texture.atlas = texture
+				NewPanelTexture.texture.region = Rect2(0,0,64,128)
+				NewPanelText.text = ChosenTower.replace("_"," ").replace(".tscn","").capitalize()
+				
+			elif num <= cumulative[2]:
+				var ChosenTower = TowersTier3.pick_random()
+				var texture = TowerTextures[ChosenTower]
+				NewPanelColor.color = Color(1,0,1) #Rosa
+				NewPanelTexture.texture.atlas = texture
+				NewPanelTexture.texture.region = Rect2(0,0,64,128)
+				NewPanelText.text = ChosenTower.replace("_"," ").replace(".tscn","").capitalize()
+				
+			elif num <= cumulative[3]:
+				var ChosenTower = TowersTier4.pick_random()
+				var texture = TowerTextures[ChosenTower]
+				NewPanelColor.color = Color(1,0,0) # Röd
+				NewPanelTexture.texture.atlas = texture
+				NewPanelTexture.texture.region = Rect2(0,0,64,128)
+				NewPanelText.text = ChosenTower.replace("_"," ").replace(".tscn","").capitalize()
+				
+			else:
+				var ChosenTower = TowersTier5.pick_random()
+				var texture = TowerTextures[ChosenTower]
+				NewPanelColor.color = Color(1,0.843,0) #Guld
+				NewPanelTexture.texture.atlas = texture
+				NewPanelTexture.texture.region = Rect2(0,0,64,128)
+				NewPanelText.text = ChosenTower.replace("_"," ").replace(".tscn","").capitalize()
 
 
 		NewPanel.visible = true
@@ -109,7 +159,12 @@ func gamble(ChestID):
 	ChestID = str(ChestID)
 	
 	_modify_drop_rates(ChestID)
-	_add_panels()
+	if ChestID == "Trait":
+		_add_panels(true)
+		print("Trait")
+	else:
+		_add_panels(false)
+		print("Chest")
 
 	scroll.get_h_scroll_bar().visible = false
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
@@ -134,6 +189,7 @@ func gamble(ChestID):
 	await get_tree().create_timer(2).timeout
 	if ChestID != "Trait":
 		get_parent()._open_chest(ChestID, true)
+	GambleFinished.emit()
 	return "ScrollFinished"
 
 func _modify_drop_rates(ChestID):
@@ -166,4 +222,6 @@ func _grant_gamble_reward():
 		var global_rect = Rect2(panel.global_position, panel.size)
 		if global_rect.has_point(centerpos):
 			queue_free()
+			print(panel.get_child(0).get_child(0).get_child(1).text.replace(" ","_"))
 			return panel.get_child(0).get_child(0).get_child(1).text.replace(" ","_")
+			
