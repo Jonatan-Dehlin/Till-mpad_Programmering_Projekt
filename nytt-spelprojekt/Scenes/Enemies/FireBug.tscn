@@ -79,6 +79,7 @@ bg_color = Color(1, 0, 0, 1)
 bg_color = Color(8.18223e-07, 0.641867, 0.311666, 1)
 
 [node name="FireBug" type="CharacterBody2D"]
+scale = Vector2(0.8, 0.8)
 collision_layer = 4
 collision_mask = 0
 input_pickable = true

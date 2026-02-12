@@ -17,11 +17,12 @@ var Playing: bool = false
 var PlayerStatFile = "user://PlayerData.txt"
 var EquippedTowers = []
 var PlayerStats = {"Silver": 0, "Gold": 0, "Level": 0, "EXP": 0}
-var PlayerInventory = [] # Format: [wizard_tower,LVL:62,TRAIT:Singularity,SLOT:0,XP:0,ID:000000000]
+var PlayerInventory = {} # Format: {"id": wizard_tower,LVL:62,TRAIT:Singularity,SLOT:0,XP:0,ID:000000000}
 
 ################## ENEMY STATS ###################
 var enemies = {"FireBug":0,"LeafBug":0,"MagmaCrab":0,"Scorpion":0}
 var enemy_base_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
+var enemy_base_speed = {"FireBug":100,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
 var enemy_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
 var enemy_speed = {"FireBug":100,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
 var enemy_base_reward = {"FireBug":10,"LeafBug":20,"MagmaCrab":50,"Scorpion":100}
@@ -39,7 +40,7 @@ var current_speed_factor: float = 1
 
 # konstanter för fienders HP och Speed ökning varje wave
 const HEALTH_FACTOR = 1.05
-const SPEED_FACTOR = 1.03
+const SPEED_FACTOR = 1.01
 const DAMAGE_TO_XP_FACTOR: float = 0.01
 
 var PlacedTowers: Dictionary = {} # {"Specifik tornreference": [antal placerade, total dmg dealt]}
@@ -52,8 +53,7 @@ var SelectedDifficultyModifiers: Dictionary = { # Modifiers beroende på vald di
 	"Hard": {"EnemyHP": 2, "EnemySpeed": 1.2, "BaseHP": 5},
 	"Insane": {"EnemyHP": 5, "EnemySpeed": 1.5, "BaseHP": 2},
 	"Impossible": {"EnemyHP": 10, "EnemySpeed": 1.8, "BaseHP": 1.5},
-	"Nightmare": {"EnemyHP": 50, "EnemySpeed": 2, "BaseHP": 1}
-}
+	"Nightmare": {"EnemyHP": 50, "EnemySpeed": 2, "BaseHP": 1}}
 
 var SelectedDifficultyRewardMultipliers: Dictionary = {
 	"Easy": [1,1],
@@ -61,8 +61,7 @@ var SelectedDifficultyRewardMultipliers: Dictionary = {
 	"Hard": [2,1.15],
 	"Insane": [2.5,1.3],
 	"Impossible": [3,1,5],
-	"Nightmare": [5,2],
-}
+	"Nightmare": [5,2]}
 
 var SelectedModifiers: Dictionary = { # Valbara modifiers som gör spelet svårare men ger mer belöningar
 	"Slow Towers": [false,25,0], # Långsammare attack speed
@@ -72,8 +71,7 @@ var SelectedModifiers: Dictionary = { # Valbara modifiers som gör spelet svåra
 	"Expensive Towers": [false,25,0], # Dyrare torn
 	"Economic Depression": [false,50,0], # Dyrare torn, mindre belöningar från pengatorn och fiende kills
 	"Sudden Death": [false,100,0], # Max HP sätts till 1
-	"Only One": [false,100,0], # Endast 1 placement per torn
-}
+	"Only One": [false,100,0]} # Endast 1 placement per torn
 
 var TraitIconAtlasDictionary: Dictionary = { # Innehåller atlastexture koordinater och färg för traitikonerna
 	"none": [Rect2(230,69,27,22), Color(0.5,0.5,1)],
@@ -206,62 +204,64 @@ func get_tower_id(TowerString: String) -> String:
 			return parts.replace("ID:","")
 	return ""
 
+func get_string_from_id(TowerID: String) -> String:
+	return PlayerInventory[TowerID]
+
 func inventory_replace_tower(TowerString: String) -> void:
-	var CheckingID = get_tower_id(TowerString)
+	PlayerInventory[get_tower_id(TowerString)] = TowerString
 
-	for i in range(PlayerInventory.size()):
-		var OldTower = PlayerInventory[i]
-		
-		if get_tower_id(OldTower) == CheckingID:
-			Globals.PlayerInventory[i] = TowerString
-
-func update_save_file(): # Uppdaterar spelarens save file
+func update_save_file():
 	if not FileAccess.file_exists(PlayerStatFile):
 		print("Fatal error: no player data file found.")
-	else:
-		var lines = []
-		
-		var file = FileAccess.open(PlayerStatFile, FileAccess.READ)
-		while not file.eof_reached():
-			lines.append(file.get_line())
-		file.close()
-		
-		#Save Player Stats
-		for line in range(lines.size()):
-			var stripped: String = lines[line].replace(" ", "").replace("	","")
-			
-			if stripped.begins_with("LEVEL:"):
-				lines[line] = "	LEVEL: " + str(Globals.PlayerStats["Level"])
-			elif stripped.begins_with("EXP:"):
-				lines[line] = "	EXP: " + str(Globals.PlayerStats["EXP"])
-			elif stripped.begins_with("SILVER:"):
-				lines[line] = "	SILVER: " + str(Globals.PlayerStats["Silver"])
-			elif stripped.begins_with("GOLD:"):
-				lines[line] = "	GOLD: " + str(Globals.PlayerStats["Gold"])
-		
-		#Save Tower Stats
-		var tower_index = -1
-		for i in range(lines.size()):
-			if lines[i].strip_edges() == "TOWERS:":
-				tower_index = i
-				break
-		
-		if tower_index == -1:
-			print("Fatal error: TOWERS: hittades inte i datafilen")
-			return
-		
-		# Ta bort alla rader efter TOWERS:
-		lines = lines.slice(0, tower_index + 1)
-		
-		# Lägg till alla torn från PlayerInventory
-		for tower in PlayerInventory:
-			lines.append(tower)
+		return
 
-		# Sparar alltihop
-		file = FileAccess.open(PlayerStatFile, FileAccess.WRITE)
-		for line in lines:
-			file.store_line(line)
-		file.close()
+	var lines: Array = []
+
+	# Läs fil
+	var file = FileAccess.open(PlayerStatFile, FileAccess.READ)
+	while not file.eof_reached():
+		lines.append(file.get_line())
+	file.close()
+
+	# Uppdatera player stats
+	for i in range(lines.size()):
+		var stripped = lines[i].replace(" ", "").replace("	","")
+
+		if stripped.begins_with("LEVEL:"):
+			lines[i] = "	LEVEL: " + str(PlayerStats["Level"])
+		elif stripped.begins_with("EXP:"):
+			lines[i] = "	EXP: " + str(PlayerStats["EXP"])
+		elif stripped.begins_with("SILVER:"):
+			lines[i] = "	SILVER: " + str(PlayerStats["Silver"])
+		elif stripped.begins_with("GOLD:"):
+			lines[i] = "	GOLD: " + str(PlayerStats["Gold"])
+
+	# Hitta TOWERS:
+	var tower_index = -1
+	for i in range(lines.size()):
+		if lines[i].strip_edges() == "TOWERS:":
+			tower_index = i
+			break
+
+	if tower_index == -1:
+		push_error("TOWERS: hittades inte i save-filen")
+		return
+
+	# Behåll allt fram till TOWERS:
+	lines = lines.slice(0, tower_index + 1)
+
+	# Lägg till inventory (ID → TowerString)
+	var ids := PlayerInventory.keys()
+	ids.sort()
+
+	for id in ids:
+		lines.append(PlayerInventory[id])
+
+	# Skriv fil
+	file = FileAccess.open(PlayerStatFile, FileAccess.WRITE)
+	for line in lines:
+		file.store_line(line)
+	file.close()
 
 func fancy_increment(StartValue, TargetValue) -> int: # Skapar fina uppräkningar av värden
 	var diff = TargetValue - StartValue
@@ -280,6 +280,8 @@ func fancy_increment(StartValue, TargetValue) -> int: # Skapar fina uppräkninga
 		amount = 100
 	elif abs_diff > 100:
 		amount = 50
+	elif StartValue > TargetValue:
+		EndValue = TargetValue
 
 	# sign gör att ovanstående fungerar oavsett om diff är negativ eller positiv
 	EndValue = StartValue + sign(diff) * amount
@@ -291,12 +293,12 @@ func calculate_required_EXP(Level, player: bool) -> int: # Räknar ut hur mycket
 	const XP_TO_MAX_TOWER_LEVEL = 1000000
 	# Vid level 90 har hälften av all XP tjänats:
 	var EXPScalingFactor: float = log(0.5) / log(0.9)
-	var BaseEXPRequirement: int = 100
+	var BaseEXPRequirement: int = 10
 	
 	if player:
-		return XP_TO_MAX_PLAYER_LEVEL * pow(float(Level) / MAX_LEVEL, EXPScalingFactor)
+		return BaseEXPRequirement + XP_TO_MAX_PLAYER_LEVEL * pow(float(Level) / MAX_LEVEL, EXPScalingFactor)
 	else:
-		return XP_TO_MAX_TOWER_LEVEL * pow(float(Level) / MAX_LEVEL, EXPScalingFactor)
+		return BaseEXPRequirement + XP_TO_MAX_TOWER_LEVEL * pow(float(Level) / MAX_LEVEL, EXPScalingFactor)
 
 func format_number(n: int) -> String: # Gör om t.ex. 1000000 -> 1,000,000
 	if n < 1000: #Om numret är under 1000 behöver det inte formatteras
@@ -386,14 +388,12 @@ func _apply_enemy_multipliers(wave) -> void: # Applicerar fiendes multipliers
 	current_health_factor = HEALTH_FACTOR ** (wave-1) * SelectedDifficultyModifiers[SelectedDifficulty]["EnemyHP"]
 	current_speed_factor = SPEED_FACTOR ** (wave-1)
 	
-	# Ändrar HP för fienden så att de får mer HP fler rundor in
+	current_health_factor = pow(HEALTH_FACTOR, wave - 1) * SelectedDifficultyModifiers[SelectedDifficulty]["EnemyHP"]
+	current_speed_factor = pow(SPEED_FACTOR, wave - 1)
+
 	for enemy in enemy_health:
 		enemy_health[enemy] = round(enemy_base_health[enemy] * current_health_factor)
-		enemy_speed[enemy] = enemy_speed[enemy] * current_speed_factor
-		
-	# Ser till att korrigera kill-belöningen för att hålla den proportionelig med fiendens HP
-	for enemy in enemy_base_reward:
-		enemy_base_reward[enemy] *= current_health_factor
+		enemy_speed[enemy] = enemy_base_speed[enemy] * current_speed_factor
 
 func damage(damage_dealt, targeted_enemy, midas: bool) -> void:
 	if damage_dealt >= targeted_enemy.current_health: # Om attacken besegrar fienden:

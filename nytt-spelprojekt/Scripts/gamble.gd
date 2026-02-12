@@ -177,20 +177,20 @@ func gamble(ChestID):
 	while speed > 0.01:
 		var t = clamp(elapsed_time / spin_duration, 0.0, 1.0)
 
-		# Ease-out quad: hastigheten avtar mjukt mot noll
+		# Hastigheten avtar mot noll för att scrollen ska kännas naturlig
 		var Ease = 1.0 - (1.0 - t) * (1.0 - t)
 		speed = lerp(start_speed, 0.0, Ease)
 
-		# Uppdatera scroll med delta-time
+		# Uppdatera scroll med hänsyn till delta (Vi änvänder get_process_delta_time() för att vi inte har tillgång till vanliga delta)
 		scroll.scroll_horizontal += speed
 		await get_tree().create_timer(0).timeout
 		elapsed_time += get_process_delta_time()
 	
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(0.1).timeout
 	if ChestID != "Trait":
 		get_parent()._open_chest(ChestID, true)
+	
 	GambleFinished.emit()
-	return "ScrollFinished"
 
 func _modify_drop_rates(ChestID):
 	ChestID = str(ChestID)

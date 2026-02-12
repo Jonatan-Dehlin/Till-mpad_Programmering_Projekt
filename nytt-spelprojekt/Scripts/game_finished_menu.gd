@@ -61,6 +61,7 @@ func fancy_display_xp(StartLevel, PreviousXP, GainedXP, TowerString):
 	var tower = load("res://Scenes/Towers/" + TowerString.split(",")[0] + ".tscn")
 	var instance: Node2D = tower.instantiate()
 	TowerIcon.texture.atlas = instance.get_node("TowerSprite").texture
+	instance.queue_free()
 	TraitIcon.texture = TraitIcon.texture.duplicate(true)
 	TraitIcon.texture.region = Globals.TraitIconAtlasDictionary[TowerString.split(",")[2].replace("TRAIT:","")][0]
 	

@@ -52,11 +52,6 @@ func _input(event: InputEvent) -> void:
 		previous_mouse_pos = mouse_pos
 		clamp_camera_to_limits()
 
-
-
-# ==========================================================
-# === Reusable zoom function ===============================
-# ==========================================================
 func _apply_zoom(factor: float) -> void:
 
 	# Begränsa hur snabbt man får zooma i ett enda event
@@ -75,13 +70,10 @@ func _apply_zoom(factor: float) -> void:
 	zoom = new_zoom
 	clamp_camera_to_limits()
 
-
-
 func get_camera_rect() -> Rect2:
 	var size = get_viewport_rect().size / zoom
 	var half = size * 0.5
 	return Rect2(global_position - half, size)
-
 
 func clamp_camera_to_limits():
 	var rect = get_camera_rect()

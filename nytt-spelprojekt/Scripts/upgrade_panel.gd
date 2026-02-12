@@ -76,6 +76,18 @@ func _unhandled_input(event: InputEvent) -> void: #Stänger panelen ifall man kl
 			parent.hovering_over_tower = false
 			parent._on_mouse_hover_detector_mouse_exited()
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and visible == true:
+		match event.keycode:
+			KEY_BACKSPACE: # Sälj torn
+				_on_sell_tower_pressed()
+			KEY_TAB: # ändra targeting
+				_on_change_targeting_pressed()
+			KEY_W: # Uppgraderingsväg A
+				_on_path_a_upgrade_button_pressed()
+			KEY_E: # Uppgraderingsväg B
+				_on_path_b_upgrade_button_pressed()
+
 func _display_sell_value(): #Visar tornets sell-värde
 	SellButton.text = "Sell: $" + str(parent.sell_value)
 

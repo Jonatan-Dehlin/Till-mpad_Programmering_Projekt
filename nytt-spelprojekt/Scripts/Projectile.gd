@@ -9,12 +9,13 @@ var lifetime: float
 var enemy: CharacterBody2D
 var enemy_rotation
 
-
 var time_passed: float = 0.0
 
 var has_exploded = false
 
 var parent: Node2D
+var parentID
+var Midas: bool = false
 
 var explosion_radii := [60, 110]
 
@@ -26,6 +27,9 @@ var explosion_radii := [60, 110]
 
 func _ready() -> void:
 	z_index = 1000
+	if parent.Trait == "Midas":
+		Midas = true
+	parentID = parent.get_meta("PlayerInventoryIndexReference")
 	
 	if parent.UpgradeA == 4 or parent.UpgradeB == 4:
 		selected_sprite = $AnimatedSprite2D2
@@ -48,7 +52,6 @@ func _ready() -> void:
 	if parent.targeted_enemy != null:
 		enemy = parent.targeted_enemy
 		_place_indicator()
-	
 
 func _place_indicator(): #Gör så att projektilen anpassar sin bana för att inte missa
 	#Avstånd till fienden
@@ -85,16 +88,18 @@ func _apply_explosion_damage():
 	#Gör skada på alla Enemy inom AOE
 	var enemies = get_overlapping_bodies()
 	for i in enemies:
-		if i is Enemy and is_instance_valid(parent):
+		if i is Enemy:
 			if i.current_health >= damage:
 				# Om fienden överlever attacken läggs hela skadan till
-				parent.stats["DamageDealt"] += damage
-				Globals.PlacedTowers[parent.get_meta("PlayerInventoryIndexReference")][1] += damage
+				if is_instance_valid(parent):
+					parent.stats["DamageDealt"] += damage
+				Globals.PlacedTowers[parentID][1] += damage
 			else:
 				# Om fienden inte överlever läggs endast fiendens HP till
-				parent.stats["DamageDealt"] += i.current_health
-				Globals.PlacedTowers[parent.get_meta("PlayerInventoryIndexReference")][1] += i.current_health
-			if parent.Trait == "Midas":
+				if is_instance_valid(parent):
+					parent.stats["DamageDealt"] += i.current_health
+				Globals.PlacedTowers[parentID][1] += i.current_health
+			if Midas:
 				# Om tornet har midas trait ska de få mer pengar ifall fienden dör
 				Globals.damage(damage,i,true)
 			else:
@@ -102,17 +107,17 @@ func _apply_explosion_damage():
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Enemy and not has_exploded: #Kontrollerar att det projektilen kolliderar med är en fiende
-		#Aktiverar AOE kollisionskroppen, men efter annan physics process för att det blir problem annars
+		# Aktiverar AOE kollisionskroppen, men efter annan physics process för att det blir problem annars
 		AOECollider.set_deferred("disabled", false) 
 		
-		#Väntar en frame för att låta AOE kroppen aktiveras
+		# Väntar en frame för att låta AOE kroppen aktiveras
 		await get_tree().process_frame
 		
-		#Gör Hitexplosion synlig och startar animationen
+		# Gör Hitexplosion synlig och startar animationen
 		selected_explosion.visible = true
 		selected_explosion.play()
 		
-		#Gömmer den vanliga spriten och sätter velocity till 0 så att explosionen inte flyttar på sig
+		# Gömmer den vanliga spriten och sätter velocity till 0 så att explosionen inte flyttar på sig
 		selected_sprite.visible = false
 		velocity = 0
 

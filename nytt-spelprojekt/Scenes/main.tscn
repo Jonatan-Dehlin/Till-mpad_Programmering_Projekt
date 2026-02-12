@@ -1,11 +1,13 @@
-[gd_scene load_steps=63 format=3 uid="uid://tbpoiyn0mbo1"]
+[gd_scene load_steps=65 format=3 uid="uid://tbpoiyn0mbo1"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_fip6x"]
 [ext_resource type="Texture2D" uid="uid://bvap3sergftsn" path="res://icon.svg" id="2_l7kl1"]
 [ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/medieval.png" id="2_ral5c"]
 [ext_resource type="Texture2D" uid="uid://dfyhvur3oujdf" path="res://Fantasy RPG (Toony) 32x32.png" id="3_baln0"]
 [ext_resource type="Texture2D" uid="uid://c0mv7l0xunohp" path="res://Skärmavbild 2025-11-18 kl. 15.15.56.png" id="3_wdan3"]
+[ext_resource type="Texture2D" uid="uid://duu5ckvrvs228" path="res://Assets/the-cyberpunk-32x32-pixel-rank-icons/2 Frames/16.png" id="5_hyy8a"]
 [ext_resource type="Texture2D" uid="uid://ufo5h6al0bee" path="res://Assets/SilverCoin.png" id="6_4boqv"]
+[ext_resource type="Texture2D" uid="uid://chhdcjor1hqkv" path="res://Assets/the-cyberpunk-32x32-pixel-rank-icons/1 Icons/8/Rank-icons_5.png" id="6_lbna8"]
 [ext_resource type="Texture2D" uid="uid://2dyamd5eme8k" path="res://#1 - Transparent Icons.png" id="7_h2fuq"]
 [ext_resource type="Texture2D" uid="uid://q7ls5cim2spy" path="res://Assets/GoldCoin.png" id="7_klchj"]
 [ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="7_ovdqn"]
@@ -541,8 +543,24 @@ offset_left = 16.0
 offset_top = 14.0
 offset_right = 86.0
 offset_bottom = 84.0
-texture = ExtResource("2_l7kl1")
+texture = ExtResource("5_hyy8a")
 expand_mode = 1
+stretch_mode = 5
+
+[node name="PlayerIconSymbol" type="TextureRect" parent="MainMenu/PlayerStats/PlayerPrestige"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_lbna8")
 stretch_mode = 5
 
 [node name="PlayerUsername" type="Label" parent="MainMenu/PlayerStats"]
@@ -1306,7 +1324,7 @@ custom_minimum_size = Vector2(0, 880)
 layout_mode = 0
 offset_left = 178.0
 offset_top = 90.0
-offset_right = 1748.0
+offset_right = 1222.0
 offset_bottom = 990.0
 horizontal_scroll_mode = 0
 
@@ -1315,7 +1333,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 12
 theme_override_constants/v_separation = 30
-columns = 6
+columns = 4
 
 [node name="ReturnToMainMenuFromInventoryButton" type="Button" parent="Inventory"]
 layout_mode = 0
@@ -1325,6 +1343,115 @@ offset_right = 1737.0
 offset_bottom = 1021.0
 theme_override_fonts/font = SubResource("FontFile_di1y4")
 text = "BACK"
+
+[node name="PreviewTower" type="VBoxContainer" parent="Inventory"]
+layout_mode = 0
+offset_left = 1365.0
+offset_top = 216.0
+offset_right = 1615.0
+offset_bottom = 687.0
+theme_override_constants/separation = 15
+
+[node name="PreviewContainer" type="CenterContainer" parent="Inventory/PreviewTower"]
+layout_mode = 2
+
+[node name="PreviewPlaceholder" type="TextureRect" parent="Inventory/PreviewTower/PreviewContainer"]
+custom_minimum_size = Vector2(250, 400)
+layout_mode = 2
+texture = SubResource("AtlasTexture_s5ptr")
+metadata/Index = 0
+
+[node name="Label" type="Label" parent="Inventory/PreviewTower/PreviewContainer/PreviewPlaceholder"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.1667
+offset_right = 20.0
+offset_bottom = 11.1667
+grow_horizontal = 2
+grow_vertical = 2
+text = "Select Tower"
+
+[node name="Label" type="Label" parent="Inventory/PreviewTower"]
+layout_mode = 2
+text = "Hotbar Slots:"
+horizontal_alignment = 1
+
+[node name="EquipHotbar" type="HBoxContainer" parent="Inventory/PreviewTower"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="HotbarSlot1" type="Button" parent="Inventory/PreviewTower/EquipHotbar"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+focus_mode = 0
+text = "1"
+metadata/ID = 0
+
+[node name="HotbarSlot2" type="Button" parent="Inventory/PreviewTower/EquipHotbar"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+focus_mode = 0
+text = "2"
+metadata/ID = 1
+
+[node name="HotbarSlot3" type="Button" parent="Inventory/PreviewTower/EquipHotbar"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+focus_mode = 0
+text = "3"
+metadata/ID = 2
+
+[node name="HotbarSlot4" type="Button" parent="Inventory/PreviewTower/EquipHotbar"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+focus_mode = 0
+text = "4"
+metadata/ID = 3
+
+[node name="HotbarSlot5" type="Button" parent="Inventory/PreviewTower/EquipHotbar"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+focus_mode = 0
+text = "5"
+metadata/ID = 4
+
+[node name="HotbarSlot6" type="Button" parent="Inventory/PreviewTower/EquipHotbar"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+focus_mode = 0
+text = "6"
+metadata/ID = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Inventory/PreviewTower"]
+layout_mode = 2
+alignment = 1
+
+[node name="HotbarSelectButton" type="Button" parent="Inventory/PreviewTower/HBoxContainer"]
+layout_mode = 2
+text = "Equip"
+
+[node name="Label3" type="Label" parent="Inventory/PreviewTower/HBoxContainer"]
+layout_mode = 2
+text = "Slot Occupied?"
+
+[node name="EquipHotbar2" type="HBoxContainer" parent="Inventory/PreviewTower"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="SellButton" type="Button" parent="Inventory/PreviewTower/EquipHotbar2"]
+layout_mode = 2
+text = "Sell: XXXX Silver"
+
+[node name="FuseButton" type="Button" parent="Inventory/PreviewTower/EquipHotbar2"]
+layout_mode = 2
+text = "Fuse: xxxx XP"
 
 [node name="Shop" type="TextureRect" parent="."]
 layout_mode = 0
@@ -2597,6 +2724,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SilverAmount" type="TextureRect" parent="Shop"]
+layout_mode = 0
 offset_left = 1096.0
 offset_top = 86.0
 offset_right = 1496.0
@@ -2693,6 +2821,7 @@ horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="GoldAmount" type="TextureRect" parent="Shop"]
+layout_mode = 0
 offset_left = 1400.0
 offset_top = 86.0
 offset_right = 1544.0
@@ -3159,6 +3288,7 @@ offset_bottom = 1044.0
 text = "BACK"
 
 [node name="SilverAmount" type="TextureRect" parent="Traits"]
+layout_mode = 0
 offset_left = 1096.0
 offset_top = 86.0
 offset_right = 1496.0
@@ -3255,6 +3385,7 @@ horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="GoldAmount" type="TextureRect" parent="Traits"]
+layout_mode = 0
 offset_left = 1400.0
 offset_top = 86.0
 offset_right = 1544.0
@@ -3315,6 +3446,7 @@ vertical_alignment = 2
 [connection signal="pressed" from="ChooseMap/ReturnToMainMenuFromPlay" to="." method="_on_return_to_main_menu_from_play_pressed"]
 [connection signal="pressed" from="ChooseMap/SelectModifiers/FinalModifiers/StartMapButton" to="." method="_on_start_map_button_pressed"]
 [connection signal="pressed" from="Inventory/ReturnToMainMenuFromInventoryButton" to="." method="_on_return_to_main_menu_from_inventory_button_pressed"]
+[connection signal="pressed" from="Inventory/PreviewTower/HBoxContainer/HotbarSelectButton" to="." method="_on_hotbar_select_button_pressed"]
 [connection signal="pressed" from="Shop/ReturnToMainMenuButton" to="." method="_on_return_to_main_menu_button_pressed"]
 [connection signal="pressed" from="Shop/TraitMenuButton" to="." method="_on_trait_menu_button_pressed"]
 [connection signal="pressed" from="Traits/PurchaseTraitReroll/HBoxContainer/RerollTraitButton" to="." method="_on_reroll_trait_button_pressed"]

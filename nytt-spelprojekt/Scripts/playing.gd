@@ -47,9 +47,39 @@ func _process(_delta: float) -> void:
 		WaveLabel.text = "Wave: " + str(Globals.current_wave) + "/" + str(max_wave)
 		
 		if Input.is_action_just_pressed("Esc"):
-			get_tree().paused = true
 			PauseMenu.visible = true
 			PauseMenu._ready()
+			
+			# Väntar en frame för att pausemenyn ska dyka upp korrekt
+			await get_tree().physics_frame
+			get_tree().paused = true
+
+func _input(event: InputEvent) -> void: # Hotkeys för hotbaren
+	#not event.echo förhindrar problem ifall knappen hålls ner, annars skulle knappen tryckas flera gånger per sekund
+	if event is InputEventKey and event.pressed and not event.echo and TowerPlacer.placed:
+		match event.keycode:
+			KEY_1:
+				_hotbar_hotkey(0)
+			KEY_2:
+				_hotbar_hotkey(1)
+			KEY_3:
+				_hotbar_hotkey(2)
+			KEY_4:
+				_hotbar_hotkey(3)
+			KEY_5:
+				_hotbar_hotkey(4)
+			KEY_6:
+				_hotbar_hotkey(5)
+
+func _hotbar_hotkey(slot: int) -> void: # Hjälpfunktion till hotkeys för hotbaren
+	if slot < 0 or slot >= EquippedTowersButtons.size(): # Ifall t.ex. man inte har ett torn equippat på en av hotbarslotsen
+		return
+	
+	var button: Button = EquippedTowersButtons[slot]
+	if button.disabled: # Av samma anledning som ovanstående
+		return
+	
+	button.emit_signal("pressed")
 
 func _physics_process(_delta: float) -> void:
 	if _detect_every_enemy_defeated():
@@ -167,7 +197,7 @@ func _send_wave(enemy: String, amount: int, cooldown: float, startcooldown: floa
 	#Kollar om fienden existerar
 	if FileAccess.file_exists("res://Scenes/Enemies/" + enemy):
 		#Cooldown innan fienden börjar spawnas
-		await get_tree().create_timer(startcooldown).timeout
+		await get_tree().create_timer(startcooldown, false).timeout
 		
 		#Laddar enemyn
 		var enemy_scene = load("res://Scenes/Enemies/" + enemy)
@@ -191,7 +221,7 @@ func _send_wave(enemy: String, amount: int, cooldown: float, startcooldown: floa
 			Path.add_child(PathFollow)
 			
 			#Cooldown mellan varje spawn
-			await get_tree().create_timer(cooldown).timeout
+			await get_tree().create_timer(cooldown, false).timeout
 	else:
 		print(enemy + " is not found in res://Scenes/Enemies/")
 	if last:

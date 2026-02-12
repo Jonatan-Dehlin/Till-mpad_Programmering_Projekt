@@ -193,7 +193,6 @@ layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("4_pft4x")
 theme_override_font_sizes/font_size = 25
-text = "$xxxxx"
 icon = SubResource("AtlasTexture_hq1of")
 icon_alignment = 1
 vertical_icon_alignment = 0
@@ -206,7 +205,6 @@ offset_right = 40.0
 offset_bottom = 22.3333
 theme_override_fonts/font = ExtResource("4_pft4x")
 theme_override_font_sizes/font_size = 30
-text = "XXX"
 horizontal_alignment = 1
 
 [node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower1"]
@@ -227,7 +225,6 @@ layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("4_pft4x")
 theme_override_font_sizes/font_size = 25
-text = "$xxxxx"
 icon = SubResource("AtlasTexture_4xh8t")
 icon_alignment = 1
 vertical_icon_alignment = 0
@@ -240,7 +237,6 @@ offset_right = 40.0
 offset_bottom = 22.3333
 theme_override_fonts/font = ExtResource("4_pft4x")
 theme_override_font_sizes/font_size = 30
-text = "XXX"
 horizontal_alignment = 1
 
 [node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower2"]
@@ -261,7 +257,6 @@ layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("4_pft4x")
 theme_override_font_sizes/font_size = 25
-text = "$xxxxx"
 icon = SubResource("AtlasTexture_rorh1")
 icon_alignment = 1
 vertical_icon_alignment = 0
@@ -274,7 +269,6 @@ offset_right = 40.0
 offset_bottom = 22.3333
 theme_override_fonts/font = ExtResource("4_pft4x")
 theme_override_font_sizes/font_size = 30
-text = "XXX"
 horizontal_alignment = 1
 
 [node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower3"]
@@ -295,7 +289,6 @@ layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("4_pft4x")
 theme_override_font_sizes/font_size = 25
-text = "$xxxxx"
 icon = SubResource("AtlasTexture_1gyvj")
 icon_alignment = 1
 vertical_icon_alignment = 0
@@ -308,7 +301,6 @@ offset_right = 40.0
 offset_bottom = 22.3333
 theme_override_fonts/font = ExtResource("4_pft4x")
 theme_override_font_sizes/font_size = 30
-text = "XXX"
 horizontal_alignment = 1
 
 [node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower4"]
@@ -329,7 +321,6 @@ layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("4_pft4x")
 theme_override_font_sizes/font_size = 25
-text = "$xxxxx"
 icon = SubResource("AtlasTexture_nrs82")
 icon_alignment = 1
 vertical_icon_alignment = 0
@@ -342,7 +333,6 @@ offset_right = 40.0
 offset_bottom = 22.3333
 theme_override_fonts/font = ExtResource("4_pft4x")
 theme_override_font_sizes/font_size = 30
-text = "XXX"
 horizontal_alignment = 1
 
 [node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower5"]
@@ -363,7 +353,6 @@ layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("4_pft4x")
 theme_override_font_sizes/font_size = 25
-text = "$xxxxx"
 icon = SubResource("AtlasTexture_12o03")
 icon_alignment = 1
 vertical_icon_alignment = 0
@@ -376,7 +365,6 @@ offset_right = 40.0
 offset_bottom = 22.3333
 theme_override_fonts/font = ExtResource("4_pft4x")
 theme_override_font_sizes/font_size = 30
-text = "XXX"
 horizontal_alignment = 1
 
 [node name="TraitIcon" type="TextureRect" parent="HUD/TowerHotbar/HBoxContainer/Tower6"]
