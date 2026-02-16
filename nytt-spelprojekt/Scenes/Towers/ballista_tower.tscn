@@ -1,19 +1,19 @@
-[gd_scene load_steps=12 format=3 uid="uid://lnvpp1rxb8pw"]
+[gd_scene load_steps=12 format=3 uid="uid://djlixekq3muyx"]
 
-[ext_resource type="Script" path="res://Scripts/TowerScripts/wizard_tower.gd" id="1_peykl"]
-[ext_resource type="PackedScene" uid="uid://bn5ae4t8xid65" path="res://Scenes/Menus/upgrade_panel.tscn" id="4_h4bsb"]
+[ext_resource type="Script" path="res://Scripts/TowerScripts/ballista_tower.gd" id="1_uykfl"]
+[ext_resource type="PackedScene" uid="uid://bn5ae4t8xid65" path="res://Scenes/Menus/upgrade_panel.tscn" id="5_1k1on"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6io15"]
-load_path = "res://.godot/imported/Tower 05.png-a7b57d5cf7370cfd2f7f1b0aec001d55.ctex"
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yqmio"]
+load_path = "res://.godot/imported/Tower 06.png-0dcbcab80d5790e2256768f17f216a19.ctex"
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gqmic"]
-load_path = "res://.godot/imported/Tower 05.png-a7b57d5cf7370cfd2f7f1b0aec001d55.ctex"
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gbcgi"]
+load_path = "res://.godot/imported/Tower 06.png-0dcbcab80d5790e2256768f17f216a19.ctex"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b7dvf"]
 radius = 108.057
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8yw34"]
-load_path = "res://.godot/imported/Tower 05 - Level 01 - Weapon.png-0ad4551d60393012a1af5b0a97ca2c11.ctex"
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_k45kn"]
+load_path = "res://.godot/imported/Tower 06 - Level 01 - Weapon.png-56b6690937d04c9080c8b4b13ce72cfe.ctex"
 
 [sub_resource type="Animation" id="Animation_4dnem"]
 length = 0.001
@@ -30,40 +30,9 @@ tracks/0/keys = {
 "values": [1]
 }
 
-[sub_resource type="Animation" id="Animation_bamwi"]
-resource_name = "Tower_Firing"
-length = 1.4
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Weapon/WeaponSprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0449431, 0.0949433, 0.144943, 0.194943, 0.244943, 0.294943, 0.344943, 0.394943, 0.444943, 0.494943, 0.544943, 0.594943, 0.644943, 0.694943, 0.744943, 0.794943, 0.844943, 0.894943, 0.944943, 0.994943, 1.04494, 1.09494, 1.14494, 1.19494, 1.24494, 1.29494, 1.34494, 1.39494),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(1.1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"_spawn_projectile"
-}]
-}
-
 [sub_resource type="Animation" id="Animation_q23k1"]
 resource_name = "Tower_Idle"
-length = 1.6
+length = 0.2
 loop_mode = 1
 step = 0.2
 tracks/0/type = "value"
@@ -73,15 +42,46 @@ tracks/0/path = NodePath("Weapon/WeaponSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_36ohr"]
 resource_name = "Tower_Idle2"
 step = 0.2
+
+[sub_resource type="Animation" id="Animation_bamwi"]
+resource_name = "Tower_Firing"
+length = 1.4
+step = 0.05
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.05),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_spawn_projectile"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Weapon/WeaponSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jxany"]
 _data = {
@@ -91,8 +91,8 @@ _data = {
 "Tower_Idle2": SubResource("Animation_36ohr")
 }
 
-[node name="Wizard Tower" type="Node2D"]
-script = ExtResource("1_peykl")
+[node name="Ballista Tower" type="Node2D"]
+script = ExtResource("1_uykfl")
 metadata/Level = 1
 metadata/Trait = "none"
 metadata/PlayerInventoryIndexReference = 0
@@ -100,7 +100,7 @@ metadata/MaxPlace = 5
 metadata/XP = 0
 
 [node name="TowerSprite" type="Sprite2D" parent="."]
-texture = SubResource("CompressedTexture2D_6io15")
+texture = SubResource("CompressedTexture2D_yqmio")
 hframes = 3
 
 [node name="TowerOutline" type="Sprite2D" parent="."]
@@ -108,7 +108,7 @@ visible = false
 modulate = Color(100, 100, 100, 1)
 z_index = -1
 scale = Vector2(1.02, 1.02)
-texture = SubResource("CompressedTexture2D_gqmic")
+texture = SubResource("CompressedTexture2D_gbcgi")
 hframes = 3
 
 [node name="TowerCollider" type="Area2D" parent="."]
@@ -126,13 +126,12 @@ shape = SubResource("CircleShape2D_b7dvf")
 debug_color = Color(0, 0.6, 0.701961, 0.180392)
 
 [node name="Weapon" type="Node2D" parent="."]
-position = Vector2(0, -19)
+position = Vector2(0, -13)
 
 [node name="WeaponSprite" type="Sprite2D" parent="Weapon"]
-scale = Vector2(1, 0.98)
-texture = SubResource("CompressedTexture2D_8yw34")
-hframes = 29
-vframes = 2
+scale = Vector2(1.2, 1.2)
+texture = SubResource("CompressedTexture2D_k45kn")
+hframes = 6
 frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -147,7 +146,7 @@ collision_mask = 0
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MouseHoverDetector"]
 polygon = PackedVector2Array(21, 64, 32, 53, 32, 8, 26, -18, 25, -28, 23, -39, 20, -42, -20, -42, -23, -39, -25, -28, -26, -18, -32, 8, -32, 53, -21, 64)
 
-[node name="UpgradePanel" parent="." instance=ExtResource("4_h4bsb")]
+[node name="UpgradePanel" parent="." instance=ExtResource("5_1k1on")]
 layer = 128
 
 [connection signal="body_entered" from="Range" to="." method="_on_range_body_entered"]

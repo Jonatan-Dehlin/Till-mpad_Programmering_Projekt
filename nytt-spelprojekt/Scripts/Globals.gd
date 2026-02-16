@@ -4,7 +4,7 @@ var current_wave = 0
 
 var health = 100
 
-var cash = 100000
+var cash = 200
 
 var GameFinishedMenu
 
@@ -16,12 +16,14 @@ var Playing: bool = false
 
 var PlayerStatFile = "user://PlayerData.txt"
 var EquippedTowers = []
+var PlayerUser: String = ""
 var PlayerStats = {"Silver": 0, "Gold": 0, "Level": 0, "EXP": 0}
 var PlayerInventory = {} # Format: {"id": wizard_tower,LVL:62,TRAIT:Singularity,SLOT:0,XP:0,ID:000000000}
+var Main = preload("res://Scenes/main.tscn")
 
 ################## ENEMY STATS ###################
 var enemies = {"FireBug":0,"LeafBug":0,"MagmaCrab":0,"Scorpion":0}
-var enemy_base_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
+var enemy_base_health = {"FireBug":50,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
 var enemy_base_speed = {"FireBug":100,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
 var enemy_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
 var enemy_speed = {"FireBug":100,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
@@ -64,10 +66,10 @@ var SelectedDifficultyRewardMultipliers: Dictionary = {
 	"Nightmare": [5,2]}
 
 var SelectedModifiers: Dictionary = { # Valbara modifiers som gör spelet svårare men ger mer belöningar
-	"Slow Towers": [false,25,0], # Långsammare attack speed
-	"Weak Towers": [false,25,0], # Mindre damage
-	"Blind Towers": [false,25,0], # Kortare range
-	"Crippled Towers": [false,50,0], # Mindre attack speed, range och damage
+	"Slow Towers": [false,25,0], # Långsammare attack speed (-20%)
+	"Weak Towers": [false,25,0], # Mindre damage (-20%)
+	"Blind Towers": [false,25,0], # Kortare range (-20%)
+	"Crippled Towers": [false,50,0], # Mindre attack speed, range och damage (-20%, -20%, -20%)
 	"Expensive Towers": [false,25,0], # Dyrare torn
 	"Economic Depression": [false,50,0], # Dyrare torn, mindre belöningar från pengatorn och fiende kills
 	"Sudden Death": [false,100,0], # Max HP sätts till 1
@@ -226,8 +228,9 @@ func update_save_file():
 	# Uppdatera player stats
 	for i in range(lines.size()):
 		var stripped = lines[i].replace(" ", "").replace("	","")
-
-		if stripped.begins_with("LEVEL:"):
+		if stripped.begins_with("NAME:"):
+			lines[i] = "	NAME: " + PlayerUser
+		elif stripped.begins_with("LEVEL:"):
 			lines[i] = "	LEVEL: " + str(PlayerStats["Level"])
 		elif stripped.begins_with("EXP:"):
 			lines[i] = "	EXP: " + str(PlayerStats["EXP"])
@@ -300,9 +303,9 @@ func calculate_required_EXP(Level, player: bool) -> int: # Räknar ut hur mycket
 	else:
 		return BaseEXPRequirement + XP_TO_MAX_TOWER_LEVEL * pow(float(Level) / MAX_LEVEL, EXPScalingFactor)
 
-func format_number(n: int) -> String: # Gör om t.ex. 1000000 -> 1,000,000
-	if n < 1000: #Om numret är under 1000 behöver det inte formatteras
-		return str(n)
+func format_number(n) -> String: # Gör om t.ex. 1000000 -> 1,000,000
+	if n < 1000: # Om numret är under 1000 behöver det inte formatteras
+		return str(snapped(n,0.01))
 	else:
 		var s = str(n)
 		var result: String = ""
@@ -396,12 +399,13 @@ func _apply_enemy_multipliers(wave) -> void: # Applicerar fiendes multipliers
 		enemy_speed[enemy] = enemy_base_speed[enemy] * current_speed_factor
 
 func damage(damage_dealt, targeted_enemy, midas: bool) -> void:
+	
 	if damage_dealt >= targeted_enemy.current_health: # Om attacken besegrar fienden:
 		targeted_enemy.get_parent().queue_free() # Ta bort fienden genom att ta bort dess förälder, PathFollow2D
 		if midas:
-			cash += targeted_enemy.kill_reward * 1.5
+			cash += targeted_enemy.kill_reward * 1.5 * current_health_factor
 		else:
-			cash += targeted_enemy.kill_reward
+			cash += targeted_enemy.kill_reward * current_health_factor
 		# Lägger till värden i accumulated_reward[silver] och [guld] som sedan visas vid game over
 		# Ser även till att anpassa kill reward så att den är proportionelig til fiendernas HP-ökning.
 		accumulated_reward[0] += enemy_kill_reward[targeted_enemy.name][0] * current_health_factor * 0.1

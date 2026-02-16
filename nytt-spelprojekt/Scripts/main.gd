@@ -62,9 +62,6 @@ var GambleMenu: Control
 # Tower Directory
 var tower_directory = DirAccess.open("res://Scenes/Towers/")
 
-# Player Stats
-var PlayerName: String
-
 # Trait Reroll variables
 var selected_trait_reroll_tower
 
@@ -117,12 +114,25 @@ func _ready() -> void:
 	Globals.update_save_file()
 	_update_tower_buttons()
 	_color_hotbar_buttons()
+	
+	if Globals.PlayerUser == "":
+		$MainMenu/EnterUsername.visible = true
+		$MainMenu/ColorRect.visible = true
+		get_tree().paused = true
+		
+		await $MainMenu/EnterUsername.text_submitted
+		
+		Globals.PlayerUser = $MainMenu/EnterUsername.text
+		$MainMenu/EnterUsername.visible = false
+		$MainMenu/ColorRect.visible = false
+		get_tree().paused = false
+		Globals.update_save_file()
 
 func _process(_delta: float) -> void:
 	_update_labels()
 
 ################ INVENTORY FUNCTIONS #############
-func _select_tower_from_inventory(TowerID, TowerPanelParent):
+func _select_tower_from_inventory(TowerID):
 	selected_inventory_tower_ID = TowerID
 	_preview_selected_tower()
 	_color_hotbar_buttons()
@@ -254,7 +264,7 @@ func _load_player_stats():
 			if line.contains("LEVEL:"):
 				Globals.PlayerStats["Level"] = int(line.replace("LEVEL:",""))
 			elif line.contains("NAME:"):
-				PlayerName = line.replace("NAME:","")
+				Globals.PlayerUser = line.replace("NAME:","")
 			elif line.contains("EXP:"):
 				Globals.PlayerStats["EXP"] = int(line.replace("EXP:",""))
 			elif line.contains("SILVER:"):
@@ -312,15 +322,18 @@ func _update_inventory():
 			
 
 		# Fixar ikon och text till tornen
-		DuplicateButton.icon.atlas = instance.get_node("TowerSprite").texture
+		var IconAtlas = AtlasTexture.new()
+		IconAtlas.atlas = instance.get_node("TowerSprite").texture
+		IconAtlas.region = Rect2(0,0,64,128)
+		DuplicateButton.icon = IconAtlas
 		DuplicateButton.get_node("TowerName").text = instance.name
 		DuplicateButton.get_node("TowerLevel").text = towers.split(",")[1]
 
 		# Fixar trait ikonen till tornet
-		var Atlas = AtlasTexture.new()
-		Atlas.atlas = DuplicateButton.get_node("TraitIcon").texture
-		Atlas.region = Globals.TraitIconAtlasDictionary[towers.split(",")[2].replace("TRAIT:","")][0]
-		DuplicateButton.get_node("TraitIcon").texture = Atlas
+		var TraitAtlas = AtlasTexture.new()
+		TraitAtlas.atlas = DuplicateButton.get_node("TraitIcon").texture
+		TraitAtlas.region = Globals.TraitIconAtlasDictionary[towers.split(",")[2].replace("TRAIT:","")][0]
+		DuplicateButton.get_node("TraitIcon").texture = TraitAtlas
 
 		# Fixar tornets meta ID
 		Duplicate.set_meta("TowerID", id)
@@ -349,7 +362,7 @@ func _update_labels():
 		var CostLabel: Label = chests.get_node("HBoxContainer").get_node("TraitCost")
 		CostLabel.text = Globals.format_number(CHEST_COSTS[chests.name])
 	
-	PlayerNameLabel.text = PlayerName
+	PlayerNameLabel.text = Globals.PlayerUser
 	PlayerLevelLabel.text = str(Globals.PlayerStats["Level"])
 	EXPProgressBar.max_value = Globals.calculate_required_EXP(Globals.PlayerStats["Level"],true)
 	EXPProgressBar.value = Globals.PlayerStats["EXP"]
@@ -415,17 +428,18 @@ func _update_tower_buttons():
 		var button: Button = towers.get_child(0)
 		
 		if not button.is_connected("pressed", Callable(self, "_select_tower_from_inventory")):
-			button.pressed.connect(_select_tower_from_inventory.bind(towers.get_meta("TowerID"), button.get_parent()))
+			button.pressed.connect(_select_tower_from_inventory.bind(towers.get_meta("TowerID")))
 
 ################ TRAIT AND CHEST FUNCTIONS ###############
 func _open_chest(chestID, reset: bool):
+	var chest: Button
 	# Om spelaren inte har råd:
 	if Globals.PlayerStats["Silver"] < CHEST_COSTS["Chest" + str(chestID)]:
 		return
 	
 	# Änvänds för att resetta kistans sprite
 	if reset: 
-		var chest: Button = Chests.get_node("Chest" + str(chestID)).get_child(0)
+		chest = Chests.get_node("Chest" + str(chestID)).get_child(0)
 		chest.icon.region.position.y -= 96
 		return
 
@@ -433,7 +447,7 @@ func _open_chest(chestID, reset: bool):
 	Globals.PlayerStats["Silver"] -= CHEST_COSTS["Chest" + str(chestID)]
 
 	# Animation
-	var chest: Button = Chests.get_node("Chest" + str(chestID)).get_child(0)
+	chest = Chests.get_node("Chest" + str(chestID)).get_child(0)
 	for i in range(3):
 		chest.icon.region.position.y += 32
 		await get_tree().create_timer(0.1).timeout

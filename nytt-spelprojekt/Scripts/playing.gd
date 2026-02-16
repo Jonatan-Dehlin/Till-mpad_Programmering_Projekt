@@ -116,6 +116,8 @@ func _start_map(MapID, Replay: bool):
 		map = map.instantiate()
 		current_level.replace_by(map)
 		current_level = map
+		if Globals.SelectedModifiers["Sudden Death"]:
+			Globals.health = 1
 	else:
 		replay = false
 

@@ -1,6 +1,6 @@
 extends Node2D
 
-var TowerName = "Wizard Tower"
+var TowerName = "Ballista Tower"
 
 var XP_earned: int = 0
 
@@ -12,21 +12,21 @@ var hovering_over_tower: bool = false
 #Tower Stats
 var Trait: String
 var Level: int
-var stats = {"damage":35,
-			"range":200,
-			"cooldown":1,
-			"projectile_velocity": 320.0,
+var stats = {"damage":100,
+			"range":300,
+			"cooldown":0.5,
+			"projectile_velocity": 500.0,
 			"projectile_lifetime": 5.0,
-			"AOESize": 100.0,
+			"AOESize": 6.0,
 			"DamageDealt": 0}
 
 var place_cost: int = 100
 var total_cash_spent: int = 100
 
-var pierce: int = 0
+var pierce: int = 5
 
 var targeting: String = "First"
-var damage_frame: int = 5
+var damage_frame: int = 1
 
 @export var sell_value: int = int(place_cost * 0.7) #70% sellback
 @export var max_placement: int = 5
@@ -36,11 +36,11 @@ var upgrade_level = 1
 var UpgradeA = 0
 var UpgradeB = 0
 
-var weapon_sprite2 = ImageTexture.create_from_image(preload("res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 02 - Weapon.png").get_image())
-var weapon_sprite3 = ImageTexture.create_from_image(preload("res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 03 - Weapon.png").get_image())
+var weapon_sprite2 = ImageTexture.create_from_image(preload("res://Assets/Towers/Towers Weapons/Tower 06/Spritesheets/Tower 06 - Level 02 - Weapon.png").get_image())
+var weapon_sprite3 = ImageTexture.create_from_image(preload("res://Assets/Towers/Towers Weapons/Tower 06/Spritesheets/Tower 06 - Level 03 - Weapon.png").get_image())
 
-var projectile_sprite2 = ImageTexture.create_from_image(preload("res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 02 - Projectile.png").get_image())
-var projectile_sprite3 = ImageTexture.create_from_image(preload("res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 03 - Projectile.png").get_image())
+var projectile_sprite2 = ImageTexture.create_from_image(preload("res://Assets/Towers/Towers Weapons/Tower 06/Spritesheets/Tower 06 - Level 02 - Projectile.png").get_image())
+var projectile_sprite3 = ImageTexture.create_from_image(preload("res://Assets/Towers/Towers Weapons/Tower 06/Spritesheets/Tower 06 - Level 03 - Projectile.png").get_image())
 
 #Upgrade Stats. Allting är additivt
 var UpgradesA = {
@@ -79,7 +79,7 @@ func _ready() -> void: # Används för att ställa in stats, när tornet placera
 	$Range/CollisionShape2D.shape = UniqueRangeShape # Den nya duplicerade range shapen appliceras
 	_apply_trait_and_level_modifiers()
 	_apply_modifiers()
-	_update_stats(null) # Uppdaterar stats utan hänsyn till A eller B upgrade paths'
+	_update_stats(null) # Uppdaterar stats utan hänsyn till A eller B upgrade paths
 
 func _apply_trait_and_level_modifiers():
 	var TraitModifiers = Globals.TraitModifiers[Trait]
@@ -144,6 +144,9 @@ func _physics_process(_delta: float) -> void:
 	enemies_in_range = overlapping_enemies.filter(func(b): return b is Enemy)
 	
 	queue_redraw()
+	if targeted_enemy != null and is_instance_valid(targeted_enemy):
+		Weapon.get_child(0).look_at(targeted_enemy.global_position)
+		Weapon.get_child(0).rotation += PI/2
 
 func _choose_targeted_enemy():
 	# Filtrera bort null fiender
@@ -209,9 +212,9 @@ func _spawn_projectile():
 		_choose_targeted_enemy()
 		
 		#skapar en projektil
-		var projectile_scene = load("res://Scenes/Projectiles/wizard_tower_projectile.tscn")
+		var projectile_scene = load("res://Scenes/Projectiles/ballista_tower_projectile.tscn")
 		var projectile = projectile_scene.instantiate()
-		projectile.global_position = Weapon.global_position - Vector2(0,19)
+		projectile.global_position = Weapon.global_position - Vector2(0,0)
 		projectile.parent = self
 		get_tree().current_scene.get_node("TowerProjectiles").add_child(projectile)
 

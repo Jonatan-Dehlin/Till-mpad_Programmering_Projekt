@@ -10586,7 +10586,7 @@ sources/2 = SubResource("TileSetAtlasSource_mfc5p")
 
 [sub_resource type="Curve2D" id="Curve2D_5bi5j"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 64, 0, 0, 0, 0, 0, 64, 208, 0, 0, 0, 0, 256, 208, 0, 0, 0, 0, 292, 182, 0, 0, 0, 0, 412, 182, 0, 0, 0, 0, 448, 208, 0, 0, 0, 0, 900, 206, 0, 0, 0, 0, 942, 225, 0, 0, 0, 0, 959, 256, 0, 0, 0, 0, 961, 790, 0, 0, 0, 0, 979, 833, 0, 0, 0, 0, 1012, 848, 0, 0, 0, 0, 1229, 849, 0, 0, 0, 0, 1266, 828, 0, 0, 0, 0, 1279, 796, 0, 0, 0, 0, 1279, 588, 0, 0, 0, 0, 1263, 548, 0, 0, 0, 0, 1223, 527, 0, 0, 0, 0, 1057, 528, 0, 0, 0, 0, 1021, 503, 0, 0, 0, 0, 901, 501, 0, 0, 0, 0, 864, 525, 0, 0, 0, 0, 701, 528, 0, 0, 0, 0, 659, 547, 0, 0, 0, 0, 641, 581, 0, 0, 0, 0, 640, 933, 0, 0, 0, 0, 660, 977, 0, 0, 0, 0, 700, 994, 0, 0, 0, 0, 1410, 993, 0, 0, 0, 0, 1455, 972, 0, 0, 0, 0, 1472, 939, 0, 0, 0, 0, 1472, -63)
+"points": PackedVector2Array(0, 0, 0, 0, 64, -20, 0, 0, 0, 0, 64, 208, 0, 0, 0, 0, 256, 208, 0, 0, 0, 0, 292, 182, 0, 0, 0, 0, 412, 182, 0, 0, 0, 0, 448, 208, 0, 0, 0, 0, 900, 206, 0, 0, 0, 0, 942, 225, 0, 0, 0, 0, 959, 256, 0, 0, 0, 0, 961, 790, 0, 0, 0, 0, 979, 833, 0, 0, 0, 0, 1012, 848, 0, 0, 0, 0, 1229, 849, 0, 0, 0, 0, 1266, 828, 0, 0, 0, 0, 1279, 796, 0, 0, 0, 0, 1279, 588, 0, 0, 0, 0, 1263, 548, 0, 0, 0, 0, 1223, 527, 0, 0, 0, 0, 1057, 528, 0, 0, 0, 0, 1021, 503, 0, 0, 0, 0, 901, 501, 0, 0, 0, 0, 864, 525, 0, 0, 0, 0, 701, 528, 0, 0, 0, 0, 659, 547, 0, 0, 0, 0, 641, 581, 0, 0, 0, 0, 640, 933, 0, 0, 0, 0, 660, 977, 0, 0, 0, 0, 700, 994, 0, 0, 0, 0, 1410, 993, 0, 0, 0, 0, 1455, 972, 0, 0, 0, 0, 1472, 939, 0, 0, 0, 0, 1472, -63)
 }
 point_count = 32
 
@@ -10621,7 +10621,7 @@ tile_set = SubResource("TileSet_opu8i")
 curve = SubResource("Curve2D_5bi5j")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="EnemyPath"]
-position = Vector2(64, 0)
+position = Vector2(64, -20)
 rotation = 1.5708
 loop = false
 script = ExtResource("3_7f1td")
@@ -10648,8 +10648,14 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyExit"]
-position = Vector2(0, -3)
+position = Vector2(0, -21)
 shape = SubResource("RectangleShape2D_lpuj0")
+
+[node name="DamageIndicators" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="body_entered" from="BrigdeEntered" to="EnemyPath/PathFollow2D" method="_on_brigde_entered_body_entered"]
 [connection signal="body_entered" from="BridgeLeft" to="EnemyPath/PathFollow2D" method="_on_bridge_left_body_entered"]

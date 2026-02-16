@@ -7,8 +7,8 @@ class_name Enemy
 
 @onready var healthbarprogress: ProgressBar = $ProgressBar
 @onready var healthbarlabel: Label = $ProgressBar/Label
+@onready var Damageindicators = $DamageIndicators
 
-var speed: int
 
 func _ready() -> void:
 	current_health = Globals.enemy_health[name]
@@ -24,9 +24,9 @@ func _physics_process(_delta: float) -> void:
 		healthbarlabel.text = str(round(healthbarprogress.value))
 
 func _on_mouse_entered() -> void:
-	#healthbarprogress.visible = true
+	healthbarprogress.visible = true
 	pass
 
 func _on_mouse_exited() -> void:
-	#healthbarprogress.visible = false
+	healthbarprogress.visible = false
 	pass

@@ -19,13 +19,13 @@ var TraitIconAtlasDictionary = Globals.TraitIconAtlasDictionary
 
 var TraitBaseTexture: Texture = preload("res://#1 - Transparent Icons.png")
 var TowerTextures = { # Förladdar texturerna till tornen
-	"wizard_tower.tscn": preload("res://Assets/Towers/Towers bases/PNGs/Tower 05.png")
-	
+	"wizard_tower.tscn": preload("res://Assets/Towers/Towers bases/PNGs/Tower 05.png"),
+	"ballista_tower.tscn": preload("res://Assets/Towers/Towers bases/PNGs/Tower 06.png"),
 }
 
-var TowersTier1 = ["wizard_tower.tscn"]
-var TowersTier2 = ["wizard_tower.tscn"]
-var TowersTier3 = ["wizard_tower.tscn"]
+var TowersTier1 = ["ballista_tower.tscn"]
+var TowersTier2 = ["ballista_tower.tscn"]
+var TowersTier3 = ["ballista_tower.tscn"]
 var TowersTier4 = ["wizard_tower.tscn"]
 var TowersTier5 = ["wizard_tower.tscn"]
 
@@ -213,7 +213,7 @@ func _modify_drop_rates(ChestID):
 		weight = [["Blue",150],["Purple",200],["Pink",200],["Red",300],["Gold",150]]
 	
 	elif ChestID == "Trait": #För traits
-		weight = [["Blue",250],["Purple",250],["Pink",200],["Red",200],["Gold",100]]
+		weight = [["Blue",500],["Purple",290],["Pink",150],["Red",50],["Gold",10]]
 
 func _grant_gamble_reward():
 	var centerpos = Vector2(960,425)  # Vector2, globalt
