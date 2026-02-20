@@ -10596,7 +10596,8 @@ size = Vector2(78, 112)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lpuj0"]
 size = Vector2(71, 52)
 
-[node name="ForestLevel" type="Node2D"]
+[node name="ForestLevel" type="Node2D" groups=["Maps"]]
+metadata/Difficulty = "Easy"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 limit_left = 0

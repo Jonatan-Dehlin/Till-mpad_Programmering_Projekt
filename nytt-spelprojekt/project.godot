@@ -32,6 +32,8 @@ enabled=PackedStringArray()
 [global_group]
 
 UpgradePanel="UpgradePanel. Gruppen används för att kunna gömma Upgradepanels från annan kod ifall det skulle behövas."
+TowerOutline=""
+Maps=""
 
 [gui]
 

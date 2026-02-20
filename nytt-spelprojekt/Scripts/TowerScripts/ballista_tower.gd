@@ -44,19 +44,19 @@ var projectile_sprite3 = ImageTexture.create_from_image(preload("res://Assets/To
 
 #Upgrade Stats. Allting är additivt
 var UpgradesA = {
-	1: {"damage": +5,  "range": 0, "cooldown": +0.01, "projectile_velocity": -20, "projectile_lifetime": -0.3, "name": "Quickspark"},
-	2: {"damage": +8,  "range": 0, "cooldown": +0.05, "projectile_velocity": -15, "projectile_lifetime": -0.2, "name": "Arcane Flurry"},
-	3: {"damage": +12, "range": -10,  "cooldown": +1.0, "projectile_velocity": -10, "projectile_lifetime": -0.1, "name": "Mystic Barrage"},
-	4: {"damage": +18, "range": 0,   "cooldown": +1.5, "projectile_velocity": 0,    "projectile_lifetime": 0,   "name": "Eldritch Haste"},
-	5: {"damage": +25, "range": +10, "cooldown": +2.0, "projectile_velocity": +10,  "projectile_lifetime": +0.1, "name": "Arcane Hyperflux"}
+	1: {"damage": +0,  "range": 0, "cooldown": +0.1, "projectile_velocity": -20, "projectile_lifetime": -0.3, "name": "Improved Reloading"},
+	2: {"damage": +20,  "range": 0, "cooldown": +0.5, "projectile_velocity": -15, "projectile_lifetime": -0.2, "name": "Reinforced Frame"},
+	3: {"damage": +30, "range": -10,  "cooldown": +1.0, "projectile_velocity": -10, "projectile_lifetime": -0.1, "name": "Titanium Gears"},
+	4: {"damage": +40, "range": 0,   "cooldown": +1.5, "projectile_velocity": 0,    "projectile_lifetime": 0,   "name": "Full-Auto Conversion"},
+	5: {"damage": +50, "range": +10, "cooldown": +2.0, "projectile_velocity": +10,  "projectile_lifetime": +0.1, "name": "Perfected Mechanism"}
 	}
 
 var UpgradesB = {
-	1: {"damage": 0, "range": +50,  "cooldown": +0.1, "projectile_velocity": +80,  "projectile_lifetime": +0.5, "name": "Longshot Initiate"},
-	2: {"damage": 0, "range": +60,  "cooldown": +0.1, "projectile_velocity": +120, "projectile_lifetime": +0.5, "name": "Skybolt Adept"},
-	3: {"damage": +40, "range": +75,  "cooldown": +0.2, "projectile_velocity": +150, "projectile_lifetime": +0.5, "name": "Aether Pierce"},
-	4: {"damage": +50, "range": +90,  "cooldown": +0.2, "projectile_velocity": +200, "projectile_lifetime": +0.6, "name": "Astral Sniper"},
-	5: {"damage": +65, "range": +100, "cooldown": +0.3, "projectile_velocity": +250, "projectile_lifetime": +0.7, "name": "Celestial Railshot"}
+	1: {"damage": 0, "range": +50,  "cooldown": -0.0, "projectile_velocity": +80,  "projectile_lifetime": +0.5, "name": "Extended Vision"},
+	2: {"damage": 0, "range": +60,  "cooldown": -0.0, "projectile_velocity": +120, "projectile_lifetime": +0.5, "name": "Binocular installation"},
+	3: {"damage": +100, "range": +75,  "cooldown": -0.0, "projectile_velocity": +150, "projectile_lifetime": +0.5, "name": "Armor-Piercing Bolts"},
+	4: {"damage": +250, "range": +90,  "cooldown": -0.2, "projectile_velocity": +200, "projectile_lifetime": +0.6, "name": "Hypersonic Velocity"},
+	5: {"damage": +500, "range": +100, "cooldown": -0.0, "projectile_velocity": +250, "projectile_lifetime": +0.7, "name": "Ultimate Demonslayer"}
 	}
 
 var UpgradeAPrices = {1:50,2:100,3:1400,4:5900,5:11000}

@@ -103,7 +103,7 @@ metadata/XP = 0
 texture = SubResource("CompressedTexture2D_6io15")
 hframes = 3
 
-[node name="TowerOutline" type="Sprite2D" parent="."]
+[node name="TowerOutline" type="Sprite2D" parent="." groups=["TowerOutline"]]
 visible = false
 modulate = Color(100, 100, 100, 1)
 z_index = -1

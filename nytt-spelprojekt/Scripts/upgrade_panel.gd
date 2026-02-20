@@ -187,3 +187,9 @@ func _on_change_targeting_pressed() -> void:
 		current_targeting_option = 0
 	ChangeTargetingButton.text = str(targeting_options[current_targeting_option])
 	parent.targeting = str(targeting_options[current_targeting_option])
+
+func _on_mouse_entered() -> void:
+	modulate.a = 1.0
+
+func _on_mouse_exited() -> void:
+	modulate.a = 0.4

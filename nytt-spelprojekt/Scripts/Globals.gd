@@ -4,7 +4,7 @@ var current_wave = 0
 
 var health = 100
 
-var cash = 200
+var cash = 2000000 # Startvärde för spelarens ingame valuta
 
 var GameFinishedMenu
 
@@ -14,20 +14,21 @@ var TotalMultiplier: PackedFloat64Array = [1.0,1.0]
 
 var Playing: bool = false
 
-var PlayerStatFile = "user://PlayerData.txt"
-var EquippedTowers = []
-var PlayerUser: String = ""
-var PlayerStats = {"Silver": 0, "Gold": 0, "Level": 0, "EXP": 0}
+var PlayerStatFile = "user://PlayerData.txt" # Referens till spelarens datafil
+var WaveDataFile = "user://WaveData.txt"
+var EquippedTowers = [] # Array som innehåller de torn som är med i hotbaren
+var PlayerUser: String = "" # Spelarens användarnamn
+var PlayerStats = {"Silver": 0, "Gold": 0, "Level": 0, "EXP": 0} # Spelarens stats
 var PlayerInventory = {} # Format: {"id": wizard_tower,LVL:62,TRAIT:Singularity,SLOT:0,XP:0,ID:000000000}
-var Main = preload("res://Scenes/main.tscn")
+var Main = preload("res://Scenes/main.tscn") # Referens till Main scenen
 
 ################## ENEMY STATS ###################
-var enemies = {"FireBug":0,"LeafBug":0,"MagmaCrab":0,"Scorpion":0}
-var enemy_base_health = {"FireBug":50,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
-var enemy_base_speed = {"FireBug":100,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
-var enemy_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000}
-var enemy_speed = {"FireBug":100,"LeafBug":50,"MagmaCrab":20,"Scorpion":10}
-var enemy_base_reward = {"FireBug":10,"LeafBug":20,"MagmaCrab":50,"Scorpion":100}
+var enemies = {"FireBug":0,"LeafBug":0,"MagmaCrab":0,"Scorpion":0} 
+var enemy_base_health = {"FireBug":50,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000} # BasHP för fiender
+var enemy_base_speed = {"FireBug":100,"LeafBug":50,"MagmaCrab":20,"Scorpion":10} # Bashastighet för fiender
+var enemy_health = {"FireBug":100,"LeafBug":200,"MagmaCrab":1000,"Scorpion":10000} # Aktuell HP för fiender
+var enemy_speed = {"FireBug":100,"LeafBug":50,"MagmaCrab":20,"Scorpion":10} # Aktuell hastighet för fiender
+var enemy_base_reward = {"FireBug":10,"LeafBug":20,"MagmaCrab":50,"Scorpion":100} # Basbelöning för besegring av fiender
 
 # Bidrar till spelarens belöningar EFTER spelets slut
 var enemy_kill_reward = {"FireBug":[10,0],"LeafBug":[20,0],"MagmaCrab":[50,5],"Scorpion":[100,10]} # Scalar med HP factor. Se _damage()
@@ -197,8 +198,28 @@ var LevelModifiers: Dictionary = { # Faktor per tornets Level
 
 #################### GENERAL FUNCTIONS ####################
 func _ready() -> void:
+	_detect_missing_datafiles()
 	current_health_factor = 1
 	current_speed_factor = 1
+
+func _detect_missing_datafiles():
+	if not FileAccess.file_exists(PlayerStatFile): # Om spelarens datafil inte hittas
+		var DefaultPlayerDataFile = FileAccess.open("res://DefaultData/PlayerData.txt", FileAccess.READ)
+		var PlayerFileAsText = DefaultPlayerDataFile.get_as_text()
+		DefaultPlayerDataFile.close()
+
+		var destination = FileAccess.open("user://PlayerData.txt", FileAccess.WRITE)
+		destination.store_string(PlayerFileAsText)
+		destination.close()
+	
+	if not FileAccess.file_exists(WaveDataFile):
+		var DefaultWaveDataFile = FileAccess.open("res://DefaultData/WaveData.txt", FileAccess.READ)
+		var WaveFileAsText = DefaultWaveDataFile.get_as_text()
+		DefaultWaveDataFile.close()
+
+		var destination = FileAccess.open("user://WaveData.txt", FileAccess.WRITE)
+		destination.store_string(WaveFileAsText)
+		destination.close()
 
 func get_tower_id(TowerString: String) -> String:
 	for parts in TowerString.split(","):
@@ -214,7 +235,7 @@ func inventory_replace_tower(TowerString: String) -> void:
 
 func update_save_file():
 	if not FileAccess.file_exists(PlayerStatFile):
-		print("Fatal error: no player data file found.")
+		print("Fatal error: no Player Stat File Found")
 		return
 
 	var lines: Array = []

@@ -22,6 +22,11 @@ func _physics_process(_delta: float) -> void:
 		$Sprite2D.modulate = Color(1,1,1)
 
 func _place_tower(instance):
+	# Gömmer eventuella upgradepaneler samt outlines ifall man vill placera ett till torn
+	for panel in get_tree().get_nodes_in_group("UpgradePanel"):
+		panel.visible = false
+	for outline in get_tree().get_nodes_in_group("TowerOutline"):
+		outline.visible = false
 	instance.global_position = get_global_mouse_position()
 	$Sprite2D.global_position = get_global_mouse_position()
 	$Area2D.global_position = get_global_mouse_position()
@@ -47,6 +52,7 @@ func _place_tower(instance):
 			
 			# Bekräftar köpet
 			Globals.cash -= selected_tower.place_cost * CostFactor
+			parent.quickswap = false
 			
 			# Sparar tornets referens i en separat variabel för att ändå ge XP
 			# Ifall tornet tas bort i efterhand.
@@ -58,10 +64,13 @@ func _place_tower(instance):
 			pass
 			#Eventuellt spela något ljud här
 	elif Input.is_action_just_pressed("Q"): # Avbryt placement
-		placed = true
-		$Sprite2D.texture = null
-		Hitbox.get_child(0).queue_free()
-		Anim.play_backwards("RemoveHotbarAnim")
+		cancel_placement()
+
+func cancel_placement():
+	placed = true
+	$Sprite2D.texture = null
+	Hitbox.get_child(0).queue_free()
+	Anim.play_backwards("RemoveHotbarAnim")
 
 func preview_tower(TowerInstance) -> void:
 	var instance = TowerInstance.duplicate()

@@ -102,8 +102,11 @@ size = Vector2(340.66, 613.541)
 
 [node name="UpgradePanel" type="Control" parent="." groups=["UpgradePanel"]]
 visible = false
+modulate = Color(1, 1, 1, 0.4)
 layout_mode = 3
 anchors_preset = 0
+offset_right = 900.0
+offset_bottom = 600.0
 scale = Vector2(1.4, 1.4)
 script = ExtResource("1_0idd4")
 
@@ -143,6 +146,8 @@ layout_mode = 2
 custom_minimum_size = Vector2(180, 220)
 layout_mode = 2
 focus_mode = 0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
 texture_normal = SubResource("AtlasTexture_6l3dh")
 stretch_mode = 5
 
@@ -239,6 +244,8 @@ layout_mode = 2
 custom_minimum_size = Vector2(180, 220)
 layout_mode = 2
 focus_mode = 0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
 texture_normal = SubResource("AtlasTexture_6mg71")
 stretch_mode = 5
 
@@ -256,6 +263,7 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_q3l7l")
 text = "UpgradeName"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="TextureRect" type="TextureRect" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/PathBUpgradeButton"]
 layout_mode = 1
@@ -335,6 +343,8 @@ alignment = 1
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 focus_mode = 0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("2_q3l7l")
 theme_override_font_sizes/font_size = 12
 theme_override_styles/normal = SubResource("StyleBoxFlat_1kkbf")
@@ -344,6 +354,8 @@ text = "Sell: $xxxxx"
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 focus_mode = 0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("2_q3l7l")
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_ipgo4")
@@ -512,6 +524,8 @@ position = Vector2(170.33, 306.419)
 shape = SubResource("RectangleShape2D_65vv1")
 disabled = true
 
+[connection signal="mouse_entered" from="UpgradePanel" to="UpgradePanel" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="UpgradePanel" to="UpgradePanel" method="_on_mouse_exited"]
 [connection signal="pressed" from="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA/PathAUpgradeButton" to="UpgradePanel" method="_on_path_a_upgrade_button_pressed"]
 [connection signal="pressed" from="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB/PathBUpgradeButton" to="UpgradePanel" method="_on_path_b_upgrade_button_pressed"]
 [connection signal="pressed" from="UpgradePanel/Panel/VBoxContainer/HBoxContainer/SellTower" to="UpgradePanel" method="_on_sell_tower_pressed"]

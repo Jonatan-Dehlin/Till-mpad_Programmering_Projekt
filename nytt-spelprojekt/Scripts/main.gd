@@ -375,45 +375,45 @@ func _update_player_icon():
 	var IconBackgroundPath = "res://Assets/the-cyberpunk-32x32-pixel-rank-icons/2 Frames/"
 	var IconSymbolPath = "res://Assets/the-cyberpunk-32x32-pixel-rank-icons/1 Icons/"
 	var PlayerLevel = Globals.PlayerStats["Level"]
-	
-	if PlayerLevel <= 14:
-		if PlayerLevel <= 4:
-			PlayerLevelBackground.texture = load(IconBackgroundPath + "8.png")
-		else:
-			PlayerLevelBackground.texture = load(IconBackgroundPath + "16.png")
-		PlayerLevelSymbol.texture = load(IconSymbolPath + "8/Rank-icons_" + str(PlayerLevel) + ".png")
-	
-	elif PlayerLevel <= 28:
-		if PlayerLevel <= 18:
-			PlayerLevelBackground.texture = load(IconBackgroundPath + "7.png")
-		else:
-			PlayerLevelBackground.texture = load(IconBackgroundPath + "15.png")
-		PlayerLevelSymbol.texture = load(IconSymbolPath + "7/Rank-icons_" + str(PlayerLevel - 14) + ".png")
-	
-	elif PlayerLevel <= 42:
-		if PlayerLevel <= 32:
-			PlayerLevelBackground.texture = load(IconBackgroundPath + "1.png")
-		else:
-			PlayerLevelBackground.texture = load(IconBackgroundPath + "9.png")
-		PlayerLevelSymbol.texture = load(IconSymbolPath + "1/Rank-icons_" + str(PlayerLevel - 28) + ".png")
-	
-	elif PlayerLevel <= 56:
-		if PlayerLevel <= 46:
-			PlayerLevelBackground.texture = load(IconBackgroundPath + "5.png")
-		else:
-			PlayerLevelBackground.texture = load(IconBackgroundPath + "13.png")
-		PlayerLevelSymbol.texture = load(IconSymbolPath + "5/Rank-icons_" + str(PlayerLevel - 42) + ".png")
-	
-	elif PlayerLevel <= 70:
-		if PlayerLevel <= 60:
-			PlayerLevelBackground.texture = load(IconBackgroundPath + "6.png")
+	if PlayerLevel != 0:
+		if PlayerLevel <= 14:
+			if PlayerLevel <= 4:
+				PlayerLevelBackground.texture = load(IconBackgroundPath + "8.png")
+			else:
+				PlayerLevelBackground.texture = load(IconBackgroundPath + "16.png")
+			PlayerLevelSymbol.texture = load(IconSymbolPath + "8/Rank-icons_" + str(PlayerLevel) + ".png")
+		
+		elif PlayerLevel <= 28:
+			if PlayerLevel <= 18:
+				PlayerLevelBackground.texture = load(IconBackgroundPath + "7.png")
+			else:
+				PlayerLevelBackground.texture = load(IconBackgroundPath + "15.png")
+			PlayerLevelSymbol.texture = load(IconSymbolPath + "7/Rank-icons_" + str(PlayerLevel - 14) + ".png")
+		
+		elif PlayerLevel <= 42:
+			if PlayerLevel <= 32:
+				PlayerLevelBackground.texture = load(IconBackgroundPath + "1.png")
+			else:
+				PlayerLevelBackground.texture = load(IconBackgroundPath + "9.png")
+			PlayerLevelSymbol.texture = load(IconSymbolPath + "1/Rank-icons_" + str(PlayerLevel - 28) + ".png")
+		
+		elif PlayerLevel <= 56:
+			if PlayerLevel <= 46:
+				PlayerLevelBackground.texture = load(IconBackgroundPath + "5.png")
+			else:
+				PlayerLevelBackground.texture = load(IconBackgroundPath + "13.png")
+			PlayerLevelSymbol.texture = load(IconSymbolPath + "5/Rank-icons_" + str(PlayerLevel - 42) + ".png")
+		
+		elif PlayerLevel <= 70:
+			if PlayerLevel <= 60:
+				PlayerLevelBackground.texture = load(IconBackgroundPath + "6.png")
+			else:
+				PlayerLevelBackground.texture = load(IconBackgroundPath + "14.png")
+			PlayerLevelSymbol.texture = load(IconSymbolPath + "6/Rank-icons_" + str(PlayerLevel - 56) + ".png")
+		
 		else:
 			PlayerLevelBackground.texture = load(IconBackgroundPath + "14.png")
-		PlayerLevelSymbol.texture = load(IconSymbolPath + "6/Rank-icons_" + str(PlayerLevel - 56) + ".png")
-	
-	else:
-		PlayerLevelBackground.texture = load(IconBackgroundPath + "14.png")
-		PlayerLevelSymbol.texture = load(IconSymbolPath + "6/Rank-icons_24.png")
+			PlayerLevelSymbol.texture = load(IconSymbolPath + "6/Rank-icons_24.png")
 
 func _update_tower_buttons():
 	# Binder knapparna i Traitmenyn

@@ -26,12 +26,14 @@ var WaitingForModifierFinished: bool = true
 var Finished_sending_wave: bool = false
 var Skip_availiable: bool = false
 var BetweenWaves: bool = false
+var LastWave: bool = false
 
 
 var victory: bool = false
-var max_wave = 100
+var max_wave: int = 100
 var display_cash: int
 var replay: bool = false
+var quickswap: bool = false
 
 func _ready() -> void:
 	_update_equipped_towers_buttons()
@@ -45,13 +47,13 @@ func _process(_delta: float) -> void:
 		MoneyLabel.text = "Money: $" + str(Globals.format_number(display_cash))
 		HealthLabel.text = "HP: " + str(Globals.health)
 		WaveLabel.text = "Wave: " + str(Globals.current_wave) + "/" + str(max_wave)
-		
+
 		if Input.is_action_just_pressed("Esc"):
 			PauseMenu.visible = true
 			PauseMenu._ready()
 			
 			# Väntar en frame för att pausemenyn ska dyka upp korrekt
-			await get_tree().physics_frame
+			await get_tree().frame
 			get_tree().paused = true
 
 func _input(event: InputEvent) -> void: # Hotkeys för hotbaren
@@ -70,6 +72,8 @@ func _input(event: InputEvent) -> void: # Hotkeys för hotbaren
 				_hotbar_hotkey(4)
 			KEY_6:
 				_hotbar_hotkey(5)
+			KEY_X:
+				Engine.time_scale = 5
 
 func _hotbar_hotkey(slot: int) -> void: # Hjälpfunktion till hotkeys för hotbaren
 	if slot < 0 or slot >= EquippedTowersButtons.size(): # Ifall t.ex. man inte har ett torn equippat på en av hotbarslotsen
@@ -83,7 +87,9 @@ func _hotbar_hotkey(slot: int) -> void: # Hjälpfunktion till hotkeys för hotba
 
 func _physics_process(_delta: float) -> void:
 	if _detect_every_enemy_defeated():
-		if not BetweenWaves:
+		if LastWave:
+			victory = true
+		if not BetweenWaves and not LastWave:
 			BetweenWaves = true
 			WaveTimer.start()
 			$HUD/StartWaveButton.visible = true
@@ -91,7 +97,7 @@ func _physics_process(_delta: float) -> void:
 	
 	_detect_game_over()
 
-func _detect_game_over():
+func _detect_game_over(): # Detekterar ifall spelaren har förlorat
 	if victory == true or Globals.health <= 0:
 		FinishedMenu.visible = true
 		Hotbar.visible = false
@@ -114,12 +120,27 @@ func _start_map(MapID, Replay: bool):
 	if not Replay:
 		var map = load("res://Scenes/Levels/"+ str(MapID) + ".tscn")
 		map = map.instantiate()
+		Globals.MapDifficulty = map.get_meta("Difficulty")
 		current_level.replace_by(map)
 		current_level = map
 		if Globals.SelectedModifiers["Sudden Death"]:
 			Globals.health = 1
+		if Globals.SelectedDifficulty == "Easy":
+			max_wave = 2
+		elif Globals.SelectedDifficulty == "Normal":
+			max_wave = 50
+		elif Globals.SelectedDifficulty == "Hard":
+			max_wave = 70
+		elif Globals.SelectedDifficulty == "Insane":
+			max_wave = 80
+		elif Globals.SelectedDifficulty == "Impossible":
+			max_wave = 90
+		elif Globals.SelectedDifficulty == "Nightmare":
+			max_wave = 100
 	else:
 		replay = false
+		victory = false
+		LastWave = false
 
 func _place_tower(TowerInstance, i):
 	if Globals.cash >= TowerInstance.place_cost:
@@ -153,6 +174,7 @@ func _place_tower(TowerInstance, i):
 				# Preview lyckades: Spelaren har råd och och inte max placement
 				TowerPlacer.preview_tower(TowerInstance)
 				TowerPlacer.i = i
+
 				Anim.play("RemoveHotbarAnim")
 				
 			else:
@@ -232,23 +254,28 @@ func _send_wave(enemy: String, amount: int, cooldown: float, startcooldown: floa
 func _wave_manager() -> void:
 	Globals.current_wave += 1
 	var enemies
-	if Globals.current_wave <= max_wave:
+	if Globals.current_wave < max_wave:
 		enemies = _read_wave_data(Globals.current_wave)
+	elif Globals.current_wave == max_wave:
+		enemies = _read_wave_data(Globals.current_wave)
+		LastWave = true
 	else:
-		enemies = _generate_wave(Globals.current_wave)
-	Globals._apply_enemy_multipliers(Globals.current_wave)
-	for enemy in enemies:
-		var e = str_to_var(enemy)
-		
-		var EnemyName = e[0]
-		var EnemyAmount = e[1]
-		var EnemyCooldown = e[2]
-		var EnemyStartCooldown = e[3]
-		var EnemyLast = e[4]
-		
-		#Globals._apply_health_multiplier(Globals.current_wave)
-		_send_wave(EnemyName, EnemyAmount, EnemyCooldown, EnemyStartCooldown, EnemyLast)
-		#print("skickade: " + str(EnemyAmount) + " st " + str(EnemyName) + " Med cooldown på: " + str(EnemyCooldown))
+		pass
+		#enemies = _generate_wave(Globals.current_wave)
+	if Globals.current_wave <= max_wave:
+		Globals._apply_enemy_multipliers(Globals.current_wave)
+		for enemy in enemies:
+			var e = str_to_var(enemy)
+			
+			var EnemyName = e[0]
+			var EnemyAmount = e[1]
+			var EnemyCooldown = e[2]
+			var EnemyStartCooldown = e[3]
+			var EnemyLast = e[4]
+			
+			#Globals._apply_health_multiplier(Globals.current_wave)
+			_send_wave(EnemyName, EnemyAmount, EnemyCooldown, EnemyStartCooldown, EnemyLast)
+			#print("skickade: " + str(EnemyAmount) + " st " + str(EnemyName) + " Med cooldown på: " + str(EnemyCooldown))
 
 func _read_wave_data(wave: int) -> Array: #Läser wave-data fram till max_wave
 	if not FileAccess.file_exists(WaveDataFile):
@@ -286,8 +313,9 @@ func _on_start_wave_button_pressed() -> void:
 	SkipTimer.start()
 
 func _on_skip_timer_timeout() -> void:
-	$HUD/StartWaveButton.text = "Skip wave?"
-	$HUD/StartWaveButton.visible = true
+	if not LastWave:
+		$HUD/StartWaveButton.text = "Skip wave?"
+		$HUD/StartWaveButton.visible = true
 
 func _on_next_wave_timer_timeout() -> void:
 	_wave_manager()

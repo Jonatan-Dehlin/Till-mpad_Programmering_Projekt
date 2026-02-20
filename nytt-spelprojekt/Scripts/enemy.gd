@@ -7,7 +7,6 @@ class_name Enemy
 
 @onready var healthbarprogress: ProgressBar = $ProgressBar
 @onready var healthbarlabel: Label = $ProgressBar/Label
-@onready var Damageindicators = $DamageIndicators
 
 
 func _ready() -> void:
