@@ -53,7 +53,7 @@ func _process(_delta: float) -> void:
 			PauseMenu._ready()
 			
 			# Väntar en frame för att pausemenyn ska dyka upp korrekt
-			await get_tree().frame
+			await get_tree().process_frames
 			get_tree().paused = true
 
 func _input(event: InputEvent) -> void: # Hotkeys för hotbaren

@@ -1,0 +1,18 @@
+#################### PLAYER DATA ####################
+	NAME: BigDrilla
+STATS:
+	LEVEL: 5
+	EXP: 0
+	SILVER: 746668
+	GOLD: 100100
+
+#################### INVENTORY ####################
+TOWERS:
+ballista_tower,LVL:38,TRAIT:none,SLOT:0,XP:880,ID:000000000
+wizard_tower,LVL:43,TRAIT:none,SLOT:1,XP:3746,ID:000000001
+ballista_tower,LVL:0,TRAIT:none,SLOT:n/a,XP:0,ID:084566721
+ballista_tower,LVL:0,TRAIT:none,SLOT:n/a,XP:0,ID:260712746
+wizard_tower,LVL:0,TRAIT:none,SLOT:n/a,XP:0,ID:457540431
+ballista_tower,LVL:0,TRAIT:none,SLOT:n/a,XP:0,ID:465936892
+ballista_tower,LVL:0,TRAIT:none,SLOT:n/a,XP:0,ID:636678604
+ballista_tower,LVL:0,TRAIT:none,SLOT:n/a,XP:0,ID:992601211

@@ -1,6 +1,6 @@
-[gd_scene load_steps=65 format=3 uid="uid://tbpoiyn0mbo1"]
+[gd_scene format=3 uid="uid://tbpoiyn0mbo1"]
 
-[ext_resource type="Script" path="res://Scripts/main.gd" id="1_fip6x"]
+[ext_resource type="Script" uid="uid://bkkhgkxapur8e" path="res://Scripts/main.gd" id="1_fip6x"]
 [ext_resource type="Texture2D" uid="uid://bvap3sergftsn" path="res://icon.svg" id="2_l7kl1"]
 [ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/medieval.png" id="2_ral5c"]
 [ext_resource type="Texture2D" uid="uid://dfyhvur3oujdf" path="res://Fantasy RPG (Toony) 32x32.png" id="3_baln0"]
@@ -313,15 +313,15 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vixfu"]
 _data = {
-"InventoryTransition": SubResource("Animation_nsful"),
-"PlayTransition": SubResource("Animation_5ksp3"),
-"RESET": SubResource("Animation_qhbpl"),
-"ResetInventory": SubResource("Animation_uiy6m"),
-"ResetPlay": SubResource("Animation_87gxu"),
-"ResetShop": SubResource("Animation_sl3wv"),
-"ResetTrait": SubResource("Animation_tgykk"),
-"ShopTransition": SubResource("Animation_btpyr"),
-"TraitTransition": SubResource("Animation_c03c7")
+&"InventoryTransition": SubResource("Animation_nsful"),
+&"PlayTransition": SubResource("Animation_5ksp3"),
+&"RESET": SubResource("Animation_qhbpl"),
+&"ResetInventory": SubResource("Animation_uiy6m"),
+&"ResetPlay": SubResource("Animation_87gxu"),
+&"ResetShop": SubResource("Animation_sl3wv"),
+&"ResetTrait": SubResource("Animation_tgykk"),
+&"ShopTransition": SubResource("Animation_btpyr"),
+&"TraitTransition": SubResource("Animation_c03c7")
 }
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c7hh7"]
@@ -354,11 +354,25 @@ region = Rect2(418, 101, 90, 26)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l30in"]
 atlas = ExtResource("2_ral5c")
-region = Rect2(849, 577, 14, 14)
+region = Rect2(835, 563, 9, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkdf5"]
+atlas = ExtResource("2_ral5c")
+region = Rect2(517, 208, 118, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lbhoq"]
 atlas = ExtResource("2_ral5c")
 region = Rect2(864, 704, 97, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdnlq"]
+region = Rect2(581, 0, 1606, 1606)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1ilt"]
+atlas = ExtResource("2_ral5c")
+region = Rect2(517, 320, 118, 48)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6iyac"]
+texture = SubResource("AtlasTexture_d1ilt")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gxtxa"]
 atlas = ExtResource("2_ral5c")
@@ -383,12 +397,11 @@ region = Rect2(3, 3, 26, 26)
 atlas = ExtResource("2_ral5c")
 region = Rect2(321, 100, 90, 27)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6huj8"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bjswq"]
 texture = SubResource("AtlasTexture_habb6")
 texture_margin_left = 9.0
 texture_margin_top = 4.0
 texture_margin_right = 4.0
-modulate_color = Color(0.690196, 0.690196, 0.690196, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6xsjf"]
 texture = SubResource("AtlasTexture_habb6")
@@ -397,11 +410,16 @@ texture_margin_top = 4.0
 texture_margin_right = 4.0
 modulate_color = Color(0.394987, 0.394987, 0.394987, 1)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bjswq"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6huj8"]
 texture = SubResource("AtlasTexture_habb6")
 texture_margin_left = 9.0
 texture_margin_top = 4.0
 texture_margin_right = 4.0
+modulate_color = Color(0.690196, 0.690196, 0.690196, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6iyac"]
+atlas = ExtResource("2_ral5c")
+region = Rect2(593, 530, 14, 13)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g27gr"]
 atlas = ExtResource("2_ral5c")
@@ -415,16 +433,6 @@ region = Rect2(64, 96, 48, 63)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fneho"]
 region = Rect2(0, 0, 64, 0)
-
-[sub_resource type="FontFile" id="FontFile_di1y4"]
-subpixel_positioning = 0
-msdf_pixel_range = 14
-msdf_size = 128
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6wws7"]
 atlas = ExtResource("2_ral5c")
@@ -500,25 +508,27 @@ texture = SubResource("AtlasTexture_bs2jl")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mk24d"]
 texture = SubResource("AtlasTexture_bs2jl")
 
-[node name="Main" type="Control"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fdnlq"]
+texture = SubResource("AtlasTexture_d1ilt")
+
+[node name="Main" type="Control" unique_id=2067074450]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_fip6x")
 
-[node name="MenuTransitions" type="AnimationPlayer" parent="."]
+[node name="MenuTransitions" type="AnimationPlayer" parent="." unique_id=999725279]
 root_node = NodePath("../Shop")
-libraries = {
-"": SubResource("AnimationLibrary_vixfu")
-}
+libraries/ = SubResource("AnimationLibrary_vixfu")
 
-[node name="MainMenu" type="TextureRect" parent="."]
+[node name="MainMenu" type="TextureRect" parent="." unique_id=21465878]
 layout_mode = 0
 offset_right = 1920.0
-offset_bottom = 1080.0
-texture = ExtResource("3_wdan3")
+offset_bottom = 1081.0
+expand_mode = 1
+stretch_mode = 5
 
-[node name="PlayerStats" type="TextureRect" parent="MainMenu"]
-layout_mode = 2
+[node name="PlayerStats" type="TextureRect" parent="MainMenu" unique_id=1924957208]
+layout_mode = 0
 offset_right = 308.0
 offset_bottom = 100.0
 scale = Vector2(2, 2)
@@ -526,8 +536,8 @@ size_flags_horizontal = 3
 texture = SubResource("AtlasTexture_c7hh7")
 stretch_mode = 4
 
-[node name="Level" type="Label" parent="MainMenu/PlayerStats"]
-layout_mode = 2
+[node name="Level" type="Label" parent="MainMenu/PlayerStats" unique_id=868703309]
+layout_mode = 0
 offset_left = 104.0
 offset_top = 8.0
 offset_right = 304.0
@@ -539,9 +549,9 @@ label_settings = SubResource("LabelSettings_ddidi")
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="PlayerPrestige" type="TextureRect" parent="MainMenu/PlayerStats"]
+[node name="PlayerPrestige" type="TextureRect" parent="MainMenu/PlayerStats" unique_id=614557840]
 custom_minimum_size = Vector2(50, 50)
-layout_mode = 2
+layout_mode = 0
 offset_left = 16.0
 offset_top = 14.0
 offset_right = 86.0
@@ -550,7 +560,7 @@ texture = ExtResource("5_hyy8a")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="PlayerIconSymbol" type="TextureRect" parent="MainMenu/PlayerStats/PlayerPrestige"]
+[node name="PlayerIconSymbol" type="TextureRect" parent="MainMenu/PlayerStats/PlayerPrestige" unique_id=727435747]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -566,8 +576,8 @@ grow_vertical = 2
 texture = ExtResource("6_lbna8")
 stretch_mode = 5
 
-[node name="PlayerUsername" type="Label" parent="MainMenu/PlayerStats"]
-layout_mode = 2
+[node name="PlayerUsername" type="Label" parent="MainMenu/PlayerStats" unique_id=315842296]
+layout_mode = 0
 offset_left = 104.0
 offset_top = 63.0
 offset_right = 248.0
@@ -578,8 +588,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="ProgressBar" type="TextureProgressBar" parent="MainMenu/PlayerStats"]
-layout_mode = 2
+[node name="ProgressBar" type="TextureProgressBar" parent="MainMenu/PlayerStats" unique_id=413367716]
+layout_mode = 0
 offset_left = 104.0
 offset_top = 36.0
 offset_right = 304.0
@@ -588,7 +598,7 @@ value = 50.0
 nine_patch_stretch = true
 texture_progress = SubResource("AtlasTexture_gsldl")
 
-[node name="Label" type="Label" parent="MainMenu/PlayerStats/ProgressBar"]
+[node name="Label" type="Label" parent="MainMenu/PlayerStats/ProgressBar" unique_id=883526960]
 layout_mode = 0
 offset_top = -4.0
 offset_right = 200.0
@@ -598,7 +608,7 @@ text = "X/Y"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="PlayerWallet" type="Control" parent="MainMenu"]
+[node name="PlayerWallet" type="Control" parent="MainMenu" unique_id=444884595]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -608,7 +618,7 @@ offset_right = -404.0
 grow_horizontal = 0
 size_flags_horizontal = 3
 
-[node name="SilverAmount" type="TextureRect" parent="MainMenu/PlayerWallet"]
+[node name="SilverAmount" type="TextureRect" parent="MainMenu/PlayerWallet" unique_id=327273249]
 layout_mode = 0
 offset_left = 116.0
 offset_top = 7.0
@@ -617,7 +627,7 @@ offset_bottom = 91.0
 texture = SubResource("AtlasTexture_su40n")
 stretch_mode = 4
 
-[node name="TextureRect" type="TextureRect" parent="MainMenu/PlayerWallet/SilverAmount"]
+[node name="TextureRect" type="TextureRect" parent="MainMenu/PlayerWallet/SilverAmount" unique_id=52972233]
 layout_mode = 0
 offset_left = 140.0
 offset_right = 282.0
@@ -627,7 +637,7 @@ expand_mode = 1
 stretch_mode = 4
 flip_h = true
 
-[node name="Currency" type="HBoxContainer" parent="MainMenu/PlayerWallet/SilverAmount"]
+[node name="Currency" type="HBoxContainer" parent="MainMenu/PlayerWallet/SilverAmount" unique_id=539160277]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -642,18 +652,18 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 40
 
-[node name="Silver" type="HBoxContainer" parent="MainMenu/PlayerWallet/SilverAmount/Currency"]
+[node name="Silver" type="HBoxContainer" parent="MainMenu/PlayerWallet/SilverAmount/Currency" unique_id=1241700161]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Silver" type="TextureRect" parent="MainMenu/PlayerWallet/SilverAmount/Currency/Silver"]
+[node name="Silver" type="TextureRect" parent="MainMenu/PlayerWallet/SilverAmount/Currency/Silver" unique_id=16106254]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 texture = ExtResource("6_4boqv")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BackgroundBlockers" type="TextureRect" parent="MainMenu/PlayerWallet/SilverAmount/Currency/Silver/Silver"]
+[node name="BackgroundBlockers" type="TextureRect" parent="MainMenu/PlayerWallet/SilverAmount/Currency/Silver/Silver" unique_id=796122296]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 0
 offset_top = 9.0
@@ -663,7 +673,7 @@ texture = SubResource("AtlasTexture_vii81")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BackgroundBlockers2" type="TextureRect" parent="MainMenu/PlayerWallet/SilverAmount/Currency/Silver/Silver"]
+[node name="BackgroundBlockers2" type="TextureRect" parent="MainMenu/PlayerWallet/SilverAmount/Currency/Silver/Silver" unique_id=739111277]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 0
 offset_left = 24.0
@@ -674,7 +684,7 @@ texture = SubResource("AtlasTexture_vii81")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BackgroundBlockers3" type="TextureRect" parent="MainMenu/PlayerWallet/SilverAmount/Currency/Silver/Silver"]
+[node name="BackgroundBlockers3" type="TextureRect" parent="MainMenu/PlayerWallet/SilverAmount/Currency/Silver/Silver" unique_id=1560232552]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 0
 offset_left = 24.0
@@ -685,7 +695,7 @@ texture = SubResource("AtlasTexture_vii81")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BackgroundBlockers4" type="TextureRect" parent="MainMenu/PlayerWallet/SilverAmount/Currency/Silver/Silver"]
+[node name="BackgroundBlockers4" type="TextureRect" parent="MainMenu/PlayerWallet/SilverAmount/Currency/Silver/Silver" unique_id=308151632]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 0
 offset_top = 39.0
@@ -695,7 +705,7 @@ texture = SubResource("AtlasTexture_vii81")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SilverLabel" type="Label" parent="MainMenu/PlayerWallet/SilverAmount/Currency/Silver" groups=["SilverAmount"]]
+[node name="SilverLabel" type="Label" parent="MainMenu/PlayerWallet/SilverAmount/Currency/Silver" unique_id=257852425 groups=["SilverAmount"]]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -705,7 +715,7 @@ text = "XXX,XXX"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="GoldAmount" type="TextureRect" parent="MainMenu/PlayerWallet"]
+[node name="GoldAmount" type="TextureRect" parent="MainMenu/PlayerWallet" unique_id=1368716007]
 layout_mode = 0
 offset_left = 116.0
 offset_top = 97.0
@@ -714,7 +724,7 @@ offset_bottom = 181.0
 texture = SubResource("AtlasTexture_su40n")
 stretch_mode = 4
 
-[node name="TextureRect" type="TextureRect" parent="MainMenu/PlayerWallet/GoldAmount"]
+[node name="TextureRect" type="TextureRect" parent="MainMenu/PlayerWallet/GoldAmount" unique_id=231339205]
 layout_mode = 0
 offset_left = 140.0
 offset_right = 282.0
@@ -724,7 +734,7 @@ expand_mode = 1
 stretch_mode = 4
 flip_h = true
 
-[node name="Currency" type="HBoxContainer" parent="MainMenu/PlayerWallet/GoldAmount"]
+[node name="Currency" type="HBoxContainer" parent="MainMenu/PlayerWallet/GoldAmount" unique_id=652526025]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -739,11 +749,11 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 40
 
-[node name="Gold" type="HBoxContainer" parent="MainMenu/PlayerWallet/GoldAmount/Currency"]
+[node name="Gold" type="HBoxContainer" parent="MainMenu/PlayerWallet/GoldAmount/Currency" unique_id=1005644183]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Gold" type="TextureRect" parent="MainMenu/PlayerWallet/GoldAmount/Currency/Gold"]
+[node name="Gold" type="TextureRect" parent="MainMenu/PlayerWallet/GoldAmount/Currency/Gold" unique_id=557457471]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -751,7 +761,7 @@ texture = ExtResource("7_klchj")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="GoldLabel" type="Label" parent="MainMenu/PlayerWallet/GoldAmount/Currency/Gold" groups=["GoldAmount"]]
+[node name="GoldLabel" type="Label" parent="MainMenu/PlayerWallet/GoldAmount/Currency/Gold" unique_id=1369559378 groups=["GoldAmount"]]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -761,13 +771,13 @@ text = "XXX,XXX"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="BottomPanel" type="Panel" parent="MainMenu"]
+[node name="BottomPanel" type="Panel" parent="MainMenu" unique_id=1550023225]
 layout_mode = 0
 offset_top = 880.0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
-[node name="Buttons" type="HBoxContainer" parent="MainMenu/BottomPanel"]
+[node name="Buttons" type="HBoxContainer" parent="MainMenu/BottomPanel" unique_id=959011051]
 layout_mode = 0
 offset_left = 100.0
 offset_top = 25.0
@@ -776,7 +786,7 @@ offset_bottom = 175.0
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="Inventory" type="TextureButton" parent="MainMenu/BottomPanel/Buttons"]
+[node name="Inventory" type="TextureButton" parent="MainMenu/BottomPanel/Buttons" unique_id=54930310]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -784,7 +794,7 @@ texture_normal = SubResource("AtlasTexture_trtci")
 texture_pressed = SubResource("AtlasTexture_trtci")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="MainMenu/BottomPanel/Buttons/Inventory"]
+[node name="Label" type="Label" parent="MainMenu/BottomPanel/Buttons/Inventory" unique_id=461047620]
 layout_mode = 1
 offset_left = 17.0
 offset_top = 29.0
@@ -796,7 +806,7 @@ text = "INVENTORY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Play" type="TextureButton" parent="MainMenu/BottomPanel/Buttons"]
+[node name="Play" type="TextureButton" parent="MainMenu/BottomPanel/Buttons" unique_id=1585342458]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -804,7 +814,7 @@ texture_normal = SubResource("AtlasTexture_trtci")
 texture_pressed = SubResource("AtlasTexture_trtci")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="MainMenu/BottomPanel/Buttons/Play"]
+[node name="Label" type="Label" parent="MainMenu/BottomPanel/Buttons/Play" unique_id=1002939666]
 layout_mode = 0
 offset_left = 17.0
 offset_top = 29.0
@@ -816,7 +826,7 @@ text = "PLAY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Shop" type="TextureButton" parent="MainMenu/BottomPanel/Buttons"]
+[node name="Shop" type="TextureButton" parent="MainMenu/BottomPanel/Buttons" unique_id=965103999]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -824,7 +834,7 @@ texture_normal = SubResource("AtlasTexture_trtci")
 texture_pressed = SubResource("AtlasTexture_trtci")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="MainMenu/BottomPanel/Buttons/Shop"]
+[node name="Label" type="Label" parent="MainMenu/BottomPanel/Buttons/Shop" unique_id=203959310]
 layout_mode = 0
 offset_left = 17.0
 offset_top = 29.0
@@ -836,28 +846,86 @@ text = "SHOP"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SettingsButton" type="Button" parent="MainMenu"]
+[node name="QuitButton" type="Button" parent="MainMenu" unique_id=2058071310]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 203.0
 offset_right = 114.0
 offset_bottom = 303.0
 focus_mode = 0
-theme_override_styles/hover = SubResource("StyleBoxEmpty_8mq78")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_8mq78")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_8mq78")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_8mq78")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_8mq78")
 icon = SubResource("AtlasTexture_l30in")
 icon_alignment = 1
 expand_icon = true
 
-[node name="ColorRect" type="ColorRect" parent="MainMenu"]
+[node name="QuitPopup" type="TextureRect" parent="MainMenu/QuitButton" unique_id=1332124370]
+visible = false
+layout_mode = 0
+offset_left = 460.0
+offset_top = -17.0
+offset_right = 1421.0
+offset_bottom = 520.0
+texture = SubResource("AtlasTexture_jkdf5")
+stretch_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainMenu/QuitButton/QuitPopup" unique_id=1863711513]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = 3.0
+offset_right = 360.0
+offset_bottom = 103.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 120
+
+[node name="CancelButton" type="Button" parent="MainMenu/QuitButton/QuitPopup/HBoxContainer" unique_id=248828971]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 60
+text = "Cancel"
+
+[node name="ConfirmButton" type="Button" parent="MainMenu/QuitButton/QuitPopup/HBoxContainer" unique_id=2058540511]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 60
+text = "Confirm"
+
+[node name="Label" type="Label" parent="MainMenu/QuitButton/QuitPopup" unique_id=2088184467]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -334.5
+offset_top = -136.5
+offset_right = 329.5
+offset_bottom = -33.100006
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 50
+text = "Are you sure that you want to quit?"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ColorRect" type="ColorRect" parent="MainMenu" unique_id=1595600386]
 visible = false
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 color = Color(0, 0, 0, 0.890196)
 
-[node name="EnterUsername" type="LineEdit" parent="MainMenu"]
+[node name="EnterUsername" type="LineEdit" parent="MainMenu" unique_id=1288416047]
 process_mode = 3
 visible = false
 layout_mode = 1
@@ -875,14 +943,14 @@ grow_vertical = 2
 placeholder_text = "Enter Username"
 alignment = 1
 
-[node name="ChooseMap" type="TextureRect" parent="."]
+[node name="ChooseMap" type="TextureRect" parent="." unique_id=999559196]
 layout_mode = 0
 offset_left = 1920.0
 offset_right = 3840.0
 offset_bottom = 1080.0
 texture = SubResource("AtlasTexture_lbhoq")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ChooseMap"]
+[node name="ScrollContainer" type="ScrollContainer" parent="ChooseMap" unique_id=149079702]
 layout_mode = 0
 offset_left = 178.0
 offset_top = 90.0
@@ -890,17 +958,17 @@ offset_right = 1742.0
 offset_bottom = 990.0
 horizontal_scroll_mode = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ChooseMap/ScrollContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ChooseMap/ScrollContainer" unique_id=271816418]
 custom_minimum_size = Vector2(1564, 0)
 layout_mode = 2
 theme_override_constants/separation = 25
 alignment = 1
 
-[node name="MapContainer1" type="VBoxContainer" parent="ChooseMap/ScrollContainer/HBoxContainer"]
+[node name="MapContainer1" type="VBoxContainer" parent="ChooseMap/ScrollContainer/HBoxContainer" unique_id=1690840952]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="forest_level" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer1"]
+[node name="forest_level" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer1" unique_id=113279460]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 focus_mode = 0
@@ -908,7 +976,8 @@ icon = ExtResource("3_wdan3")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button2" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer1"]
+[node name="Button2" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer1" unique_id=2112544033]
+visible = false
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 focus_mode = 0
@@ -916,7 +985,8 @@ icon = ExtResource("2_l7kl1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button3" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer1"]
+[node name="Button3" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer1" unique_id=1700405622]
+visible = false
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 focus_mode = 0
@@ -924,11 +994,20 @@ icon = ExtResource("2_l7kl1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="MapContainer2" type="VBoxContainer" parent="ChooseMap/ScrollContainer/HBoxContainer"]
+[node name="MapContainer2" type="VBoxContainer" parent="ChooseMap/ScrollContainer/HBoxContainer" unique_id=914401928]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="Button" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer2"]
+[node name="dark_forest_level" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer2" unique_id=687635322]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+focus_mode = 0
+icon = SubResource("AtlasTexture_fdnlq")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Button2" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer2" unique_id=97396961]
+visible = false
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 focus_mode = 0
@@ -936,7 +1015,8 @@ icon = ExtResource("2_l7kl1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button2" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer2"]
+[node name="Button3" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer2" unique_id=330132777]
+visible = false
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 focus_mode = 0
@@ -944,19 +1024,12 @@ icon = ExtResource("2_l7kl1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button3" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer2"]
-custom_minimum_size = Vector2(500, 500)
-layout_mode = 2
-focus_mode = 0
-icon = ExtResource("2_l7kl1")
-icon_alignment = 1
-expand_icon = true
-
-[node name="MapContainer3" type="VBoxContainer" parent="ChooseMap/ScrollContainer/HBoxContainer"]
+[node name="MapContainer3" type="VBoxContainer" parent="ChooseMap/ScrollContainer/HBoxContainer" unique_id=65494850]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="Button" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer3"]
+[node name="Button" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer3" unique_id=1663786551]
+visible = false
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 focus_mode = 0
@@ -964,7 +1037,8 @@ icon = ExtResource("2_l7kl1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button2" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer3"]
+[node name="Button2" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer3" unique_id=1172557082]
+visible = false
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 focus_mode = 0
@@ -972,7 +1046,8 @@ icon = ExtResource("2_l7kl1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button3" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer3"]
+[node name="Button3" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer3" unique_id=833732133]
+visible = false
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 focus_mode = 0
@@ -980,15 +1055,20 @@ icon = ExtResource("2_l7kl1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="ReturnToMainMenuFromPlay" type="Button" parent="ChooseMap"]
+[node name="ReturnToMainMenuFromPlay" type="Button" parent="ChooseMap" unique_id=1957069387]
 layout_mode = 0
-offset_left = 205.0
-offset_top = 1012.0
-offset_right = 366.0
-offset_bottom = 1067.0
+offset_left = 91.0
+offset_top = 1000.0
+offset_right = 252.0
+offset_bottom = 1065.0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/normal = SubResource("StyleBoxTexture_6iyac")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_6iyac")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6iyac")
 text = "Back"
 
-[node name="SelectModifiers" type="TextureRect" parent="ChooseMap"]
+[node name="SelectModifiers" type="TextureRect" parent="ChooseMap" unique_id=402315211]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -1005,7 +1085,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_gxtxa")
 stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ChooseMap/SelectModifiers"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ChooseMap/SelectModifiers" unique_id=523237491]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1021,7 +1101,7 @@ grow_vertical = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="Label" type="Label" parent="ChooseMap/SelectModifiers/VBoxContainer"]
+[node name="Label" type="Label" parent="ChooseMap/SelectModifiers/VBoxContainer" unique_id=1645623138]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
 theme_override_font_sizes/font_size = 50
@@ -1029,12 +1109,12 @@ text = "Difficulty:"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ChooseMap/SelectModifiers/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ChooseMap/SelectModifiers/VBoxContainer" unique_id=1219594356]
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="DifficultyLabel" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer"]
+[node name="DifficultyLabel" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer" unique_id=2115953034]
 custom_minimum_size = Vector2(270, 0)
 layout_mode = 2
 mouse_filter = 2
@@ -1045,38 +1125,38 @@ text = "Easy"
 icon = SubResource("AtlasTexture_ufbn5")
 expand_icon = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer" unique_id=243111889]
 layout_mode = 2
 
-[node name="SilverModifier" type="Label" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="SilverModifier" type="Label" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer/HBoxContainer" unique_id=1133356170]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
 theme_override_font_sizes/font_size = 30
 text = "+0%"
 
-[node name="TextureRect" type="TextureRect" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer/HBoxContainer" unique_id=238220254]
 layout_mode = 2
 texture = ExtResource("6_4boqv")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="GoldModifier" type="Label" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="GoldModifier" type="Label" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer/HBoxContainer" unique_id=884675465]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
 theme_override_font_sizes/font_size = 30
 text = "+0%"
 
-[node name="TextureRect2" type="TextureRect" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer/HBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="ChooseMap/SelectModifiers/VBoxContainer/HBoxContainer/HBoxContainer" unique_id=323765028]
 layout_mode = 2
 texture = ExtResource("7_klchj")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Difficulty" type="HBoxContainer" parent="ChooseMap/SelectModifiers/VBoxContainer"]
+[node name="Difficulty" type="HBoxContainer" parent="ChooseMap/SelectModifiers/VBoxContainer" unique_id=490670208]
 layout_mode = 2
 alignment = 1
 
-[node name="Easy" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty"]
+[node name="Easy" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty" unique_id=1770744310]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1085,7 +1165,7 @@ text = "Easy"
 metadata/SilverModifier = 0
 metadata/GoldModifier = 0
 
-[node name="Normal" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty"]
+[node name="Normal" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty" unique_id=1957052916]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1094,7 +1174,7 @@ text = "Normal"
 metadata/SilverModifier = 50
 metadata/GoldModifier = 0
 
-[node name="Hard" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty"]
+[node name="Hard" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty" unique_id=1977844815]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1103,7 +1183,7 @@ text = "Hard"
 metadata/SilverModifier = 100
 metadata/GoldModifier = 15
 
-[node name="Insane" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty"]
+[node name="Insane" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty" unique_id=938564874]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1112,7 +1192,7 @@ text = "Insane"
 metadata/SilverModifier = 150
 metadata/GoldModifier = 30
 
-[node name="Impossible" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty"]
+[node name="Impossible" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty" unique_id=1590093700]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1121,7 +1201,7 @@ text = "Impossible"
 metadata/SilverModifier = 200
 metadata/GoldModifier = 50
 
-[node name="Nightmare" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty"]
+[node name="Nightmare" type="Button" parent="ChooseMap/SelectModifiers/VBoxContainer/Difficulty" unique_id=1722182529]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1130,7 +1210,7 @@ text = "Nightmare"
 metadata/SilverModifier = 500
 metadata/GoldModifier = 100
 
-[node name="CheckBoxContainer" type="VBoxContainer" parent="ChooseMap/SelectModifiers"]
+[node name="CheckBoxContainer" type="VBoxContainer" parent="ChooseMap/SelectModifiers" unique_id=1858207499]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1144,7 +1224,7 @@ offset_bottom = 232.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Slow Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+[node name="Slow Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=1234748698]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1154,7 +1234,7 @@ icon = ExtResource("6_4boqv")
 icon_alignment = 2
 expand_icon = true
 
-[node name="Weak Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+[node name="Weak Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=924871965]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1164,7 +1244,7 @@ icon = ExtResource("6_4boqv")
 icon_alignment = 2
 expand_icon = true
 
-[node name="Blind Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+[node name="Blind Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=970990245]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1174,7 +1254,7 @@ icon = ExtResource("6_4boqv")
 icon_alignment = 2
 expand_icon = true
 
-[node name="Crippled Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+[node name="Crippled Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=1473704628]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1185,7 +1265,7 @@ icon = ExtResource("6_4boqv")
 icon_alignment = 2
 expand_icon = true
 
-[node name="Expensive Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+[node name="Expensive Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=428581294]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1195,7 +1275,7 @@ icon = ExtResource("6_4boqv")
 icon_alignment = 2
 expand_icon = true
 
-[node name="Economic Depression" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+[node name="Economic Depression" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=189713550]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1205,7 +1285,7 @@ icon = ExtResource("6_4boqv")
 icon_alignment = 2
 expand_icon = true
 
-[node name="Sudden Death" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+[node name="Sudden Death" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=1611850215]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1215,7 +1295,7 @@ icon = ExtResource("6_4boqv")
 icon_alignment = 2
 expand_icon = true
 
-[node name="Only One" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer"]
+[node name="Only One" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=551390693]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1225,7 +1305,7 @@ icon = ExtResource("6_4boqv")
 icon_alignment = 2
 expand_icon = true
 
-[node name="FinalModifiers" type="HBoxContainer" parent="ChooseMap/SelectModifiers"]
+[node name="FinalModifiers" type="HBoxContainer" parent="ChooseMap/SelectModifiers" unique_id=80089861]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -1239,47 +1319,58 @@ offset_bottom = -67.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="StartMapButton" type="Button" parent="ChooseMap/SelectModifiers/FinalModifiers"]
+[node name="StartMapButton" type="Button" parent="ChooseMap/SelectModifiers/FinalModifiers" unique_id=1506642555]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
 theme_override_font_sizes/font_size = 45
-theme_override_styles/hover = SubResource("StyleBoxTexture_6huj8")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_6xsjf")
 theme_override_styles/normal = SubResource("StyleBoxTexture_bjswq")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_6xsjf")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6huj8")
 text = "START"
 
-[node name="SilverModifier" type="Label" parent="ChooseMap/SelectModifiers/FinalModifiers"]
+[node name="SilverModifier" type="Label" parent="ChooseMap/SelectModifiers/FinalModifiers" unique_id=866855445]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
 theme_override_font_sizes/font_size = 30
 text = "+0%"
 
-[node name="TextureRect" type="TextureRect" parent="ChooseMap/SelectModifiers/FinalModifiers"]
+[node name="TextureRect" type="TextureRect" parent="ChooseMap/SelectModifiers/FinalModifiers" unique_id=598027347]
 layout_mode = 2
 texture = ExtResource("6_4boqv")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="GoldModifier" type="Label" parent="ChooseMap/SelectModifiers/FinalModifiers"]
+[node name="GoldModifier" type="Label" parent="ChooseMap/SelectModifiers/FinalModifiers" unique_id=1644218677]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
 theme_override_font_sizes/font_size = 30
 text = "+0%"
 
-[node name="TextureRect2" type="TextureRect" parent="ChooseMap/SelectModifiers/FinalModifiers"]
+[node name="TextureRect2" type="TextureRect" parent="ChooseMap/SelectModifiers/FinalModifiers" unique_id=575661578]
 layout_mode = 2
 texture = ExtResource("7_klchj")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Inventory" type="TextureRect" parent="."]
+[node name="CloseMenuButton" type="TextureButton" parent="ChooseMap/SelectModifiers" unique_id=470772587]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 0
+offset_left = 202.50003
+offset_top = 626.0
+offset_right = 262.50003
+offset_bottom = 682.0
+focus_mode = 0
+texture_normal = SubResource("AtlasTexture_6iyac")
+stretch_mode = 4
+
+[node name="Inventory" type="TextureRect" parent="." unique_id=130781396]
 layout_mode = 0
 offset_left = -1920.0
 offset_bottom = 1080.0
 texture = SubResource("AtlasTexture_g27gr")
 
-[node name="InventoryPlaceHolderBackground" type="TextureRect" parent="Inventory"]
+[node name="InventoryPlaceHolderBackground" type="TextureRect" parent="Inventory" unique_id=497338559]
 visible = false
 custom_minimum_size = Vector2(250, 400)
 layout_mode = 0
@@ -1290,8 +1381,8 @@ offset_bottom = 531.0
 texture = SubResource("AtlasTexture_s5ptr")
 metadata/Index = 0
 
-[node name="InventoryPlaceholder" type="Button" parent="Inventory/InventoryPlaceHolderBackground"]
-layout_mode = 2
+[node name="InventoryPlaceholder" type="Button" parent="Inventory/InventoryPlaceHolderBackground" unique_id=1808518978]
+layout_mode = 0
 offset_left = 16.0
 offset_top = 45.0
 offset_right = 234.0
@@ -1300,20 +1391,20 @@ focus_mode = 0
 theme_override_constants/h_separation = 45
 theme_override_fonts/font = ExtResource("7_ovdqn")
 theme_override_font_sizes/font_size = 50
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_76ib4")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
 icon = SubResource("AtlasTexture_fneho")
 autowrap_mode = 3
 icon_alignment = 1
 vertical_icon_alignment = 2
 expand_icon = true
 
-[node name="TowerName" type="Label" parent="Inventory/InventoryPlaceHolderBackground/InventoryPlaceholder"]
+[node name="TowerName" type="Label" parent="Inventory/InventoryPlaceHolderBackground/InventoryPlaceholder" unique_id=1941659609]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -1330,7 +1421,7 @@ text = "WIZARD TOWER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TowerLevel" type="Label" parent="Inventory/InventoryPlaceHolderBackground/InventoryPlaceholder"]
+[node name="TowerLevel" type="Label" parent="Inventory/InventoryPlaceHolderBackground/InventoryPlaceholder" unique_id=193240284]
 modulate = Color(0.873865, 4.71681e-06, 6.73831e-07, 1)
 layout_mode = 1
 offset_left = 9.0
@@ -1343,7 +1434,7 @@ text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TraitIcon" type="TextureRect" parent="Inventory/InventoryPlaceHolderBackground/InventoryPlaceholder"]
+[node name="TraitIcon" type="TextureRect" parent="Inventory/InventoryPlaceHolderBackground/InventoryPlaceholder" unique_id=1234210405]
 layout_mode = 0
 offset_left = 158.0
 offset_top = 9.0
@@ -1352,7 +1443,7 @@ offset_bottom = 49.0
 texture = ExtResource("7_h2fuq")
 expand_mode = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Inventory"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Inventory" unique_id=960478433]
 custom_minimum_size = Vector2(0, 880)
 layout_mode = 0
 offset_left = 178.0
@@ -1361,23 +1452,27 @@ offset_right = 1222.0
 offset_bottom = 990.0
 horizontal_scroll_mode = 0
 
-[node name="InventoryGrid" type="GridContainer" parent="Inventory/ScrollContainer"]
+[node name="InventoryGrid" type="GridContainer" parent="Inventory/ScrollContainer" unique_id=459098524]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 12
 theme_override_constants/v_separation = 30
 columns = 4
 
-[node name="ReturnToMainMenuFromInventoryButton" type="Button" parent="Inventory"]
+[node name="ReturnToMainMenuFromInventoryButton" type="Button" parent="Inventory" unique_id=2114582645]
 layout_mode = 0
-offset_left = 1370.0
+offset_left = 1507.0
 offset_top = 952.0
 offset_right = 1737.0
 offset_bottom = 1021.0
-theme_override_fonts/font = SubResource("FontFile_di1y4")
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/normal = SubResource("StyleBoxTexture_6iyac")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_6iyac")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6iyac")
 text = "BACK"
 
-[node name="PreviewTower" type="VBoxContainer" parent="Inventory"]
+[node name="PreviewTower" type="VBoxContainer" parent="Inventory" unique_id=461880968]
 layout_mode = 0
 offset_left = 1365.0
 offset_top = 216.0
@@ -1385,16 +1480,16 @@ offset_right = 1615.0
 offset_bottom = 687.0
 theme_override_constants/separation = 15
 
-[node name="PreviewContainer" type="CenterContainer" parent="Inventory/PreviewTower"]
+[node name="PreviewContainer" type="CenterContainer" parent="Inventory/PreviewTower" unique_id=555159834]
 layout_mode = 2
 
-[node name="PreviewPlaceholder" type="TextureRect" parent="Inventory/PreviewTower/PreviewContainer"]
+[node name="PreviewPlaceholder" type="TextureRect" parent="Inventory/PreviewTower/PreviewContainer" unique_id=386768810]
 custom_minimum_size = Vector2(250, 400)
 layout_mode = 2
 texture = SubResource("AtlasTexture_s5ptr")
 metadata/Index = 0
 
-[node name="Label" type="Label" parent="Inventory/PreviewTower/PreviewContainer/PreviewPlaceholder"]
+[node name="Label" type="Label" parent="Inventory/PreviewTower/PreviewContainer/PreviewPlaceholder" unique_id=481542205]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1407,92 +1502,119 @@ offset_right = 20.0
 offset_bottom = 11.1667
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 25
 text = "Select Tower"
 
-[node name="Label" type="Label" parent="Inventory/PreviewTower"]
+[node name="Label" type="Label" parent="Inventory/PreviewTower" unique_id=841279996]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
 text = "Hotbar Slots:"
 horizontal_alignment = 1
 
-[node name="EquipHotbar" type="HBoxContainer" parent="Inventory/PreviewTower"]
+[node name="EquipHotbar" type="HBoxContainer" parent="Inventory/PreviewTower" unique_id=356658227]
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="HotbarSlot1" type="Button" parent="Inventory/PreviewTower/EquipHotbar"]
+[node name="HotbarSlot1" type="Button" parent="Inventory/PreviewTower/EquipHotbar" unique_id=1640189378]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 40
 text = "1"
 metadata/ID = 0
 
-[node name="HotbarSlot2" type="Button" parent="Inventory/PreviewTower/EquipHotbar"]
+[node name="HotbarSlot2" type="Button" parent="Inventory/PreviewTower/EquipHotbar" unique_id=2082634903]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 40
 text = "2"
 metadata/ID = 1
 
-[node name="HotbarSlot3" type="Button" parent="Inventory/PreviewTower/EquipHotbar"]
+[node name="HotbarSlot3" type="Button" parent="Inventory/PreviewTower/EquipHotbar" unique_id=913552718]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 40
 text = "3"
 metadata/ID = 2
 
-[node name="HotbarSlot4" type="Button" parent="Inventory/PreviewTower/EquipHotbar"]
+[node name="HotbarSlot4" type="Button" parent="Inventory/PreviewTower/EquipHotbar" unique_id=1307489253]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 40
 text = "4"
 metadata/ID = 3
 
-[node name="HotbarSlot5" type="Button" parent="Inventory/PreviewTower/EquipHotbar"]
+[node name="HotbarSlot5" type="Button" parent="Inventory/PreviewTower/EquipHotbar" unique_id=968603791]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 40
 text = "5"
 metadata/ID = 4
 
-[node name="HotbarSlot6" type="Button" parent="Inventory/PreviewTower/EquipHotbar"]
+[node name="HotbarSlot6" type="Button" parent="Inventory/PreviewTower/EquipHotbar" unique_id=255154983]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 focus_mode = 0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 40
 text = "6"
 metadata/ID = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Inventory/PreviewTower"]
-layout_mode = 2
-alignment = 1
-
-[node name="HotbarSelectButton" type="Button" parent="Inventory/PreviewTower/HBoxContainer"]
-layout_mode = 2
-text = "Equip"
-
-[node name="Label3" type="Label" parent="Inventory/PreviewTower/HBoxContainer"]
-layout_mode = 2
-text = "Slot Occupied?"
-
-[node name="EquipHotbar2" type="HBoxContainer" parent="Inventory/PreviewTower"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Inventory/PreviewTower" unique_id=1321359387]
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="SellButton" type="Button" parent="Inventory/PreviewTower/EquipHotbar2"]
+[node name="HotbarSelectButton" type="Button" parent="Inventory/PreviewTower/HBoxContainer" unique_id=272048598]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "Equip"
+
+[node name="Label3" type="Label" parent="Inventory/PreviewTower/HBoxContainer" unique_id=347609712]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 30
+text = "Slot Occupied?"
+autowrap_mode = 3
+
+[node name="EquipHotbar2" type="HBoxContainer" parent="Inventory/PreviewTower" unique_id=479134206]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="SellButton" type="Button" parent="Inventory/PreviewTower/EquipHotbar2" unique_id=1178744968]
+visible = false
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
 text = "Sell: XXXX Silver"
 
-[node name="FuseButton" type="Button" parent="Inventory/PreviewTower/EquipHotbar2"]
+[node name="FuseButton" type="Button" parent="Inventory/PreviewTower/EquipHotbar2" unique_id=836265536]
+visible = false
 layout_mode = 2
+theme_override_fonts/font = ExtResource("7_ovdqn")
 text = "Fuse: xxxx XP"
 
-[node name="Shop" type="TextureRect" parent="."]
+[node name="Shop" type="TextureRect" parent="." unique_id=224836476]
 layout_mode = 0
 offset_top = -1080.0
 offset_right = 1920.0
 texture = SubResource("AtlasTexture_6wws7")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Shop"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Shop" unique_id=1824106324]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1507,7 +1629,7 @@ grow_horizontal = 2
 grow_vertical = 2
 vertical_scroll_mode = 0
 
-[node name="Chests" type="HBoxContainer" parent="Shop/ScrollContainer"]
+[node name="Chests" type="HBoxContainer" parent="Shop/ScrollContainer" unique_id=1392387593]
 custom_minimum_size = Vector2(880, 0)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -1515,12 +1637,12 @@ size_flags_vertical = 4
 theme_override_constants/separation = 40
 alignment = 1
 
-[node name="Chest1" type="Panel" parent="Shop/ScrollContainer/Chests"]
+[node name="Chest1" type="Panel" parent="Shop/ScrollContainer/Chests" unique_id=309669105]
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest1"]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest1" unique_id=2124308014]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 1
 anchors_preset = 8
@@ -1540,23 +1662,23 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1"]
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1" unique_id=603288185]
 layout_mode = 0
 offset_left = 66.0
 offset_top = 75.0
 offset_right = 441.0
 offset_bottom = 446.0
 
-[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay"]
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay" unique_id=1859409173]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Blue"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Blue" unique_id=240470471]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Blue"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Blue" unique_id=2127024825]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1565,16 +1687,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay"]
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay" unique_id=588512216]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Purple"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Purple" unique_id=1565339392]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0.6, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Purple"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Purple" unique_id=1772703958]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1583,16 +1705,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay"]
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay" unique_id=1145243383]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Pink"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Pink" unique_id=1811502360]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Pink"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Pink" unique_id=545100595]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1601,16 +1723,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay"]
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay" unique_id=225394466]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Red"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Red" unique_id=404084463]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Red"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Red" unique_id=1381830359]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1619,16 +1741,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay"]
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay" unique_id=1320105029]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Gold"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Gold" unique_id=1677365830]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0.843, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Gold"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/PercentageDisplay/Gold" unique_id=857647365]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1637,7 +1759,7 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest1" unique_id=748091922]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -1653,14 +1775,14 @@ grow_vertical = 0
 theme_override_constants/separation = 7
 alignment = 1
 
-[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest1/HBoxContainer"]
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest1/HBoxContainer" unique_id=572787267]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 texture = ExtResource("6_4boqv")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/HBoxContainer"]
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest1/HBoxContainer" unique_id=967443016]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -1672,14 +1794,14 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
 text = "xx,xxx"
 vertical_alignment = 1
 
-[node name="Chest2" type="Panel" parent="Shop/ScrollContainer/Chests"]
+[node name="Chest2" type="Panel" parent="Shop/ScrollContainer/Chests" unique_id=1142656580]
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest2"]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest2" unique_id=1103636281]
 custom_minimum_size = Vector2(250, 250)
-layout_mode = 2
+layout_mode = 0
 offset_left = 125.0
 offset_top = 385.0
 offset_right = 375.0
@@ -1690,23 +1812,23 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2"]
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2" unique_id=457588628]
 layout_mode = 0
 offset_left = 66.0
 offset_top = 75.0
 offset_right = 441.0
 offset_bottom = 442.0
 
-[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay"]
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay" unique_id=114030656]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Blue"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Blue" unique_id=1187159401]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Blue"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Blue" unique_id=780983175]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1715,16 +1837,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay"]
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay" unique_id=780957459]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Purple"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Purple" unique_id=1382007065]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0.6, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Purple"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Purple" unique_id=1069438775]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1733,16 +1855,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay"]
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay" unique_id=665230258]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Pink"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Pink" unique_id=1640689697]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Pink"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Pink" unique_id=2112451279]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1751,16 +1873,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay"]
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay" unique_id=311554602]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Red"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Red" unique_id=278876310]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Red"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Red" unique_id=459492986]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1769,16 +1891,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay"]
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay" unique_id=1714403427]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Gold"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Gold" unique_id=1439053668]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0.843, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Gold"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/PercentageDisplay/Gold" unique_id=914046800]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1787,7 +1909,7 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest2" unique_id=315515434]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -1803,14 +1925,14 @@ grow_vertical = 0
 theme_override_constants/separation = 7
 alignment = 1
 
-[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest2/HBoxContainer"]
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest2/HBoxContainer" unique_id=284334737]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 texture = ExtResource("6_4boqv")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/HBoxContainer"]
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest2/HBoxContainer" unique_id=1583412121]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -1822,14 +1944,14 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
 text = "xx,xxx"
 vertical_alignment = 1
 
-[node name="Chest3" type="Panel" parent="Shop/ScrollContainer/Chests"]
+[node name="Chest3" type="Panel" parent="Shop/ScrollContainer/Chests" unique_id=1969535858]
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest3"]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest3" unique_id=776353587]
 custom_minimum_size = Vector2(250, 250)
-layout_mode = 2
+layout_mode = 0
 offset_left = 125.0
 offset_top = 385.0
 offset_right = 375.0
@@ -1840,23 +1962,23 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3"]
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3" unique_id=660065412]
 layout_mode = 0
 offset_left = 66.0
 offset_top = 75.0
 offset_right = 441.0
 offset_bottom = 442.0
 
-[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay"]
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay" unique_id=236621933]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Blue"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Blue" unique_id=234386356]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Blue"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Blue" unique_id=1319983048]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1865,16 +1987,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay"]
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay" unique_id=256550321]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Purple"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Purple" unique_id=1121995799]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0.6, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Purple"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Purple" unique_id=1226650488]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1883,16 +2005,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay"]
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay" unique_id=1365067088]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Pink"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Pink" unique_id=310019688]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Pink"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Pink" unique_id=634790540]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1901,16 +2023,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay"]
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay" unique_id=1464122535]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Red"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Red" unique_id=1575361042]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Red"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Red" unique_id=1993084740]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1919,16 +2041,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay"]
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay" unique_id=650699170]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Gold"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Gold" unique_id=1623444819]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0.843, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Gold"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/PercentageDisplay/Gold" unique_id=526253333]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1937,7 +2059,7 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest3" unique_id=1629439048]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -1953,14 +2075,14 @@ grow_vertical = 0
 theme_override_constants/separation = 7
 alignment = 1
 
-[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest3/HBoxContainer"]
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest3/HBoxContainer" unique_id=1437057363]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 texture = ExtResource("6_4boqv")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/HBoxContainer"]
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest3/HBoxContainer" unique_id=1812060358]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -1972,14 +2094,14 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
 text = "xx,xxx"
 vertical_alignment = 1
 
-[node name="Chest4" type="Panel" parent="Shop/ScrollContainer/Chests"]
+[node name="Chest4" type="Panel" parent="Shop/ScrollContainer/Chests" unique_id=535043066]
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest4"]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest4" unique_id=460625729]
 custom_minimum_size = Vector2(250, 250)
-layout_mode = 2
+layout_mode = 0
 offset_left = 125.0
 offset_top = 385.0
 offset_right = 375.0
@@ -1990,23 +2112,23 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4"]
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4" unique_id=904699071]
 layout_mode = 0
 offset_left = 66.0
 offset_top = 75.0
 offset_right = 441.0
 offset_bottom = 442.0
 
-[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay"]
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay" unique_id=1521380770]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Blue"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Blue" unique_id=2076273064]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Blue"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Blue" unique_id=1809812431]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2015,16 +2137,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay"]
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay" unique_id=2077055623]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Purple"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Purple" unique_id=829854527]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0.6, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Purple"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Purple" unique_id=466413933]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2033,16 +2155,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay"]
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay" unique_id=1899941232]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Pink"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Pink" unique_id=1447115633]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Pink"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Pink" unique_id=1830664243]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2051,16 +2173,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay"]
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay" unique_id=329221698]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Red"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Red" unique_id=1535015214]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Red"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Red" unique_id=1176179893]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2069,16 +2191,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay"]
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay" unique_id=129398753]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Gold"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Gold" unique_id=327746528]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0.843, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Gold"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/PercentageDisplay/Gold" unique_id=865800904]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2087,7 +2209,7 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest4" unique_id=599164157]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -2103,14 +2225,14 @@ grow_vertical = 0
 theme_override_constants/separation = 7
 alignment = 1
 
-[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest4/HBoxContainer"]
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest4/HBoxContainer" unique_id=348263238]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 texture = ExtResource("6_4boqv")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/HBoxContainer"]
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest4/HBoxContainer" unique_id=947513229]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -2122,14 +2244,14 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
 text = "xx,xxx"
 vertical_alignment = 1
 
-[node name="Chest5" type="Panel" parent="Shop/ScrollContainer/Chests"]
+[node name="Chest5" type="Panel" parent="Shop/ScrollContainer/Chests" unique_id=600137133]
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest5"]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest5" unique_id=1909758445]
 custom_minimum_size = Vector2(250, 250)
-layout_mode = 2
+layout_mode = 0
 offset_left = 125.0
 offset_top = 385.0
 offset_right = 375.0
@@ -2140,23 +2262,23 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5"]
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5" unique_id=70136254]
 layout_mode = 0
 offset_left = 66.0
 offset_top = 75.0
 offset_right = 441.0
 offset_bottom = 442.0
 
-[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay"]
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay" unique_id=1915994042]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Blue"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Blue" unique_id=1761769099]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Blue"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Blue" unique_id=1783272506]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2165,16 +2287,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay"]
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay" unique_id=1417460806]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Purple"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Purple" unique_id=128046389]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0.6, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Purple"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Purple" unique_id=416313193]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2183,16 +2305,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay"]
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay" unique_id=2052755843]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Pink"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Pink" unique_id=1032766472]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Pink"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Pink" unique_id=1504593197]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2201,16 +2323,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay"]
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay" unique_id=1657066426]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Red"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Red" unique_id=2067639649]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Red"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Red" unique_id=738555225]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2219,16 +2341,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay"]
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay" unique_id=1956791153]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Gold"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Gold" unique_id=67002637]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0.843, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Gold"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/PercentageDisplay/Gold" unique_id=1448951017]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2237,7 +2359,7 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest5" unique_id=1212324454]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -2253,14 +2375,14 @@ grow_vertical = 0
 theme_override_constants/separation = 7
 alignment = 1
 
-[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest5/HBoxContainer"]
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest5/HBoxContainer" unique_id=2018114151]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 texture = ExtResource("6_4boqv")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/HBoxContainer"]
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest5/HBoxContainer" unique_id=1980235338]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -2272,14 +2394,14 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
 text = "xx,xxx"
 vertical_alignment = 1
 
-[node name="Chest6" type="Panel" parent="Shop/ScrollContainer/Chests"]
+[node name="Chest6" type="Panel" parent="Shop/ScrollContainer/Chests" unique_id=283360335]
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest6"]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest6" unique_id=1679751494]
 custom_minimum_size = Vector2(250, 250)
-layout_mode = 2
+layout_mode = 0
 offset_left = 125.0
 offset_top = 385.0
 offset_right = 375.0
@@ -2290,23 +2412,23 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6"]
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6" unique_id=938710500]
 layout_mode = 0
 offset_left = 66.0
 offset_top = 75.0
 offset_right = 441.0
 offset_bottom = 442.0
 
-[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay"]
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay" unique_id=736265929]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Blue"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Blue" unique_id=1547574811]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Blue"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Blue" unique_id=63730115]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2315,16 +2437,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay"]
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay" unique_id=1105566608]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Purple"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Purple" unique_id=923607678]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0.6, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Purple"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Purple" unique_id=1463123051]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2333,16 +2455,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay"]
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay" unique_id=694034039]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Pink"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Pink" unique_id=1561618661]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Pink"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Pink" unique_id=2044115581]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2351,16 +2473,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay"]
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay" unique_id=2007034775]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Red"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Red" unique_id=331677063]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Red"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Red" unique_id=1364229263]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2369,16 +2491,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay"]
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay" unique_id=1382479725]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Gold"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Gold" unique_id=872869066]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0.843, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Gold"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/PercentageDisplay/Gold" unique_id=1215655136]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2387,7 +2509,7 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest6" unique_id=2068917042]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -2403,14 +2525,14 @@ grow_vertical = 0
 theme_override_constants/separation = 7
 alignment = 1
 
-[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest6/HBoxContainer"]
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest6/HBoxContainer" unique_id=813810058]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 texture = ExtResource("6_4boqv")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/HBoxContainer"]
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest6/HBoxContainer" unique_id=1148788203]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -2422,14 +2544,14 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
 text = "xx,xxx"
 vertical_alignment = 1
 
-[node name="Chest7" type="Panel" parent="Shop/ScrollContainer/Chests"]
+[node name="Chest7" type="Panel" parent="Shop/ScrollContainer/Chests" unique_id=719839234]
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest7"]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest7" unique_id=191587815]
 custom_minimum_size = Vector2(250, 250)
-layout_mode = 2
+layout_mode = 0
 offset_left = 125.0
 offset_top = 385.0
 offset_right = 375.0
@@ -2440,23 +2562,23 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7"]
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7" unique_id=2053486427]
 layout_mode = 0
 offset_left = 66.0
 offset_top = 75.0
 offset_right = 441.0
 offset_bottom = 442.0
 
-[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay"]
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay" unique_id=1992230397]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Blue"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Blue" unique_id=1531957922]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Blue"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Blue" unique_id=1286272421]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2465,16 +2587,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay"]
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay" unique_id=710382518]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Purple"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Purple" unique_id=1815178996]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0.6, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Purple"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Purple" unique_id=1389971939]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2483,16 +2605,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay"]
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay" unique_id=1434761153]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Pink"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Pink" unique_id=1355522729]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Pink"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Pink" unique_id=1190468052]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2501,16 +2623,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay"]
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay" unique_id=1623196138]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Red"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Red" unique_id=204337170]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Red"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Red" unique_id=1252629110]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2519,16 +2641,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay"]
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay" unique_id=290048035]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Gold"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Gold" unique_id=1601330348]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0.843, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Gold"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/PercentageDisplay/Gold" unique_id=81298960]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2537,7 +2659,7 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest7" unique_id=956477921]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -2553,14 +2675,14 @@ grow_vertical = 0
 theme_override_constants/separation = 7
 alignment = 1
 
-[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest7/HBoxContainer"]
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest7/HBoxContainer" unique_id=1154939917]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 texture = ExtResource("6_4boqv")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/HBoxContainer"]
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest7/HBoxContainer" unique_id=875250726]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -2572,14 +2694,14 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
 text = "xx,xxx"
 vertical_alignment = 1
 
-[node name="Chest8" type="Panel" parent="Shop/ScrollContainer/Chests"]
+[node name="Chest8" type="Panel" parent="Shop/ScrollContainer/Chests" unique_id=824132058]
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest8"]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest8" unique_id=1367447864]
 custom_minimum_size = Vector2(250, 250)
-layout_mode = 2
+layout_mode = 0
 offset_left = 125.0
 offset_top = 385.0
 offset_right = 375.0
@@ -2590,23 +2712,23 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
-[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8"]
+[node name="PercentageDisplay" type="VBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8" unique_id=343513241]
 layout_mode = 0
 offset_left = 66.0
 offset_top = 75.0
 offset_right = 441.0
 offset_bottom = 442.0
 
-[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay"]
+[node name="Blue" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay" unique_id=343854107]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Blue"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Blue" unique_id=182556760]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Blue"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Blue" unique_id=1722840670]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2615,16 +2737,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay"]
+[node name="Purple" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay" unique_id=1483782319]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Purple"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Purple" unique_id=1196074313]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0.6, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Purple"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Purple" unique_id=2068406996]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2633,16 +2755,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay"]
+[node name="Pink" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay" unique_id=1787802502]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Pink"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Pink" unique_id=1412935973]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Pink"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Pink" unique_id=1167013703]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2651,16 +2773,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay"]
+[node name="Red" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay" unique_id=155483619]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Red"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Red" unique_id=705974165]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Red"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Red" unique_id=236340068]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2669,16 +2791,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay"]
+[node name="Gold" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay" unique_id=1970441872]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Gold"]
+[node name="ColorRect" type="ColorRect" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Gold" unique_id=1155125087]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0.843, 0, 1)
 
-[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Gold"]
+[node name="Label" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/PercentageDisplay/Gold" unique_id=1549646526]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -2687,7 +2809,7 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Shop/ScrollContainer/Chests/Chest8" unique_id=2040038307]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -2703,14 +2825,14 @@ grow_vertical = 0
 theme_override_constants/separation = 7
 alignment = 1
 
-[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest8/HBoxContainer"]
+[node name="SilverCoin" type="TextureRect" parent="Shop/ScrollContainer/Chests/Chest8/HBoxContainer" unique_id=117516910]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 texture = ExtResource("6_4boqv")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/HBoxContainer"]
+[node name="TraitCost" type="Label" parent="Shop/ScrollContainer/Chests/Chest8/HBoxContainer" unique_id=25920590]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -2722,24 +2844,34 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
 text = "xx,xxx"
 vertical_alignment = 1
 
-[node name="ReturnToMainMenuButton" type="Button" parent="Shop"]
+[node name="ReturnToMainMenuButton" type="Button" parent="Shop" unique_id=1098684721]
 layout_mode = 0
-offset_left = 217.0
-offset_top = 975.0
-offset_right = 584.0
-offset_bottom = 1044.0
+offset_left = 96.0
+offset_top = 983.0
+offset_right = 301.0
+offset_bottom = 1052.0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/normal = SubResource("StyleBoxTexture_6iyac")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_6iyac")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6iyac")
 text = "BACK"
 
-[node name="TraitMenuButton" type="Button" parent="Shop"]
+[node name="TraitMenuButton" type="Button" parent="Shop" unique_id=559274880]
 layout_mode = 0
-offset_left = 1391.0
+offset_left = 1546.0
 offset_top = 990.0
 offset_right = 1758.0
 offset_bottom = 1059.0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/normal = SubResource("StyleBoxTexture_6iyac")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_6iyac")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6iyac")
 text = "Traits
 "
 
-[node name="Label" type="Label" parent="Shop"]
+[node name="Label" type="Label" parent="Shop" unique_id=2079802982]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -2756,7 +2888,7 @@ text = "Towers"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SilverAmount" type="TextureRect" parent="Shop"]
+[node name="SilverAmount" type="TextureRect" parent="Shop" unique_id=1209003974]
 layout_mode = 0
 offset_left = 1096.0
 offset_top = 86.0
@@ -2765,7 +2897,7 @@ offset_bottom = 170.0
 texture = SubResource("AtlasTexture_su40n")
 stretch_mode = 4
 
-[node name="TextureRect" type="TextureRect" parent="Shop/SilverAmount"]
+[node name="TextureRect" type="TextureRect" parent="Shop/SilverAmount" unique_id=1212713332]
 layout_mode = 0
 offset_left = 140.0
 offset_right = 282.0
@@ -2775,7 +2907,7 @@ expand_mode = 1
 stretch_mode = 4
 flip_h = true
 
-[node name="Currency" type="HBoxContainer" parent="Shop/SilverAmount"]
+[node name="Currency" type="HBoxContainer" parent="Shop/SilverAmount" unique_id=1836794207]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -2790,18 +2922,18 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 40
 
-[node name="Silver" type="HBoxContainer" parent="Shop/SilverAmount/Currency"]
+[node name="Silver" type="HBoxContainer" parent="Shop/SilverAmount/Currency" unique_id=2054668329]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Silver" type="TextureRect" parent="Shop/SilverAmount/Currency/Silver"]
+[node name="Silver" type="TextureRect" parent="Shop/SilverAmount/Currency/Silver" unique_id=779426055]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 texture = ExtResource("6_4boqv")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BackgroundBlockers" type="TextureRect" parent="Shop/SilverAmount/Currency/Silver/Silver"]
+[node name="BackgroundBlockers" type="TextureRect" parent="Shop/SilverAmount/Currency/Silver/Silver" unique_id=916596747]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 0
 offset_top = 9.0
@@ -2811,7 +2943,7 @@ texture = SubResource("AtlasTexture_vii81")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BackgroundBlockers2" type="TextureRect" parent="Shop/SilverAmount/Currency/Silver/Silver"]
+[node name="BackgroundBlockers2" type="TextureRect" parent="Shop/SilverAmount/Currency/Silver/Silver" unique_id=125760631]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 0
 offset_left = 24.0
@@ -2822,7 +2954,7 @@ texture = SubResource("AtlasTexture_vii81")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BackgroundBlockers3" type="TextureRect" parent="Shop/SilverAmount/Currency/Silver/Silver"]
+[node name="BackgroundBlockers3" type="TextureRect" parent="Shop/SilverAmount/Currency/Silver/Silver" unique_id=799986606]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 0
 offset_left = 24.0
@@ -2833,7 +2965,7 @@ texture = SubResource("AtlasTexture_vii81")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BackgroundBlockers4" type="TextureRect" parent="Shop/SilverAmount/Currency/Silver/Silver"]
+[node name="BackgroundBlockers4" type="TextureRect" parent="Shop/SilverAmount/Currency/Silver/Silver" unique_id=1231709314]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 0
 offset_top = 39.0
@@ -2843,7 +2975,7 @@ texture = SubResource("AtlasTexture_vii81")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SilverLabel" type="Label" parent="Shop/SilverAmount/Currency/Silver" groups=["SilverAmount"]]
+[node name="SilverLabel" type="Label" parent="Shop/SilverAmount/Currency/Silver" unique_id=1357817149 groups=["SilverAmount"]]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -2853,7 +2985,7 @@ text = "XXX,XXX"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="GoldAmount" type="TextureRect" parent="Shop"]
+[node name="GoldAmount" type="TextureRect" parent="Shop" unique_id=1170916269]
 layout_mode = 0
 offset_left = 1400.0
 offset_top = 86.0
@@ -2862,7 +2994,7 @@ offset_bottom = 170.0
 texture = SubResource("AtlasTexture_su40n")
 stretch_mode = 4
 
-[node name="TextureRect" type="TextureRect" parent="Shop/GoldAmount"]
+[node name="TextureRect" type="TextureRect" parent="Shop/GoldAmount" unique_id=693409975]
 layout_mode = 0
 offset_left = 140.0
 offset_right = 282.0
@@ -2872,7 +3004,7 @@ expand_mode = 1
 stretch_mode = 4
 flip_h = true
 
-[node name="Currency" type="HBoxContainer" parent="Shop/GoldAmount"]
+[node name="Currency" type="HBoxContainer" parent="Shop/GoldAmount" unique_id=1766744530]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -2887,11 +3019,11 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 40
 
-[node name="Gold" type="HBoxContainer" parent="Shop/GoldAmount/Currency"]
+[node name="Gold" type="HBoxContainer" parent="Shop/GoldAmount/Currency" unique_id=1762298977]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Gold" type="TextureRect" parent="Shop/GoldAmount/Currency/Gold"]
+[node name="Gold" type="TextureRect" parent="Shop/GoldAmount/Currency/Gold" unique_id=1607448617]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -2899,7 +3031,7 @@ texture = ExtResource("7_klchj")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="GoldLabel" type="Label" parent="Shop/GoldAmount/Currency/Gold" groups=["GoldAmount"]]
+[node name="GoldLabel" type="Label" parent="Shop/GoldAmount/Currency/Gold" unique_id=1299230678 groups=["GoldAmount"]]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -2909,14 +3041,14 @@ text = "XXX,XXX"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="Traits" type="TextureRect" parent="."]
+[node name="Traits" type="TextureRect" parent="." unique_id=585615315]
 layout_mode = 0
 offset_left = 1920.0
 offset_top = -1080.0
 offset_right = 3840.0
 texture = SubResource("AtlasTexture_6wws7")
 
-[node name="Label" type="Label" parent="Traits"]
+[node name="Label" type="Label" parent="Traits" unique_id=947707110]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -2933,7 +3065,7 @@ text = "Traits"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CenterContainer" type="CenterContainer" parent="Traits"]
+[node name="CenterContainer" type="CenterContainer" parent="Traits" unique_id=1841292130]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -2948,14 +3080,14 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.7, 1.7)
 
-[node name="InventoryPlaceHolderBackground" type="TextureRect" parent="Traits/CenterContainer"]
+[node name="InventoryPlaceHolderBackground" type="TextureRect" parent="Traits/CenterContainer" unique_id=633970162]
 visible = false
 custom_minimum_size = Vector2(250, 400)
 layout_mode = 2
 texture = SubResource("AtlasTexture_s5ptr")
 
-[node name="InventoryPlaceholder" type="Button" parent="Traits/CenterContainer/InventoryPlaceHolderBackground"]
-layout_mode = 2
+[node name="InventoryPlaceholder" type="Button" parent="Traits/CenterContainer/InventoryPlaceHolderBackground" unique_id=1724689287]
+layout_mode = 0
 offset_left = 16.0
 offset_top = 45.0
 offset_right = 234.0
@@ -2964,20 +3096,20 @@ focus_mode = 0
 theme_override_constants/h_separation = 45
 theme_override_fonts/font = ExtResource("7_ovdqn")
 theme_override_font_sizes/font_size = 50
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_76ib4")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
 icon = SubResource("AtlasTexture_fneho")
 autowrap_mode = 3
 icon_alignment = 1
 vertical_icon_alignment = 2
 expand_icon = true
 
-[node name="TowerName" type="Label" parent="Traits/CenterContainer/InventoryPlaceHolderBackground/InventoryPlaceholder"]
+[node name="TowerName" type="Label" parent="Traits/CenterContainer/InventoryPlaceHolderBackground/InventoryPlaceholder" unique_id=336606816]
 layout_mode = 1
 offset_left = 9.0
 offset_top = -22.0
@@ -2989,7 +3121,7 @@ text = "WIZARD TOWER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TowerLevel" type="Label" parent="Traits/CenterContainer/InventoryPlaceHolderBackground/InventoryPlaceholder"]
+[node name="TowerLevel" type="Label" parent="Traits/CenterContainer/InventoryPlaceHolderBackground/InventoryPlaceholder" unique_id=1676125516]
 modulate = Color(0.873865, 4.71681e-06, 6.73831e-07, 1)
 layout_mode = 1
 offset_left = 9.0
@@ -3002,7 +3134,7 @@ text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TraitIcon" type="TextureRect" parent="Traits/CenterContainer/InventoryPlaceHolderBackground/InventoryPlaceholder"]
+[node name="TraitIcon" type="TextureRect" parent="Traits/CenterContainer/InventoryPlaceHolderBackground/InventoryPlaceholder" unique_id=1517908783]
 visible = false
 layout_mode = 0
 offset_left = 158.0
@@ -3012,7 +3144,7 @@ offset_bottom = 49.0
 texture = SubResource("AtlasTexture_kidrv")
 expand_mode = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Traits"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Traits" unique_id=1300728952]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3026,20 +3158,20 @@ offset_bottom = 431.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GridContainer" type="GridContainer" parent="Traits/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="Traits/ScrollContainer" unique_id=1195677360]
 layout_mode = 2
 theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 50
 columns = 2
 
-[node name="InventoryPlaceHolderBackground" type="TextureRect" parent="Traits/ScrollContainer"]
+[node name="InventoryPlaceHolderBackground" type="TextureRect" parent="Traits/ScrollContainer" unique_id=458812106]
 visible = false
 custom_minimum_size = Vector2(250, 400)
 layout_mode = 2
 texture = SubResource("AtlasTexture_s5ptr")
 
-[node name="InventoryPlaceholder" type="Button" parent="Traits/ScrollContainer/InventoryPlaceHolderBackground"]
-layout_mode = 2
+[node name="InventoryPlaceholder" type="Button" parent="Traits/ScrollContainer/InventoryPlaceHolderBackground" unique_id=1270449574]
+layout_mode = 0
 offset_left = 16.0
 offset_top = 45.0
 offset_right = 234.0
@@ -3048,20 +3180,20 @@ focus_mode = 0
 theme_override_constants/h_separation = 45
 theme_override_fonts/font = ExtResource("7_ovdqn")
 theme_override_font_sizes/font_size = 50
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_76ib4")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_76ib4")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_76ib4")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_76ib4")
 icon = SubResource("AtlasTexture_fneho")
 autowrap_mode = 3
 icon_alignment = 1
 vertical_icon_alignment = 2
 expand_icon = true
 
-[node name="TowerName" type="Label" parent="Traits/ScrollContainer/InventoryPlaceHolderBackground/InventoryPlaceholder"]
+[node name="TowerName" type="Label" parent="Traits/ScrollContainer/InventoryPlaceHolderBackground/InventoryPlaceholder" unique_id=1995916606]
 layout_mode = 1
 offset_left = 9.0
 offset_top = -22.0
@@ -3073,7 +3205,7 @@ text = "WIZARD TOWER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TowerLevel" type="Label" parent="Traits/ScrollContainer/InventoryPlaceHolderBackground/InventoryPlaceholder"]
+[node name="TowerLevel" type="Label" parent="Traits/ScrollContainer/InventoryPlaceHolderBackground/InventoryPlaceholder" unique_id=241176661]
 modulate = Color(0.873865, 4.71681e-06, 6.73831e-07, 1)
 layout_mode = 1
 offset_left = 9.0
@@ -3086,7 +3218,7 @@ text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TraitIcon" type="TextureRect" parent="Traits/ScrollContainer/InventoryPlaceHolderBackground/InventoryPlaceholder"]
+[node name="TraitIcon" type="TextureRect" parent="Traits/ScrollContainer/InventoryPlaceHolderBackground/InventoryPlaceholder" unique_id=1610367919]
 layout_mode = 0
 offset_left = 158.0
 offset_top = 9.0
@@ -3095,7 +3227,7 @@ offset_bottom = 49.0
 texture = ExtResource("2_l7kl1")
 expand_mode = 1
 
-[node name="OddsTable" type="TextureRect" parent="Traits"]
+[node name="OddsTable" type="TextureRect" parent="Traits" unique_id=352594706]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3110,7 +3242,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_jt2w2")
 
-[node name="PercentageDisplay" type="VBoxContainer" parent="Traits/OddsTable"]
+[node name="PercentageDisplay" type="VBoxContainer" parent="Traits/OddsTable" unique_id=1896782386]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3125,16 +3257,16 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="Blue" type="HBoxContainer" parent="Traits/OddsTable/PercentageDisplay"]
+[node name="Blue" type="HBoxContainer" parent="Traits/OddsTable/PercentageDisplay" unique_id=1080257396]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="ColorRect" type="ColorRect" parent="Traits/OddsTable/PercentageDisplay/Blue"]
+[node name="ColorRect" type="ColorRect" parent="Traits/OddsTable/PercentageDisplay/Blue" unique_id=1895880906]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Traits/OddsTable/PercentageDisplay/Blue"]
+[node name="Label" type="Label" parent="Traits/OddsTable/PercentageDisplay/Blue" unique_id=1048986850]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -3143,16 +3275,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Purple" type="HBoxContainer" parent="Traits/OddsTable/PercentageDisplay"]
+[node name="Purple" type="HBoxContainer" parent="Traits/OddsTable/PercentageDisplay" unique_id=1088425249]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="ColorRect" type="ColorRect" parent="Traits/OddsTable/PercentageDisplay/Purple"]
+[node name="ColorRect" type="ColorRect" parent="Traits/OddsTable/PercentageDisplay/Purple" unique_id=1691893801]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(0.6, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Traits/OddsTable/PercentageDisplay/Purple"]
+[node name="Label" type="Label" parent="Traits/OddsTable/PercentageDisplay/Purple" unique_id=1167728240]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -3161,16 +3293,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Pink" type="HBoxContainer" parent="Traits/OddsTable/PercentageDisplay"]
+[node name="Pink" type="HBoxContainer" parent="Traits/OddsTable/PercentageDisplay" unique_id=401501385]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="ColorRect" type="ColorRect" parent="Traits/OddsTable/PercentageDisplay/Pink"]
+[node name="ColorRect" type="ColorRect" parent="Traits/OddsTable/PercentageDisplay/Pink" unique_id=1654553076]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 1, 1)
 
-[node name="Label" type="Label" parent="Traits/OddsTable/PercentageDisplay/Pink"]
+[node name="Label" type="Label" parent="Traits/OddsTable/PercentageDisplay/Pink" unique_id=1028283254]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -3179,16 +3311,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Red" type="HBoxContainer" parent="Traits/OddsTable/PercentageDisplay"]
+[node name="Red" type="HBoxContainer" parent="Traits/OddsTable/PercentageDisplay" unique_id=1887142236]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="ColorRect" type="ColorRect" parent="Traits/OddsTable/PercentageDisplay/Red"]
+[node name="ColorRect" type="ColorRect" parent="Traits/OddsTable/PercentageDisplay/Red" unique_id=1871910826]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0, 0, 1)
 
-[node name="Label" type="Label" parent="Traits/OddsTable/PercentageDisplay/Red"]
+[node name="Label" type="Label" parent="Traits/OddsTable/PercentageDisplay/Red" unique_id=215231644]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -3197,16 +3329,16 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Gold" type="HBoxContainer" parent="Traits/OddsTable/PercentageDisplay"]
+[node name="Gold" type="HBoxContainer" parent="Traits/OddsTable/PercentageDisplay" unique_id=1123219510]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="ColorRect" type="ColorRect" parent="Traits/OddsTable/PercentageDisplay/Gold"]
+[node name="ColorRect" type="ColorRect" parent="Traits/OddsTable/PercentageDisplay/Gold" unique_id=1262436261]
 custom_minimum_size = Vector2(120, 60)
 layout_mode = 2
 color = Color(1, 0.843, 0, 1)
 
-[node name="Label" type="Label" parent="Traits/OddsTable/PercentageDisplay/Gold"]
+[node name="Label" type="Label" parent="Traits/OddsTable/PercentageDisplay/Gold" unique_id=510426743]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -3215,7 +3347,7 @@ text = "xx.x%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PurchaseTraitReroll" type="TextureRect" parent="Traits"]
+[node name="PurchaseTraitReroll" type="TextureRect" parent="Traits" unique_id=1396548016]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3231,7 +3363,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_11gnl")
 stretch_mode = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Traits/PurchaseTraitReroll"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Traits/PurchaseTraitReroll" unique_id=787715535]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3247,27 +3379,28 @@ grow_vertical = 2
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="RerollTraitButton" type="Button" parent="Traits/PurchaseTraitReroll/HBoxContainer"]
+[node name="RerollTraitButton" type="Button" parent="Traits/PurchaseTraitReroll/HBoxContainer" unique_id=1014188487]
 custom_minimum_size = Vector2(150, 79)
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_styles/hover = SubResource("StyleBoxTexture_ev6a5")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_mk24d")
+theme_override_font_sizes/font_size = 18
 theme_override_styles/normal = SubResource("StyleBoxTexture_ev6a5")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mk24d")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ev6a5")
 text = "Reroll Trait"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Traits/PurchaseTraitReroll/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Traits/PurchaseTraitReroll/HBoxContainer" unique_id=822226509]
 layout_mode = 2
 
-[node name="GoldCoin" type="TextureRect" parent="Traits/PurchaseTraitReroll/HBoxContainer/HBoxContainer"]
+[node name="GoldCoin" type="TextureRect" parent="Traits/PurchaseTraitReroll/HBoxContainer/HBoxContainer" unique_id=1966776784]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 texture = ExtResource("7_klchj")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TraitCost" type="Label" parent="Traits/PurchaseTraitReroll/HBoxContainer/HBoxContainer"]
+[node name="TraitCost" type="Label" parent="Traits/PurchaseTraitReroll/HBoxContainer/HBoxContainer" unique_id=1271139969]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -3277,7 +3410,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
 text = "xx,xxx"
 vertical_alignment = 1
 
-[node name="PurchaseTraitReroll2" type="TextureRect" parent="Traits"]
+[node name="PurchaseTraitReroll2" type="TextureRect" parent="Traits" unique_id=980157078]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3293,7 +3426,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_11gnl")
 stretch_mode = 5
 
-[node name="CenterContainer" type="CenterContainer" parent="Traits/PurchaseTraitReroll2"]
+[node name="CenterContainer" type="CenterContainer" parent="Traits/PurchaseTraitReroll2" unique_id=1989980558]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3307,21 +3440,26 @@ offset_bottom = 31.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CurrentTrait" type="Label" parent="Traits/PurchaseTraitReroll2/CenterContainer"]
+[node name="CurrentTrait" type="Label" parent="Traits/PurchaseTraitReroll2/CenterContainer" unique_id=606389516]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("7_ovdqn")
-theme_override_font_sizes/font_size = 30
-text = "Current Trait: XXXXXX"
+theme_override_font_sizes/font_size = 40
+text = "Select a tower"
 
-[node name="ReturnToShopMenu" type="Button" parent="Traits"]
+[node name="ReturnToShopMenu" type="Button" parent="Traits" unique_id=1195237872]
 layout_mode = 0
-offset_left = 217.0
-offset_top = 975.0
-offset_right = 584.0
-offset_bottom = 1044.0
+offset_left = 104.0
+offset_top = 990.0
+offset_right = 281.0
+offset_bottom = 1059.0
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/normal = SubResource("StyleBoxTexture_fdnlq")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_6iyac")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6iyac")
 text = "BACK"
 
-[node name="SilverAmount" type="TextureRect" parent="Traits"]
+[node name="SilverAmount" type="TextureRect" parent="Traits" unique_id=1131407740]
 layout_mode = 0
 offset_left = 1096.0
 offset_top = 86.0
@@ -3330,7 +3468,7 @@ offset_bottom = 170.0
 texture = SubResource("AtlasTexture_su40n")
 stretch_mode = 4
 
-[node name="TextureRect" type="TextureRect" parent="Traits/SilverAmount"]
+[node name="TextureRect" type="TextureRect" parent="Traits/SilverAmount" unique_id=290811238]
 layout_mode = 0
 offset_left = 140.0
 offset_right = 282.0
@@ -3340,7 +3478,7 @@ expand_mode = 1
 stretch_mode = 4
 flip_h = true
 
-[node name="Currency" type="HBoxContainer" parent="Traits/SilverAmount"]
+[node name="Currency" type="HBoxContainer" parent="Traits/SilverAmount" unique_id=984561745]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3355,18 +3493,18 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 40
 
-[node name="Silver" type="HBoxContainer" parent="Traits/SilverAmount/Currency"]
+[node name="Silver" type="HBoxContainer" parent="Traits/SilverAmount/Currency" unique_id=1737097376]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Silver" type="TextureRect" parent="Traits/SilverAmount/Currency/Silver"]
+[node name="Silver" type="TextureRect" parent="Traits/SilverAmount/Currency/Silver" unique_id=1545114507]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 texture = ExtResource("6_4boqv")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BackgroundBlockers" type="TextureRect" parent="Traits/SilverAmount/Currency/Silver/Silver"]
+[node name="BackgroundBlockers" type="TextureRect" parent="Traits/SilverAmount/Currency/Silver/Silver" unique_id=784385112]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 0
 offset_top = 9.0
@@ -3376,7 +3514,7 @@ texture = SubResource("AtlasTexture_vii81")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BackgroundBlockers2" type="TextureRect" parent="Traits/SilverAmount/Currency/Silver/Silver"]
+[node name="BackgroundBlockers2" type="TextureRect" parent="Traits/SilverAmount/Currency/Silver/Silver" unique_id=522033953]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 0
 offset_left = 24.0
@@ -3387,7 +3525,7 @@ texture = SubResource("AtlasTexture_vii81")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BackgroundBlockers3" type="TextureRect" parent="Traits/SilverAmount/Currency/Silver/Silver"]
+[node name="BackgroundBlockers3" type="TextureRect" parent="Traits/SilverAmount/Currency/Silver/Silver" unique_id=1847048019]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 0
 offset_left = 24.0
@@ -3398,7 +3536,7 @@ texture = SubResource("AtlasTexture_vii81")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BackgroundBlockers4" type="TextureRect" parent="Traits/SilverAmount/Currency/Silver/Silver"]
+[node name="BackgroundBlockers4" type="TextureRect" parent="Traits/SilverAmount/Currency/Silver/Silver" unique_id=610676118]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 0
 offset_top = 39.0
@@ -3408,7 +3546,7 @@ texture = SubResource("AtlasTexture_vii81")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SilverLabel" type="Label" parent="Traits/SilverAmount/Currency/Silver" groups=["SilverAmount"]]
+[node name="SilverLabel" type="Label" parent="Traits/SilverAmount/Currency/Silver" unique_id=1259109458 groups=["SilverAmount"]]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -3418,7 +3556,7 @@ text = "XXX,XXX"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="GoldAmount" type="TextureRect" parent="Traits"]
+[node name="GoldAmount" type="TextureRect" parent="Traits" unique_id=1340007515]
 layout_mode = 0
 offset_left = 1400.0
 offset_top = 86.0
@@ -3427,7 +3565,7 @@ offset_bottom = 170.0
 texture = SubResource("AtlasTexture_su40n")
 stretch_mode = 4
 
-[node name="TextureRect" type="TextureRect" parent="Traits/GoldAmount"]
+[node name="TextureRect" type="TextureRect" parent="Traits/GoldAmount" unique_id=819353177]
 layout_mode = 0
 offset_left = 140.0
 offset_right = 282.0
@@ -3437,7 +3575,7 @@ expand_mode = 1
 stretch_mode = 4
 flip_h = true
 
-[node name="Currency" type="HBoxContainer" parent="Traits/GoldAmount"]
+[node name="Currency" type="HBoxContainer" parent="Traits/GoldAmount" unique_id=741618392]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -3452,11 +3590,11 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 40
 
-[node name="Gold" type="HBoxContainer" parent="Traits/GoldAmount/Currency"]
+[node name="Gold" type="HBoxContainer" parent="Traits/GoldAmount/Currency" unique_id=1201459654]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Gold" type="TextureRect" parent="Traits/GoldAmount/Currency/Gold"]
+[node name="Gold" type="TextureRect" parent="Traits/GoldAmount/Currency/Gold" unique_id=2079785028]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -3464,7 +3602,7 @@ texture = ExtResource("7_klchj")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="GoldLabel" type="Label" parent="Traits/GoldAmount/Currency/Gold" groups=["GoldAmount"]]
+[node name="GoldLabel" type="Label" parent="Traits/GoldAmount/Currency/Gold" unique_id=1411717318 groups=["GoldAmount"]]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -3477,8 +3615,12 @@ vertical_alignment = 2
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Inventory" to="." method="_on_inventory_pressed"]
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Shop" to="." method="_on_shop_pressed"]
+[connection signal="pressed" from="MainMenu/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MainMenu/QuitButton/QuitPopup/HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="MainMenu/QuitButton/QuitPopup/HBoxContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]
 [connection signal="pressed" from="ChooseMap/ReturnToMainMenuFromPlay" to="." method="_on_return_to_main_menu_from_play_pressed"]
 [connection signal="pressed" from="ChooseMap/SelectModifiers/FinalModifiers/StartMapButton" to="." method="_on_start_map_button_pressed"]
+[connection signal="pressed" from="ChooseMap/SelectModifiers/CloseMenuButton" to="." method="_on_close_menu_button_pressed"]
 [connection signal="pressed" from="Inventory/ReturnToMainMenuFromInventoryButton" to="." method="_on_return_to_main_menu_from_inventory_button_pressed"]
 [connection signal="pressed" from="Inventory/PreviewTower/HBoxContainer/HotbarSelectButton" to="." method="_on_hotbar_select_button_pressed"]
 [connection signal="pressed" from="Shop/ReturnToMainMenuButton" to="." method="_on_return_to_main_menu_button_pressed"]

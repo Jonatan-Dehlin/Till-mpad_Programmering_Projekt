@@ -1,0 +1,618 @@
+[gd_scene load_steps=18 format=3 uid="uid://cyfp805luoknq"]
+
+[ext_resource type="Script" path="res://Scripts/game_finished_menu.gd" id="1_81qqe"]
+[ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/medieval.png" id="1_sseo8"]
+[ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="2_mgdof"]
+[ext_resource type="Texture2D" uid="uid://di68gim02dr7c" path="res://Assets/Towers/Towers bases/PNGs/Tower 05.png" id="3_300f6"]
+[ext_resource type="Texture2D" uid="uid://ufo5h6al0bee" path="res://Assets/SilverCoin.png" id="4_0l5to"]
+[ext_resource type="Texture2D" uid="uid://2dyamd5eme8k" path="res://#1 - Transparent Icons.png" id="4_yvm20"]
+[ext_resource type="Texture2D" uid="uid://q7ls5cim2spy" path="res://Assets/GoldCoin.png" id="5_ix0bh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t8g63"]
+atlas = ExtResource("1_sseo8")
+region = Rect2(84, 274, 71, 92)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jqar"]
+atlas = ExtResource("1_sseo8")
+region = Rect2(864, 704, 97, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j07os"]
+atlas = ExtResource("3_300f6")
+region = Rect2(0, 22, 64, 106)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5e10t"]
+atlas = ExtResource("4_yvm20")
+region = Rect2(258, 674, 28, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hh0ee"]
+atlas = ExtResource("1_sseo8")
+region = Rect2(517, 272, 118, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4aa4r"]
+texture = SubResource("AtlasTexture_hh0ee")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8h75"]
+atlas = ExtResource("1_sseo8")
+region = Rect2(321, 100, 90, 27)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_74h2i"]
+texture = SubResource("AtlasTexture_b8h75")
+texture_margin_left = 10.0
+texture_margin_top = 15.0
+texture_margin_right = 10.0
+texture_margin_bottom = 13.0
+modulate_color = Color(0.691357, 0.691357, 0.691357, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_autof"]
+texture = SubResource("AtlasTexture_b8h75")
+texture_margin_left = 10.0
+texture_margin_top = 15.0
+texture_margin_right = 10.0
+texture_margin_bottom = 13.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vx1x8"]
+texture = SubResource("AtlasTexture_b8h75")
+texture_margin_left = 10.0
+texture_margin_top = 15.0
+texture_margin_right = 10.0
+texture_margin_bottom = 13.0
+modulate_color = Color(0.691357, 0.691357, 0.691357, 1)
+
+[node name="GameFinishedMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_81qqe")
+
+[node name="Main Panel" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -456.0
+offset_top = -332.0
+offset_right = 467.0
+offset_bottom = 344.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_t8g63")
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="Main Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 152.5
+offset_top = -277.0
+offset_right = 867.5
+offset_bottom = 247.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_5jqar")
+stretch_mode = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Main Panel/TextureRect2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -215.5
+offset_top = -218.0
+offset_right = 215.5
+offset_bottom = 218.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Placeholder" type="HBoxContainer" parent="Main Panel/TextureRect2/ScrollContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+metadata/HotbarIndex = 0
+
+[node name="TowerIcon" type="TextureRect" parent="Main Panel/TextureRect2/ScrollContainer/Placeholder"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = SubResource("AtlasTexture_j07os")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TraitIcon" type="TextureRect" parent="Main Panel/TextureRect2/ScrollContainer/Placeholder/TowerIcon"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = SubResource("AtlasTexture_5e10t")
+
+[node name="ProgressBar" type="ProgressBar" parent="Main Panel/TextureRect2/ScrollContainer/Placeholder"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_mgdof")
+show_percentage = false
+
+[node name="Label" type="Label" parent="Main Panel/TextureRect2/ScrollContainer/Placeholder/ProgressBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -7.0
+offset_right = 23.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 30
+text = "XX/XX"
+
+[node name="Double" type="VBoxContainer" parent="Main Panel/TextureRect2/ScrollContainer/Placeholder"]
+layout_mode = 2
+alignment = 1
+
+[node name="LevelLabel" type="Label" parent="Main Panel/TextureRect2/ScrollContainer/Placeholder/Double"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "x -> x"
+horizontal_alignment = 1
+
+[node name="XPLabel" type="Label" parent="Main Panel/TextureRect2/ScrollContainer/Placeholder/Double"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+ XX,XXX"
+
+[node name="LevelUpContainer" type="VBoxContainer" parent="Main Panel/TextureRect2/ScrollContainer"]
+custom_minimum_size = Vector2(430, 0)
+layout_mode = 2
+
+[node name="DefeatOrVictoryLabel" type="Label" parent="Main Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -106.5
+offset_top = 86.0
+offset_right = 104.5
+offset_bottom = 153.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxTexture_4aa4r")
+text = "VICTORY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WavesSurvived" type="Label" parent="Main Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.5
+offset_top = -208.0
+offset_right = 120.5
+offset_bottom = -98.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Waves Survived: XXX"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Difficulty" type="HBoxContainer" parent="Main Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -166.5
+offset_top = -132.0
+offset_right = 166.5
+offset_bottom = -96.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Difficulty" type="Label" parent="Main Panel/Difficulty"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 35
+text = "Hard:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="Main Panel/Difficulty"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="Main Panel/Difficulty"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 35
+text = "+150%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon3" type="TextureRect" parent="Main Panel/Difficulty"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("5_ix0bh")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier2" type="Label" parent="Main Panel/Difficulty"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 35
+text = "+50%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DifficultyFactors" type="VBoxContainer" parent="Main Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -143.5
+offset_top = -80.5
+offset_right = 143.5
+offset_bottom = 170.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Slow Towers" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Slow Towers"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Slow Towers"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="Main Panel/DifficultyFactors/Slow Towers"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="Main Panel/DifficultyFactors/Slow Towers"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+25%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Weak Towers" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Weak Towers"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Weak Towers
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="Main Panel/DifficultyFactors/Weak Towers"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="Main Panel/DifficultyFactors/Weak Towers"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+25%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Blind Towers" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Blind Towers"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Blind Towers
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="Main Panel/DifficultyFactors/Blind Towers"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="Main Panel/DifficultyFactors/Blind Towers"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+25%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Crippled Towers" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Crippled Towers"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Crippled Towers
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="Main Panel/DifficultyFactors/Crippled Towers"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="Main Panel/DifficultyFactors/Crippled Towers"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+50%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Expensive Towers" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Expensive Towers"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Expensive Towers
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="Main Panel/DifficultyFactors/Expensive Towers"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="Main Panel/DifficultyFactors/Expensive Towers"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+25%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Economic Depression" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Economic Depression"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Economic Depression
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="Main Panel/DifficultyFactors/Economic Depression"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="Main Panel/DifficultyFactors/Economic Depression"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+50%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sudden Death" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Sudden Death"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Sudden Death
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="Main Panel/DifficultyFactors/Sudden Death"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="Main Panel/DifficultyFactors/Sudden Death"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Only One" type="HBoxContainer" parent="Main Panel/DifficultyFactors"]
+visible = false
+layout_mode = 2
+
+[node name="SlowTowers" type="Label" parent="Main Panel/DifficultyFactors/Only One"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "Only One
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="TextureRect" parent="Main Panel/DifficultyFactors/Only One"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Modifier" type="Label" parent="Main Panel/DifficultyFactors/Only One"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 20
+text = "+100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TotalEarned" type="HBoxContainer" parent="Main Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -156.0
+offset_top = -192.0
+offset_right = 156.0
+offset_bottom = -152.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="Main Panel/TotalEarned"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 19
+text = "Total Earned: "
+
+[node name="TextureRect" type="TextureRect" parent="Main Panel/TotalEarned"]
+layout_mode = 2
+texture = ExtResource("4_0l5to")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="Main Panel/TotalEarned"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 19
+text = "0"
+
+[node name="TextureRect2" type="TextureRect" parent="Main Panel/TotalEarned"]
+layout_mode = 2
+texture = ExtResource("5_ix0bh")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label3" type="Label" parent="Main Panel/TotalEarned"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.556863, 0.372549, 0.168627, 1)
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 19
+text = "0"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Main Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -152.0
+offset_top = -141.0
+offset_right = 152.0
+offset_bottom = -82.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ReturnToMenuButton" type="Button" parent="Main Panel/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = SubResource("StyleBoxTexture_74h2i")
+theme_override_styles/normal = SubResource("StyleBoxTexture_autof")
+text = "Main Menu"
+
+[node name="ReplayButton" type="Button" parent="Main Panel/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_mgdof")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/hover = SubResource("StyleBoxTexture_vx1x8")
+theme_override_styles/normal = SubResource("StyleBoxTexture_autof")
+text = "Replay"
+
+[connection signal="pressed" from="Main Panel/HBoxContainer/ReturnToMenuButton" to="." method="_on_return_to_menu_button_pressed"]
+[connection signal="pressed" from="Main Panel/HBoxContainer/ReplayButton" to="." method="_on_replay_button_pressed"]
