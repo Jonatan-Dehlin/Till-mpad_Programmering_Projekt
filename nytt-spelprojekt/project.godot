@@ -17,7 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="Realmguard Tower Defense"
 run/main_scene="res://Scenes/main.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://Assets/Icons/icon.svg"
 
 [autoload]
 
@@ -38,6 +38,10 @@ enabled=PackedStringArray()
 UpgradePanel="UpgradePanel. Gruppen används för att kunna gömma Upgradepanels från annan kod ifall det skulle behövas."
 TowerOutline=""
 Maps=""
+LightUIButton=""
+MediumUIButton="Used to connect UI sounds on press"
+HeavyUIButton=""
+ConfirmUIButton=""
 
 [gui]
 

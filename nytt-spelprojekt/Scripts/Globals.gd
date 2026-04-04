@@ -36,6 +36,26 @@ var map_completed_reward = {"Easy":[1000,100],"Normal":[1500,200],"Advanced":[30
 var accumulated_reward: Array = [0,0] # [silver, guld]
 var accumulated_player_EXP: int = 0
 
+# UI och BG ljud
+var UI_audio = {
+	"LightClick": 
+	[preload("res://Assets/Audio/UI/LightClick1.ogg"),
+	preload("res://Assets/Audio/UI/LightClick2.ogg"),
+	preload("res://Assets/Audio/UI/LightClick3.ogg"),
+	preload("res://Assets/Audio/UI/LightClick4.ogg")],
+	"MediumClick":
+	[preload("res://Assets/Audio/UI/MediumClick1.ogg"),
+	preload("res://Assets/Audio/UI/MediumClick2.ogg")],
+	"HeavyClick":
+	[preload("res://Assets/Audio/UI/HeavyClick1.ogg"),
+	preload("res://Assets/Audio/UI/HeavyClick2.ogg")],
+	"ConfirmClick":
+	[preload("res://Assets/Audio/UI/ConfirmClick1.ogg"),
+	preload("res://Assets/Audio/UI/ConfirmClick2.ogg"),
+	preload("res://Assets/Audio/UI/ConfirmClick3.ogg"),
+	preload("res://Assets/Audio/UI/ConfirmClick4.ogg")],
+}
+
 
 # Speed och HP faktorer för fiender
 var current_health_factor: float = 1
@@ -326,7 +346,10 @@ func calculate_required_EXP(Level, player: bool) -> int: # Räknar ut hur mycket
 
 func format_number(n) -> String: # Gör om t.ex. 1000000 -> 1,000,000
 	if n < 1000: # Om numret är under 1000 behöver det inte formatteras
-		return str(snapped(n,0.01))
+		if n == int(n):
+			return str(int(n))
+		else:
+			return str(snapped(n,0.01))
 	else:
 		var s = str(n)
 		var result: String = ""
@@ -388,6 +411,16 @@ func level_up_player():
 		PlayerStats["Level"] += 1
 	
 	update_save_file()
+
+func audio_manager(PreloadedAudio): # Tar hand om allt ljud
+	print("Played")
+	var AudioPlayer = AudioStreamPlayer.new()
+	AudioPlayer.stream = PreloadedAudio
+	add_child(AudioPlayer)
+	AudioPlayer.play()
+	
+	await AudioPlayer.finished
+	AudioPlayer.queue_free()
 
 ###################### PLAY FUNCTIONS #####################
 func reset() -> void:

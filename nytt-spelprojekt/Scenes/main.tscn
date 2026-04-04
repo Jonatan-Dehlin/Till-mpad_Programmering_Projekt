@@ -1,15 +1,16 @@
 [gd_scene format=3 uid="uid://tbpoiyn0mbo1"]
 
 [ext_resource type="Script" uid="uid://bkkhgkxapur8e" path="res://Scripts/main.gd" id="1_fip6x"]
-[ext_resource type="Texture2D" uid="uid://bvap3sergftsn" path="res://icon.svg" id="2_l7kl1"]
-[ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/medieval.png" id="2_ral5c"]
-[ext_resource type="Texture2D" uid="uid://dfyhvur3oujdf" path="res://Fantasy RPG (Toony) 32x32.png" id="3_baln0"]
-[ext_resource type="Texture2D" uid="uid://c0mv7l0xunohp" path="res://Skärmavbild 2025-11-18 kl. 15.15.56.png" id="3_wdan3"]
+[ext_resource type="Texture2D" uid="uid://sahmmdmugf1a" path="res://Assets/Icons/Skärmavbild 2026-03-20 kl. 08.26.38.png" id="2_6iyac"]
+[ext_resource type="Texture2D" uid="uid://bvap3sergftsn" path="res://Assets/Icons/icon.svg" id="2_l7kl1"]
+[ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/Icons/medieval.png" id="2_ral5c"]
+[ext_resource type="Texture2D" uid="uid://dfyhvur3oujdf" path="res://Assets/Icons/Fantasy RPG (Toony) 32x32.png" id="3_baln0"]
+[ext_resource type="Texture2D" uid="uid://c0mv7l0xunohp" path="res://Assets/Icons/Skärmavbild 2025-11-18 kl. 15.15.56.png" id="3_wdan3"]
 [ext_resource type="Texture2D" uid="uid://duu5ckvrvs228" path="res://Assets/the-cyberpunk-32x32-pixel-rank-icons/2 Frames/16.png" id="5_hyy8a"]
-[ext_resource type="Texture2D" uid="uid://ufo5h6al0bee" path="res://Assets/SilverCoin.png" id="6_4boqv"]
+[ext_resource type="Texture2D" uid="uid://ufo5h6al0bee" path="res://Assets/Icons/SilverCoin.png" id="6_4boqv"]
 [ext_resource type="Texture2D" uid="uid://chhdcjor1hqkv" path="res://Assets/the-cyberpunk-32x32-pixel-rank-icons/1 Icons/8/Rank-icons_5.png" id="6_lbna8"]
-[ext_resource type="Texture2D" uid="uid://2dyamd5eme8k" path="res://#1 - Transparent Icons.png" id="7_h2fuq"]
-[ext_resource type="Texture2D" uid="uid://q7ls5cim2spy" path="res://Assets/GoldCoin.png" id="7_klchj"]
+[ext_resource type="Texture2D" uid="uid://2dyamd5eme8k" path="res://Assets/Icons/#1 - Transparent Icons.png" id="7_h2fuq"]
+[ext_resource type="Texture2D" uid="uid://q7ls5cim2spy" path="res://Assets/Icons/GoldCoin.png" id="7_klchj"]
 [ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="7_ovdqn"]
 
 [sub_resource type="Animation" id="Animation_nsful"]
@@ -365,6 +366,7 @@ atlas = ExtResource("2_ral5c")
 region = Rect2(864, 704, 97, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fdnlq"]
+atlas = ExtResource("2_6iyac")
 region = Rect2(581, 0, 1606, 1606)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d1ilt"]
@@ -524,6 +526,7 @@ libraries/ = SubResource("AnimationLibrary_vixfu")
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1081.0
+texture = ExtResource("2_6iyac")
 expand_mode = 1
 stretch_mode = 5
 
@@ -786,7 +789,7 @@ offset_bottom = 175.0
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="Inventory" type="TextureButton" parent="MainMenu/BottomPanel/Buttons" unique_id=54930310]
+[node name="Inventory" type="TextureButton" parent="MainMenu/BottomPanel/Buttons" unique_id=54930310 groups=["MediumUIButton"]]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -806,7 +809,7 @@ text = "INVENTORY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Play" type="TextureButton" parent="MainMenu/BottomPanel/Buttons" unique_id=1585342458]
+[node name="Play" type="TextureButton" parent="MainMenu/BottomPanel/Buttons" unique_id=1585342458 groups=["MediumUIButton"]]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -826,7 +829,7 @@ text = "PLAY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Shop" type="TextureButton" parent="MainMenu/BottomPanel/Buttons" unique_id=965103999]
+[node name="Shop" type="TextureButton" parent="MainMenu/BottomPanel/Buttons" unique_id=965103999 groups=["MediumUIButton"]]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -968,7 +971,7 @@ alignment = 1
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="forest_level" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer1" unique_id=113279460]
+[node name="forest_level" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer1" unique_id=113279460 groups=["MediumUIButton"]]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 focus_mode = 0
@@ -998,7 +1001,7 @@ expand_icon = true
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="dark_forest_level" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer2" unique_id=687635322]
+[node name="dark_forest_level" type="Button" parent="ChooseMap/ScrollContainer/HBoxContainer/MapContainer2" unique_id=687635322 groups=["MediumUIButton"]]
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 focus_mode = 0
@@ -1055,7 +1058,7 @@ icon = ExtResource("2_l7kl1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="ReturnToMainMenuFromPlay" type="Button" parent="ChooseMap" unique_id=1957069387]
+[node name="ReturnToMainMenuFromPlay" type="Button" parent="ChooseMap" unique_id=1957069387 groups=["HeavyUIButton"]]
 layout_mode = 0
 offset_left = 91.0
 offset_top = 1000.0
@@ -1224,7 +1227,7 @@ offset_bottom = 232.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Slow Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=1234748698]
+[node name="Slow Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=1234748698 groups=["LightUIButton"]]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1234,7 +1237,7 @@ icon = ExtResource("6_4boqv")
 icon_alignment = 2
 expand_icon = true
 
-[node name="Weak Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=924871965]
+[node name="Weak Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=924871965 groups=["LightUIButton"]]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1244,7 +1247,7 @@ icon = ExtResource("6_4boqv")
 icon_alignment = 2
 expand_icon = true
 
-[node name="Blind Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=970990245]
+[node name="Blind Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=970990245 groups=["LightUIButton"]]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1254,7 +1257,7 @@ icon = ExtResource("6_4boqv")
 icon_alignment = 2
 expand_icon = true
 
-[node name="Crippled Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=1473704628]
+[node name="Crippled Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=1473704628 groups=["LightUIButton"]]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1265,7 +1268,7 @@ icon = ExtResource("6_4boqv")
 icon_alignment = 2
 expand_icon = true
 
-[node name="Expensive Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=428581294]
+[node name="Expensive Towers" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=428581294 groups=["LightUIButton"]]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1275,7 +1278,7 @@ icon = ExtResource("6_4boqv")
 icon_alignment = 2
 expand_icon = true
 
-[node name="Economic Depression" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=189713550]
+[node name="Economic Depression" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=189713550 groups=["LightUIButton"]]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1285,7 +1288,7 @@ icon = ExtResource("6_4boqv")
 icon_alignment = 2
 expand_icon = true
 
-[node name="Sudden Death" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=1611850215]
+[node name="Sudden Death" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=1611850215 groups=["LightUIButton"]]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1295,7 +1298,7 @@ icon = ExtResource("6_4boqv")
 icon_alignment = 2
 expand_icon = true
 
-[node name="Only One" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=551390693]
+[node name="Only One" type="CheckBox" parent="ChooseMap/SelectModifiers/CheckBoxContainer" unique_id=551390693 groups=["LightUIButton"]]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1319,7 +1322,7 @@ offset_bottom = -67.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="StartMapButton" type="Button" parent="ChooseMap/SelectModifiers/FinalModifiers" unique_id=1506642555]
+[node name="StartMapButton" type="Button" parent="ChooseMap/SelectModifiers/FinalModifiers" unique_id=1506642555 groups=["ConfirmUIButton"]]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("7_ovdqn")
@@ -1353,7 +1356,7 @@ texture = ExtResource("7_klchj")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="CloseMenuButton" type="TextureButton" parent="ChooseMap/SelectModifiers" unique_id=470772587]
+[node name="CloseMenuButton" type="TextureButton" parent="ChooseMap/SelectModifiers" unique_id=470772587 groups=["HeavyUIButton"]]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 0
 offset_left = 202.50003
@@ -1381,7 +1384,7 @@ offset_bottom = 531.0
 texture = SubResource("AtlasTexture_s5ptr")
 metadata/Index = 0
 
-[node name="InventoryPlaceholder" type="Button" parent="Inventory/InventoryPlaceHolderBackground" unique_id=1808518978]
+[node name="InventoryPlaceholder" type="Button" parent="Inventory/InventoryPlaceHolderBackground" unique_id=1808518978 groups=["LightUIButton"]]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 45.0
@@ -1459,7 +1462,7 @@ theme_override_constants/h_separation = 12
 theme_override_constants/v_separation = 30
 columns = 4
 
-[node name="ReturnToMainMenuFromInventoryButton" type="Button" parent="Inventory" unique_id=2114582645]
+[node name="ReturnToMainMenuFromInventoryButton" type="Button" parent="Inventory" unique_id=2114582645 groups=["HeavyUIButton"]]
 layout_mode = 0
 offset_left = 1507.0
 offset_top = 952.0
@@ -2844,7 +2847,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_8s43a")
 text = "xx,xxx"
 vertical_alignment = 1
 
-[node name="ReturnToMainMenuButton" type="Button" parent="Shop" unique_id=1098684721]
+[node name="ReturnToMainMenuButton" type="Button" parent="Shop" unique_id=1098684721 groups=["HeavyUIButton"]]
 layout_mode = 0
 offset_left = 96.0
 offset_top = 983.0
@@ -3446,7 +3449,7 @@ theme_override_fonts/font = ExtResource("7_ovdqn")
 theme_override_font_sizes/font_size = 40
 text = "Select a tower"
 
-[node name="ReturnToShopMenu" type="Button" parent="Traits" unique_id=1195237872]
+[node name="ReturnToShopMenu" type="Button" parent="Traits" unique_id=1195237872 groups=["HeavyUIButton"]]
 layout_mode = 0
 offset_left = 104.0
 offset_top = 990.0

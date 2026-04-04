@@ -17,7 +17,7 @@ var SelectedTower
 
 var TraitIconAtlasDictionary = Globals.TraitIconAtlasDictionary
 
-var TraitBaseTexture: Texture = preload("res://#1 - Transparent Icons.png")
+var TraitBaseTexture: Texture = preload("res://Assets/Icons/#1 - Transparent Icons.png")
 var TowerTextures = { # Förladdar texturerna till tornen
 	"wizard_tower.tscn": preload("res://Assets/Towers/Towers bases/PNGs/Tower 05.png"),
 	"ballista_tower.tscn": preload("res://Assets/Towers/Towers bases/PNGs/Tower 06.png"),

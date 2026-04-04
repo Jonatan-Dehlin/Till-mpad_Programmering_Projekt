@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://il8yu6rtfu8h"]
+[gd_scene format=3 uid="uid://il8yu6rtfu8h"]
 
-[ext_resource type="Script" path="res://Scripts/pause_menu.gd" id="1_0ynhq"]
-[ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/medieval.png" id="1_2jws7"]
+[ext_resource type="Script" uid="uid://cytsmwpvkqjp3" path="res://Scripts/pause_menu.gd" id="1_0ynhq"]
+[ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/Icons/medieval.png" id="1_2jws7"]
 [ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="2_4odxh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kjfmf"]
@@ -12,11 +12,10 @@ region = Rect2(84, 274, 71, 92)
 atlas = ExtResource("1_2jws7")
 region = Rect2(321, 100, 90, 27)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_axwma"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nvkfc"]
 texture = SubResource("AtlasTexture_8ot4e")
 expand_margin_top = 10.0
 expand_margin_bottom = 5.0
-modulate_color = Color(0.779291, 0.779291, 0.779291, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tyu8l"]
 texture = SubResource("AtlasTexture_8ot4e")
@@ -24,12 +23,13 @@ expand_margin_top = 10.0
 expand_margin_bottom = 5.0
 modulate_color = Color(0.585062, 0.585062, 0.585062, 1)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nvkfc"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_axwma"]
 texture = SubResource("AtlasTexture_8ot4e")
 expand_margin_top = 10.0
 expand_margin_bottom = 5.0
+modulate_color = Color(0.779291, 0.779291, 0.779291, 1)
 
-[node name="PauseMenu" type="Control"]
+[node name="PauseMenu" type="Control" unique_id=372074853]
 process_mode = 2
 layout_mode = 3
 anchors_preset = 15
@@ -39,7 +39,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0ynhq")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1384174598]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -56,7 +56,7 @@ texture = SubResource("AtlasTexture_kjfmf")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect" unique_id=551165337]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -72,34 +72,34 @@ grow_vertical = 2
 theme_override_constants/separation = 80
 alignment = 1
 
-[node name="ResumeButton" type="Button" parent="TextureRect/VBoxContainer"]
+[node name="ResumeButton" type="Button" parent="TextureRect/VBoxContainer" unique_id=1881517445]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("2_4odxh")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/hover = SubResource("StyleBoxTexture_axwma")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_tyu8l")
 theme_override_styles/normal = SubResource("StyleBoxTexture_nvkfc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_tyu8l")
+theme_override_styles/hover = SubResource("StyleBoxTexture_axwma")
 text = "Resume"
 
-[node name="SettingsButton" type="Button" parent="TextureRect/VBoxContainer"]
+[node name="SettingsButton" type="Button" parent="TextureRect/VBoxContainer" unique_id=1974739980]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("2_4odxh")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/hover = SubResource("StyleBoxTexture_axwma")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_tyu8l")
 theme_override_styles/normal = SubResource("StyleBoxTexture_nvkfc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_tyu8l")
+theme_override_styles/hover = SubResource("StyleBoxTexture_axwma")
 text = "Settings"
 
-[node name="ExitButton" type="Button" parent="TextureRect/VBoxContainer"]
+[node name="ExitButton" type="Button" parent="TextureRect/VBoxContainer" unique_id=1540444711]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("2_4odxh")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/hover = SubResource("StyleBoxTexture_axwma")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_tyu8l")
 theme_override_styles/normal = SubResource("StyleBoxTexture_nvkfc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_tyu8l")
+theme_override_styles/hover = SubResource("StyleBoxTexture_axwma")
 text = "Exit"
 
 [connection signal="pressed" from="TextureRect/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]

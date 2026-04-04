@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://buq0e5edyfx5w"
+path="res://.godot/imported/Pixel 8.mp3-72359665d6eec27b20326c7110bbc347.mp3str"
+
+[deps]
+
+source_file="res://Assets/Audio/Pixel Music Pack/mp3/Pixel 8.mp3"
+dest_files=["res://.godot/imported/Pixel 8.mp3-72359665d6eec27b20326c7110bbc347.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

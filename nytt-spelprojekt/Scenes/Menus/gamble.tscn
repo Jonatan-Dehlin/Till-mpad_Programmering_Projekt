@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://b6ed3qo1nn504"]
+[gd_scene format=3 uid="uid://b6ed3qo1nn504"]
 
-[ext_resource type="Script" path="res://Scripts/gamble.gd" id="1_j1h4x"]
-[ext_resource type="Texture2D" uid="uid://2dyamd5eme8k" path="res://#1 - Transparent Icons.png" id="2_io8sd"]
+[ext_resource type="Script" uid="uid://ql0t6akmcjxr" path="res://Scripts/gamble.gd" id="1_j1h4x"]
+[ext_resource type="Texture2D" uid="uid://2dyamd5eme8k" path="res://Assets/Icons/#1 - Transparent Icons.png" id="2_io8sd"]
 [ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="3_y1au2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ehlj6"]
@@ -12,7 +12,7 @@
 atlas = ExtResource("2_io8sd")
 region = Rect2(258, 674, 28, 28)
 
-[node name="Gamble" type="Control"]
+[node name="Gamble" type="Control" unique_id=198037718]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -22,19 +22,19 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_j1h4x")
 
-[node name="Panel2" type="Panel" parent="."]
+[node name="Panel2" type="Panel" parent="." unique_id=1720120619]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=509878553]
 layout_mode = 0
 offset_top = 115.0
 offset_right = 1920.0
 offset_bottom = 965.0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=1901854924]
 layout_mode = 0
 offset_top = 25.0
 offset_right = 1920.0
@@ -43,11 +43,11 @@ mouse_filter = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/ScrollContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/ScrollContainer" unique_id=996989765]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Panel" type="Panel" parent="Panel"]
+[node name="Panel" type="Panel" parent="Panel" unique_id=164408904]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -63,10 +63,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ehlj6")
 
-[node name="Marker2D" type="Marker2D" parent="Panel/Panel"]
+[node name="Marker2D" type="Marker2D" parent="Panel/Panel" unique_id=1144895374]
 position = Vector2(5, 425)
 
-[node name="ReferencePanel" type="Panel" parent="." groups=["GamblePanel"]]
+[node name="ReferencePanel" type="Panel" parent="." unique_id=518381479 groups=["GamblePanel"]]
 visible = false
 custom_minimum_size = Vector2(500, 800)
 layout_mode = 0
@@ -74,7 +74,7 @@ offset_right = 500.0
 offset_bottom = 800.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_itup5")
 
-[node name="ColorRect" type="ColorRect" parent="ReferencePanel"]
+[node name="ColorRect" type="ColorRect" parent="ReferencePanel" unique_id=1366747792]
 custom_minimum_size = Vector2(450, 450)
 layout_mode = 1
 anchors_preset = 8
@@ -90,7 +90,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 0.843137, 0, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ReferencePanel/ColorRect"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ReferencePanel/ColorRect" unique_id=728370764]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -106,13 +106,13 @@ grow_vertical = 2
 theme_override_constants/separation = 25
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="ReferencePanel/ColorRect/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="ReferencePanel/ColorRect/VBoxContainer" unique_id=1233016961]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 2
 texture = SubResource("AtlasTexture_r0f22")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="ReferencePanel/ColorRect/VBoxContainer"]
+[node name="Label" type="Label" parent="ReferencePanel/ColorRect/VBoxContainer" unique_id=123601701]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_y1au2")

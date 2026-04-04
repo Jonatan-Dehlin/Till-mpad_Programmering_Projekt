@@ -1,8 +1,8 @@
-[gd_scene load_steps=85 format=3 uid="uid://cuyi61e8w66x2"]
+[gd_scene format=3 uid="uid://cuyi61e8w66x2"]
 
-[ext_resource type="Script" path="res://Scripts/Projectile.gd" id="1_pbdgp"]
+[ext_resource type="Script" uid="uid://u21ifcgv5i8w" path="res://Scripts/Projectile.gd" id="1_pbdgp"]
 [ext_resource type="Texture2D" uid="uid://31o77wtth81k" path="res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 01 - Projectile.png" id="2_ovk5h"]
-[ext_resource type="Texture2D" uid="uid://bvap3sergftsn" path="res://icon.svg" id="3_4o312"]
+[ext_resource type="Texture2D" uid="uid://bvap3sergftsn" path="res://Assets/Icons/icon.svg" id="3_4o312"]
 [ext_resource type="Texture2D" uid="uid://dyd8n5w23badw" path="res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 02 - Projectile.png" id="3_vo8be"]
 [ext_resource type="Texture2D" uid="uid://c6qgbh7kclmcw" path="res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 03 - Projectile.png" id="4_aoxpx"]
 [ext_resource type="Texture2D" uid="uid://cokyqspih6qrs" path="res://Assets/Towers/Towers Weapons/Tower 05/Spritesheets/Tower 05 - Level 01 - Projectile - Impact.png" id="4_sef36"]
@@ -539,25 +539,25 @@ animations = [{
 "speed": 20.0
 }]
 
-[node name="WizardTowerProjectile" type="Area2D"]
+[node name="WizardTowerProjectile" type="Area2D" unique_id=125154667]
 scale = Vector2(2, 2)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_pbdgp")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1354509227]
 sprite_frames = SubResource("SpriteFrames_4fhrd")
 animation = &"new_animation"
 autoplay = "new_animation"
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=621858145]
 visible = false
 sprite_frames = SubResource("SpriteFrames_ej4uj")
 animation = &"new_animation"
 autoplay = "new_animation"
 frame_progress = 0.890536
 
-[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="." unique_id=2104736000]
 visible = false
 sprite_frames = SubResource("SpriteFrames_doset")
 animation = &"new_animation"
@@ -565,33 +565,33 @@ autoplay = "new_animation"
 frame = 6
 frame_progress = 0.706346
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=707729403]
 shape = SubResource("CircleShape2D_5djm6")
 
-[node name="AOECollider" type="CollisionShape2D" parent="."]
+[node name="AOECollider" type="CollisionShape2D" parent="." unique_id=539323088]
 shape = SubResource("CircleShape2D_lcyjy")
 disabled = true
 
-[node name="LeadIndicator" type="Marker2D" parent="."]
+[node name="LeadIndicator" type="Marker2D" parent="." unique_id=1704375166]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1432440101]
 visible = false
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_4o312")
 
-[node name="HitExplosion" type="AnimatedSprite2D" parent="."]
+[node name="HitExplosion" type="AnimatedSprite2D" parent="." unique_id=499322500]
 visible = false
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_20nqc")
 metadata/AOESize = 44.5
 
-[node name="HitExplosion2" type="AnimatedSprite2D" parent="."]
+[node name="HitExplosion2" type="AnimatedSprite2D" parent="." unique_id=1945410573]
 visible = false
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_kb34c")
 metadata/AOESize = 60.0
 
-[node name="HitExplosion3" type="AnimatedSprite2D" parent="."]
+[node name="HitExplosion3" type="AnimatedSprite2D" parent="." unique_id=46355569]
 visible = false
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_20ryu")
