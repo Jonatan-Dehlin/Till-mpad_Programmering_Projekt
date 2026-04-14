@@ -42,6 +42,10 @@ LightUIButton=""
 MediumUIButton="Used to connect UI sounds on press"
 HeavyUIButton=""
 ConfirmUIButton=""
+Paths=""
+MapExit=""
+BridgeExit=""
+BridgeEnter=""
 
 [gui]
 

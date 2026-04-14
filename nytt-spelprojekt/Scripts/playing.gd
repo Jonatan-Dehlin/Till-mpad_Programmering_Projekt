@@ -235,7 +235,7 @@ func _send_wave(enemy: String, amount: int, cooldown: float, startcooldown: floa
 		var enemy_scene = load("res://Scenes/Enemies/" + enemy)
 		
 		#Definerar levelns path och dess pathfollow2D template
-		var Path = current_level.get_node("EnemyPath")
+		var Path = get_tree().get_nodes_in_group("Paths").pick_random()
 		var PathFollowTemplate = current_level.get_node("EnemyPath").get_node("PathFollow2D")
 		
 		for i in range(amount):

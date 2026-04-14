@@ -12,6 +12,8 @@ func _ready() -> void:
 		z = enemy.z_index
 	if enemy != null:
 		speed = Globals.enemy_speed[enemy.name]
+	for exits: Area2D in get_tree().get_nodes_in_group("MapExit"):
+		exits.body_entered.connect(_on_enemy_exit_body_entered)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
