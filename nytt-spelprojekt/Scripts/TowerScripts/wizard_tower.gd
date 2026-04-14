@@ -9,16 +9,26 @@ var is_attacking: bool = false
 var targeted_enemy
 var hovering_over_tower: bool = false
 
+var ExplosionAudio = [
+	preload("res://Assets/Audio/SFX/WizardProjectile1.wav"),
+	preload("res://Assets/Audio/SFX/WizardProjectile2.wav"),
+	preload("res://Assets/Audio/SFX/WizardProjectile3.wav"),
+	preload("res://Assets/Audio/SFX/WizardProjectile4.wav"),
+	preload("res://Assets/Audio/SFX/WizardProjectile5.wav"),
+	preload("res://Assets/Audio/SFX/WizardProjectile6.wav"),
+]
+
 #Tower Stats
 var Trait: String
 var Level: int
-var stats = {"damage":35,
-			"range":200,
-			"cooldown":1,
-			"projectile_velocity": 320.0,
-			"projectile_lifetime": 5.0,
-			"AOESize": 100.0,
-			"DamageDealt": 0}
+var stats = {
+	"damage":35,
+	"range":200,
+	"cooldown":1,
+	"projectile_velocity": 320.0,
+	"projectile_lifetime": 5.0,
+	"AOESize": 100.0,
+	"DamageDealt": 0}
 
 var place_cost: int = 100
 var total_cash_spent: int = 100

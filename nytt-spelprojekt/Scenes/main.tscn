@@ -513,6 +513,17 @@ texture = SubResource("AtlasTexture_bs2jl")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fdnlq"]
 texture = SubResource("AtlasTexture_d1ilt")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_wsu2k"]
+atlas = ExtResource("2_ral5c")
+region = Rect2(423, 629, 98, 85)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k12tt"]
+texture = SubResource("AtlasTexture_wsu2k")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1bgf"]
+atlas = ExtResource("2_ral5c")
+region = Rect2(577, 529, 14, 14)
+
 [node name="Main" type="Control" unique_id=2067074450]
 layout_mode = 3
 anchors_preset = 0
@@ -1645,7 +1656,7 @@ custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest1" unique_id=2124308014]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest1" unique_id=2124308014 groups=["MediumUIButton"]]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 1
 anchors_preset = 8
@@ -1802,7 +1813,7 @@ custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest2" unique_id=1103636281]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest2" unique_id=1103636281 groups=["MediumUIButton"]]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 0
 offset_left = 125.0
@@ -1952,7 +1963,7 @@ custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest3" unique_id=776353587]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest3" unique_id=776353587 groups=["MediumUIButton"]]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 0
 offset_left = 125.0
@@ -2102,7 +2113,7 @@ custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest4" unique_id=460625729]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest4" unique_id=460625729 groups=["MediumUIButton"]]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 0
 offset_left = 125.0
@@ -2252,7 +2263,7 @@ custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest5" unique_id=1909758445]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest5" unique_id=1909758445 groups=["MediumUIButton"]]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 0
 offset_left = 125.0
@@ -2402,7 +2413,7 @@ custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest6" unique_id=1679751494]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest6" unique_id=1679751494 groups=["MediumUIButton"]]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 0
 offset_left = 125.0
@@ -2552,7 +2563,7 @@ custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest7" unique_id=191587815]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest7" unique_id=191587815 groups=["MediumUIButton"]]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 0
 offset_left = 125.0
@@ -2702,7 +2713,7 @@ custom_minimum_size = Vector2(500, 800)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_iq2jm")
 
-[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest8" unique_id=1367447864]
+[node name="Chest1Button" type="Button" parent="Shop/ScrollContainer/Chests/Chest8" unique_id=1367447864 groups=["MediumUIButton"]]
 custom_minimum_size = Vector2(250, 250)
 layout_mode = 0
 offset_left = 125.0
@@ -2860,7 +2871,7 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_6iyac")
 theme_override_styles/hover = SubResource("StyleBoxTexture_6iyac")
 text = "BACK"
 
-[node name="TraitMenuButton" type="Button" parent="Shop" unique_id=559274880]
+[node name="TraitMenuButton" type="Button" parent="Shop" unique_id=559274880 groups=["LightUIButton"]]
 layout_mode = 0
 offset_left = 1546.0
 offset_top = 990.0
@@ -3382,7 +3393,7 @@ grow_vertical = 2
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="RerollTraitButton" type="Button" parent="Traits/PurchaseTraitReroll/HBoxContainer" unique_id=1014188487]
+[node name="RerollTraitButton" type="Button" parent="Traits/PurchaseTraitReroll/HBoxContainer" unique_id=1014188487 groups=["MediumUIButton"]]
 custom_minimum_size = Vector2(150, 79)
 layout_mode = 2
 focus_mode = 0
@@ -3615,6 +3626,36 @@ text = "XXX,XXX"
 horizontal_alignment = 1
 vertical_alignment = 2
 
+[node name="Tutorial" type="Label" parent="." unique_id=2092038151]
+layout_mode = 0
+offset_left = 1360.0
+offset_top = 201.0
+offset_right = 1635.0
+offset_bottom = 475.0
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("7_ovdqn")
+theme_override_styles/normal = SubResource("StyleBoxTexture_k12tt")
+text = "
+Tutorial:
+
+In the INVENTORY, you can choose which towers to equip!
+
+In the SHOP, you can buy new towers from the chests, as well as purchase traits for your towers!
+
+In the PLAY menu, you can select maps and modifiers!
+"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="TextureButton" type="TextureButton" parent="Tutorial" unique_id=490174308]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 56.0
+offset_bottom = 52.0
+texture_normal = SubResource("AtlasTexture_h1bgf")
+stretch_mode = 0
+
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Inventory" to="." method="_on_inventory_pressed"]
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MainMenu/BottomPanel/Buttons/Shop" to="." method="_on_shop_pressed"]
@@ -3630,3 +3671,4 @@ vertical_alignment = 2
 [connection signal="pressed" from="Shop/TraitMenuButton" to="." method="_on_trait_menu_button_pressed"]
 [connection signal="pressed" from="Traits/PurchaseTraitReroll/HBoxContainer/RerollTraitButton" to="." method="_on_reroll_trait_button_pressed"]
 [connection signal="pressed" from="Traits/ReturnToShopMenu" to="." method="_on_return_to_shop_menu_pressed"]
+[connection signal="pressed" from="Tutorial/TextureButton" to="." method="_on_texture_button_pressed"]

@@ -594,7 +594,7 @@ offset_bottom = -82.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="ReturnToMenuButton" type="Button" parent="Main Panel/HBoxContainer" unique_id=1157023007]
+[node name="ReturnToMenuButton" type="Button" parent="Main Panel/HBoxContainer" unique_id=1157023007 groups=["ConfirmUIButton"]]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_mode = 0
@@ -604,7 +604,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_autof")
 theme_override_styles/hover = SubResource("StyleBoxTexture_74h2i")
 text = "Main Menu"
 
-[node name="ReplayButton" type="Button" parent="Main Panel/HBoxContainer" unique_id=974574980]
+[node name="ReplayButton" type="Button" parent="Main Panel/HBoxContainer" unique_id=974574980 groups=["ConfirmUIButton"]]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 focus_mode = 0

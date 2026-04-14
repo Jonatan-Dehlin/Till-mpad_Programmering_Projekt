@@ -36,9 +36,17 @@ var replay: bool = false
 var quickswap: bool = false
 
 func _ready() -> void:
+	Globals.clear_bg_music()
 	_update_equipped_towers_buttons()
 	_read_wave_data(1)
 	_start_map(Globals.MapID, replay)
+	Globals.connect_UI_sounds()
+	if Globals.FirstTime:
+		$Tutorial.visible = true
+	if Globals.MapID == "forest_level":
+		Globals.play_bg_music(Globals.BG_audio["Map1"])
+	else:
+		Globals.play_bg_music(Globals.BG_audio["Map2"])
 
 func _process(_delta: float) -> void:
 	if Globals.Playing:
@@ -93,7 +101,7 @@ func _physics_process(_delta: float) -> void:
 			BetweenWaves = true
 			WaveTimer.start()
 			$HUD/StartWaveButton.visible = true
-		$HUD/StartWaveButton.text = "Next wave in: " + str(round(WaveTimer.time_left))
+		$HUD/StartWaveButton.text = "Next wave in: " + str(int(WaveTimer.time_left))
 	
 	_detect_game_over()
 
@@ -321,3 +329,7 @@ func _on_next_wave_timer_timeout() -> void:
 	_wave_manager()
 	$HUD/StartWaveButton.visible = false
 	SkipTimer.start()
+
+func _on_texture_button_pressed() -> void:
+	$Tutorial.visible = false
+	Globals.FirstTime = false

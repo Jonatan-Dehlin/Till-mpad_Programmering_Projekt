@@ -82,6 +82,7 @@ func _ready() -> void:
 	add_child(NewGamblePanel)
 	NewGamblePanel._ready()
 	GambleMenu = NewGamblePanel
+	Globals.clear_bg_music()
 	
 	#Koppla kistknapparna
 	var ID = 0
@@ -114,11 +115,15 @@ func _ready() -> void:
 	Globals.update_save_file()
 	_update_tower_buttons()
 	_color_hotbar_buttons()
-	_connect_UI_sounds()
+	Globals.connect_UI_sounds()
+	Globals.play_bg_music(Globals.BG_audio["Main"])
 	
 	if Globals.PlayerUser == "":
 		$MainMenu/EnterUsername.visible = true
 		$MainMenu/ColorRect.visible = true
+		$Tutorial.visible = true
+		Globals.FirstTime = true
+		
 		get_tree().paused = true
 		
 		await $MainMenu/EnterUsername.text_submitted
@@ -131,19 +136,6 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	_update_labels()
-
-func _connect_UI_sounds() -> void:
-	for button: BaseButton in get_tree().get_nodes_in_group("LightUIButton"):
-		button.pressed.connect(Globals.audio_manager.bind(Globals.UI_audio["LightClick"].pick_random()))
-	
-	for button: BaseButton in get_tree().get_nodes_in_group("MediumUIButton"):
-		button.pressed.connect(Globals.audio_manager.bind(Globals.UI_audio["MediumClick"].pick_random()))
-		
-	for button: BaseButton in get_tree().get_nodes_in_group("HeavyUIButton"):
-		button.pressed.connect(Globals.audio_manager.bind(Globals.UI_audio["HeavyClick"].pick_random()))
-		
-	for button: BaseButton in get_tree().get_nodes_in_group("ConfirmUIButton"):
-		button.pressed.connect(Globals.audio_manager.bind(Globals.UI_audio["ConfirmClick"].pick_random()))
 
 ################ INVENTORY FUNCTIONS #############
 func _select_tower_from_inventory(TowerID):
@@ -691,3 +683,6 @@ func _on_hotbar_select_button_pressed() -> void:
 
 func _on_close_menu_button_pressed() -> void:
 	SelectModifiers.visible = false
+
+func _on_texture_button_pressed() -> void:
+	$Tutorial.visible = false

@@ -9,16 +9,21 @@ var is_attacking: bool = false
 var targeted_enemy
 var hovering_over_tower: bool = false
 
+var ExplosionAudio = [
+	preload("res://Assets/Audio/SFX/BallistaHit.wav"),
+]
+
 #Tower Stats
 var Trait: String
 var Level: int
-var stats = {"damage":100,
-			"range":300,
-			"cooldown":0.5,
-			"projectile_velocity": 500.0,
-			"projectile_lifetime": 5.0,
-			"AOESize": 6.0,
-			"DamageDealt": 0}
+var stats = {
+	"damage":100,
+	"range":300,
+	"cooldown":0.5,
+	"projectile_velocity": 500.0,
+	"projectile_lifetime": 5.0,
+	"AOESize": 6.0,
+	"DamageDealt": 0}
 
 var place_cost: int = 100
 var total_cash_spent: int = 100

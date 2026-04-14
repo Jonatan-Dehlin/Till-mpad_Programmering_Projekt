@@ -142,7 +142,7 @@ alignment = 1
 [node name="PathA" type="VBoxContainer" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths" unique_id=1610357203]
 layout_mode = 2
 
-[node name="PathAUpgradeButton" type="TextureButton" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA" unique_id=188838630]
+[node name="PathAUpgradeButton" type="TextureButton" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathA" unique_id=188838630 groups=["MediumUIButton"]]
 custom_minimum_size = Vector2(180, 220)
 layout_mode = 2
 focus_mode = 0
@@ -240,7 +240,7 @@ expand_mode = 1
 [node name="PathB" type="VBoxContainer" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths" unique_id=1150665911]
 layout_mode = 2
 
-[node name="PathBUpgradeButton" type="TextureButton" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB" unique_id=1991739650]
+[node name="PathBUpgradeButton" type="TextureButton" parent="UpgradePanel/Panel/VBoxContainer/UpgradePaths/PathB" unique_id=1991739650 groups=["MediumUIButton"]]
 custom_minimum_size = Vector2(180, 220)
 layout_mode = 2
 focus_mode = 0
@@ -339,7 +339,7 @@ layout_mode = 2
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="SellTower" type="Button" parent="UpgradePanel/Panel/VBoxContainer/HBoxContainer" unique_id=1736356655]
+[node name="SellTower" type="Button" parent="UpgradePanel/Panel/VBoxContainer/HBoxContainer" unique_id=1736356655 groups=["HeavyUIButton"]]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 focus_mode = 0
@@ -350,7 +350,7 @@ theme_override_font_sizes/font_size = 12
 theme_override_styles/normal = SubResource("StyleBoxFlat_1kkbf")
 text = "Sell: $xxxxx"
 
-[node name="ChangeTargeting" type="Button" parent="UpgradePanel/Panel/VBoxContainer/HBoxContainer" unique_id=1315242709]
+[node name="ChangeTargeting" type="Button" parent="UpgradePanel/Panel/VBoxContainer/HBoxContainer" unique_id=1315242709 groups=["LightUIButton"]]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 focus_mode = 0

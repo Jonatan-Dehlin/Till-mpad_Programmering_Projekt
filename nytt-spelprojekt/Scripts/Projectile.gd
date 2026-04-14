@@ -19,6 +19,7 @@ var damage_frame: int
 var parent: Node2D
 var parentID
 var Midas: bool = false
+var HitAudio
 
 @onready var indicator: Marker2D = $LeadIndicator
 @onready var AOECollider: CollisionShape2D = $AOECollider
@@ -28,6 +29,7 @@ var Midas: bool = false
 
 func _ready() -> void:
 	z_index = 1000
+	HitAudio = parent.ExplosionAudio.pick_random()
 	damage_frame = parent.damage_frame
 	if parent.Trait == "Midas":
 		Midas = true
@@ -124,6 +126,9 @@ func _on_body_entered(body: Node2D) -> void:
 func _on_hit_explosion_frame_changed() -> void:
 	if selected_explosion.frame == damage_frame: #frame där explosionen faktiskt händer
 		_apply_explosion_damage()
+		
+		# Spelar hit-ljud
+		Globals.audio_manager(HitAudio)
 
 func _on_hit_explosion_animation_finished() -> void:
 	queue_free()

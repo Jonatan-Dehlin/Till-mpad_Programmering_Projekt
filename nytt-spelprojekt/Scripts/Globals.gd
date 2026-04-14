@@ -4,7 +4,7 @@ var current_wave = 0
 
 var health = 100
 
-var cash = 2000000 # Startvärde för spelarens ingame valuta
+var cash = 1000 # Startvärde för spelarens ingame valuta
 
 var GameFinishedMenu
 
@@ -12,6 +12,7 @@ var MapID
 var MapDifficulty: String
 var TotalMultiplier: PackedFloat64Array = [1.0,1.0]
 
+var FirstTime: bool = false
 var Playing: bool = false
 
 var PlayerStatFile = "user://PlayerData.txt" # Referens till spelarens datafil
@@ -56,6 +57,11 @@ var UI_audio = {
 	preload("res://Assets/Audio/UI/ConfirmClick4.ogg")],
 }
 
+var BG_audio = {
+	"Main": preload("res://Assets/Audio/BG/MainMenu.wav"),
+	"Map1": preload("res://Assets/Audio/BG/Map1.wav"),
+	"Map2": preload("res://Assets/Audio/BG/Map2.wav"),
+}
 
 # Speed och HP faktorer för fiender
 var current_health_factor: float = 1
@@ -351,7 +357,7 @@ func format_number(n) -> String: # Gör om t.ex. 1000000 -> 1,000,000
 		else:
 			return str(snapped(n,0.01))
 	else:
-		var s = str(n)
+		var s = str(int(n))
 		var result: String = ""
 		var numbers_added = 0
 		
@@ -412,9 +418,28 @@ func level_up_player():
 	
 	update_save_file()
 
-func audio_manager(PreloadedAudio): # Tar hand om allt ljud
-	print("Played")
+func connect_UI_sounds() -> void:
+
+	for button: BaseButton in get_tree().get_nodes_in_group("LightUIButton"):
+		if not button.is_connected("pressed", Callable(Globals, "audio_manager")):
+			button.pressed.connect(Globals.audio_manager.bind(Globals.UI_audio["LightClick"].pick_random(), false))
+	
+	for button: BaseButton in get_tree().get_nodes_in_group("MediumUIButton"):
+		if not button.is_connected("pressed", Callable(Globals, "audio_manager")):
+			button.pressed.connect(Globals.audio_manager.bind(Globals.UI_audio["MediumClick"].pick_random(), false))
+		
+	for button: BaseButton in get_tree().get_nodes_in_group("HeavyUIButton"):
+		if not button.is_connected("pressed", Callable(Globals, "audio_manager")):
+			button.pressed.connect(Globals.audio_manager.bind(Globals.UI_audio["HeavyClick"].pick_random(), false))
+		
+	for button: BaseButton in get_tree().get_nodes_in_group("ConfirmUIButton"):
+		if not button.is_connected("pressed", Callable(Globals, "audio_manager")):
+			button.pressed.connect(Globals.audio_manager.bind(Globals.UI_audio["ConfirmClick"].pick_random(), false))
+
+func audio_manager(PreloadedAudio, BG: bool): # Tar hand om allt ljud
 	var AudioPlayer = AudioStreamPlayer.new()
+	if BG:
+		AudioPlayer.set_meta("BG", true)
 	AudioPlayer.stream = PreloadedAudio
 	add_child(AudioPlayer)
 	AudioPlayer.play()
@@ -422,6 +447,13 @@ func audio_manager(PreloadedAudio): # Tar hand om allt ljud
 	await AudioPlayer.finished
 	AudioPlayer.queue_free()
 
+func play_bg_music(PreloadedAudio):
+	audio_manager(PreloadedAudio, true)
+
+func clear_bg_music():
+	for audionodes in get_children():
+		if audionodes.has_meta("BG"):
+			audionodes.queue_free()
 ###################### PLAY FUNCTIONS #####################
 func reset() -> void:
 	current_wave = 0

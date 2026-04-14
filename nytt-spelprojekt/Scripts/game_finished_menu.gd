@@ -77,7 +77,7 @@ func fancy_display_xp(StartLevel, PreviousXP, GainedXP, TowerString):
 	progressbar.value = PreviousXP
 	progressbar.max_value = Globals.calculate_required_EXP(StartLevel, false)
 	progressbar.value = PreviousXP
-	progressbarLabel.text = str(progressbar.value) + "/" + str(progressbar.max_value)
+	progressbarLabel.text = str(int(progressbar.value)) + "/" + str(int(progressbar.max_value))
 	totalXPlabel.text = "+0"
 	LVLLabel.text = str(StartLevel) + " -> " + str(StartLevel)
 	
@@ -110,7 +110,7 @@ func fancy_display_xp(StartLevel, PreviousXP, GainedXP, TowerString):
 				currentOverflow = 0
 		
 		totalXPlabel.text = "+" + str(Globals.format_number(currentOverflow))
-		progressbarLabel.text = str(progressbar.value) + "/" + str(progressbar.max_value)
+		progressbarLabel.text = str(int(progressbar.value)) + "/" + str(int(progressbar.max_value))
 		LVLLabel.text = str(StartLevel) + " -> " + str(currentLVL)
 		
 		await get_tree().create_timer(0.01).timeout

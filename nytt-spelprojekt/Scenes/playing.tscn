@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://dy4gotpw351rm" path="res://Assets/Fonts/Perfect DOS VGA 437.ttf" id="4_pft4x"]
 [ext_resource type="Texture2D" uid="uid://2dyamd5eme8k" path="res://Assets/Icons/#1 - Transparent Icons.png" id="5_a2xsb"]
 [ext_resource type="PackedScene" uid="uid://il8yu6rtfu8h" path="res://Scenes/Menus/pause_menu.tscn" id="6_mcen5"]
+[ext_resource type="Texture2D" uid="uid://cipmwnep1bxsg" path="res://Assets/Icons/medieval.png" id="7_2cnrk"]
 
 [sub_resource type="Animation" id="Animation_pbbup"]
 length = 0.001
@@ -110,6 +111,17 @@ cache/0/16/0/underline_position = 0.0
 cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_wsu2k"]
+atlas = ExtResource("7_2cnrk")
+region = Rect2(423, 629, 98, 85)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0dfw0"]
+texture = SubResource("AtlasTexture_wsu2k")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2amvo"]
+atlas = ExtResource("7_2cnrk")
+region = Rect2(577, 529, 14, 14)
+
 [node name="Playing" type="Control" unique_id=1925795125]
 layout_mode = 3
 anchors_preset = 15
@@ -194,7 +206,7 @@ offset_bottom = 931.0
 theme_override_constants/separation = 40
 alignment = 1
 
-[node name="Tower1" type="Button" parent="HUD/TowerHotbar/HBoxContainer" unique_id=1846701884]
+[node name="Tower1" type="Button" parent="HUD/TowerHotbar/HBoxContainer" unique_id=1846701884 groups=["LightUIButton"]]
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 focus_mode = 0
@@ -226,7 +238,7 @@ texture = SubResource("AtlasTexture_atmga")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Tower2" type="Button" parent="HUD/TowerHotbar/HBoxContainer" unique_id=1272981003]
+[node name="Tower2" type="Button" parent="HUD/TowerHotbar/HBoxContainer" unique_id=1272981003 groups=["LightUIButton"]]
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 focus_mode = 0
@@ -258,7 +270,7 @@ texture = SubResource("AtlasTexture_atmga")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Tower3" type="Button" parent="HUD/TowerHotbar/HBoxContainer" unique_id=511220097]
+[node name="Tower3" type="Button" parent="HUD/TowerHotbar/HBoxContainer" unique_id=511220097 groups=["LightUIButton"]]
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 focus_mode = 0
@@ -290,7 +302,7 @@ texture = SubResource("AtlasTexture_atmga")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Tower4" type="Button" parent="HUD/TowerHotbar/HBoxContainer" unique_id=1404452137]
+[node name="Tower4" type="Button" parent="HUD/TowerHotbar/HBoxContainer" unique_id=1404452137 groups=["LightUIButton"]]
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 focus_mode = 0
@@ -322,7 +334,7 @@ texture = SubResource("AtlasTexture_atmga")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Tower5" type="Button" parent="HUD/TowerHotbar/HBoxContainer" unique_id=439960057]
+[node name="Tower5" type="Button" parent="HUD/TowerHotbar/HBoxContainer" unique_id=439960057 groups=["LightUIButton"]]
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 focus_mode = 0
@@ -354,7 +366,7 @@ texture = SubResource("AtlasTexture_atmga")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Tower6" type="Button" parent="HUD/TowerHotbar/HBoxContainer" unique_id=1890927807]
+[node name="Tower6" type="Button" parent="HUD/TowerHotbar/HBoxContainer" unique_id=1890927807 groups=["LightUIButton"]]
 custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 focus_mode = 0
@@ -411,6 +423,38 @@ process_callback = 0
 wait_time = 15.0
 one_shot = true
 
+[node name="Tutorial" type="Label" parent="." unique_id=80710753]
+visible = false
+layout_mode = 0
+offset_left = 1268.0
+offset_top = 81.0
+offset_right = 1528.6666
+offset_bottom = 363.95996
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("4_pft4x")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxTexture_0dfw0")
+text = "
+Tutorial:
+
+You can use Keys 1-6 to quick select towers from your hotbar! Use the Q button to cancel placement
+
+Use the TAB button to cycle targeting option when having a tower selected, and press BACKSPACE to sell the tower!
+
+Stop the enemies from finishing the entire track!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="TextureButton" type="TextureButton" parent="Tutorial" unique_id=150704185]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 56.0
+offset_bottom = 52.0
+texture_normal = SubResource("AtlasTexture_2amvo")
+stretch_mode = 0
+
 [connection signal="pressed" from="HUD/StartWaveButton" to="." method="_on_start_wave_button_pressed"]
 [connection signal="timeout" from="HUD/NextWaveTimer" to="." method="_on_next_wave_timer_timeout"]
 [connection signal="timeout" from="HUD/SkipTimer" to="." method="_on_skip_timer_timeout"]
+[connection signal="pressed" from="Tutorial/TextureButton" to="." method="_on_texture_button_pressed"]
