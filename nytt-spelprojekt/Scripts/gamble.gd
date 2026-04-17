@@ -52,7 +52,6 @@ func _ready() -> void:
 		index += 1
 
 func _add_panels(Trait: bool):
-	print("Kom till add panel")
 	for panels in range(200):
 		var cumulative = []
 		var total = 0
@@ -161,10 +160,8 @@ func gamble(ChestID):
 	_modify_drop_rates(ChestID)
 	if ChestID == "Trait":
 		_add_panels(true)
-		print("Trait")
 	else:
 		_add_panels(false)
-		print("Chest")
 
 	scroll.get_h_scroll_bar().visible = false
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
@@ -222,6 +219,5 @@ func _grant_gamble_reward():
 		var global_rect = Rect2(panel.global_position, panel.size)
 		if global_rect.has_point(centerpos):
 			queue_free()
-			print(panel.get_child(0).get_child(0).get_child(1).text.replace(" ","_"))
 			return panel.get_child(0).get_child(0).get_child(1).text.replace(" ","_")
 			

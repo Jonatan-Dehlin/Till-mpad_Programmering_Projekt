@@ -134,7 +134,7 @@ func _start_map(MapID, Replay: bool):
 		if Globals.SelectedModifiers["Sudden Death"]:
 			Globals.health = 1
 		if Globals.SelectedDifficulty == "Easy":
-			max_wave = 2
+			max_wave = 40
 		elif Globals.SelectedDifficulty == "Normal":
 			max_wave = 50
 		elif Globals.SelectedDifficulty == "Hard":
@@ -235,7 +235,6 @@ func _send_wave(enemy: String, amount: int, cooldown: float, startcooldown: floa
 		var enemy_scene = load("res://Scenes/Enemies/" + enemy)
 		
 		#Definerar levelns path och dess pathfollow2D template
-		var Path = get_tree().get_nodes_in_group("Paths").pick_random()
 		var PathFollowTemplate = current_level.get_node("EnemyPath").get_node("PathFollow2D")
 		
 		for i in range(amount):
@@ -245,6 +244,9 @@ func _send_wave(enemy: String, amount: int, cooldown: float, startcooldown: floa
 			#Kopierar PathFollow2D och lägger till fienden i den
 			var PathFollow = PathFollowTemplate.duplicate()
 			PathFollow.add_child(spawn)
+			
+			#Ger en random path för fiende ifall det finns fler än en path
+			var Path = get_tree().get_nodes_in_group("Paths").pick_random()
 			
 			#Nollställer progress så att de inte spawnar på samma ställe
 			PathFollow.progress = 0
@@ -281,9 +283,7 @@ func _wave_manager() -> void:
 			var EnemyStartCooldown = e[3]
 			var EnemyLast = e[4]
 			
-			#Globals._apply_health_multiplier(Globals.current_wave)
 			_send_wave(EnemyName, EnemyAmount, EnemyCooldown, EnemyStartCooldown, EnemyLast)
-			#print("skickade: " + str(EnemyAmount) + " st " + str(EnemyName) + " Med cooldown på: " + str(EnemyCooldown))
 
 func _read_wave_data(wave: int) -> Array: #Läser wave-data fram till max_wave
 	if not FileAccess.file_exists(WaveDataFile):

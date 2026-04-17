@@ -160,7 +160,6 @@ func _switch_hotbar_tower(Equipped: bool) -> void:
 			HotbarSwapResponse.text = "No Hotbar Slot Selected!"
 		elif _is_slot_occupied():
 			HotbarSwapResponse.text = "This Slot Is Already Occupied!"
-			print("ändrade text")
 		else:
 			var NewSlotString = "SLOT:" + str(selected_hotbar_id)
 			var NewString = Globals.get_string_from_id(selected_inventory_tower_ID).replace("SLOT:n/a",NewSlotString)

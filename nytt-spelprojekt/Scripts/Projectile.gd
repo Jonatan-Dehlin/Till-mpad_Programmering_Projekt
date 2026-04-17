@@ -128,7 +128,7 @@ func _on_hit_explosion_frame_changed() -> void:
 		_apply_explosion_damage()
 		
 		# Spelar hit-ljud
-		Globals.audio_manager(HitAudio)
+		Globals.audio_manager(HitAudio, false)
 
 func _on_hit_explosion_animation_finished() -> void:
 	queue_free()
